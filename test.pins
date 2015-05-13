@@ -1,0 +1,48 @@
+; Wed May 13 20:12:42 GMT+01:00 2015
+; 
+;+ (version "3.4.8")
+;+ (build "Build 629")
+
+([ontologia_Class15] of  Asignatura
+
+	(Matriculados 50)
+	(Nombre "EDA")
+	(PrctAprobado 50))
+
+([ontologia_Class16] of  Asignatura
+
+	(Matriculados 2)
+	(Nombre "IA")
+	(PrctAprobado 40)
+	(PreRequesit [ontologia_Class3]))
+
+([ontologia_Class17] of  Asignatura
+
+	(Matriculados 12)
+	(Nombre "TC")
+	(PrctAprobado 30)
+	(PreRequesit [ontologia_Class3]))
+
+([ontologia_Class18] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class15])
+	(Cuatrimentre "2")
+	(Nota 4.0))
+
+([ontologia_Class19] of  Alumno
+
+	(Convocatorias [ontologia_Class18])
+	(Nombre "Palote"))
+
+([ontologia_Class20] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class17])
+	(Cuatrimentre "3")
+	(Nota 2.0))
+
+([ontologia_Class3] of  Asignatura
+
+	(Matriculados 200)
+	(Nombre "PROP")
+	(PrctAprobado 2)
+	(PreRequesit [ontologia_Class15]))

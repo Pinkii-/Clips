@@ -1,0 +1,35 @@
+; Wed May 13 13:04:29 GMT+01:00 2015
+; 
+;+ (version "3.4.8")
+;+ (build "Build 629")
+
+
+(defclass %3ACLIPS_TOP_LEVEL_SLOT_CLASS "Fake class to save top-level slot information"
+	(is-a USER)
+	(role abstract)
+	(single-slot %25+Aprobado
+		(type INTEGER)
+		(range 0 100)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot Matriculados
+;+		(comment "Numero de alumnos matriculados.")
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))
+
+(defclass Asignatura
+	(is-a USER)
+	(role concrete)
+	(single-slot Matriculados
+;+		(comment "Numero de alumnos matriculados.")
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot %25+Aprobado
+		(type INTEGER)
+		(range 0 100)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))
