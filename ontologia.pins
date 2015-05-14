@@ -1,4 +1,4 @@
-; Thu May 14 23:34:08 CEST 2015
+; Thu May 14 23:45:23 CEST 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -591,7 +591,10 @@
 
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40015])
-	(Nombre "ADEI"))
+	(Nombre "ADEI")
+	(PreRequesit
+		[ontologia_Class30006]
+		[ontologia_Class30009]))
 
 ([ontologia_Class40061] of  Asignatura
 
@@ -608,9 +611,13 @@
 
 ([ontologia_Class40064] of  Asignatura
 
+	(CoRequesit
+		[ontologia_Class40050]
+		[ontologia_Class40063])
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40015])
-	(Nombre "PSI"))
+	(Nombre "PSI")
+	(PreRequesit [ontologia_Class40061]))
 
 ([ontologia_Class40065] of  Asignatura
 
@@ -632,28 +639,40 @@
 
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40019])
-	(Nombre "ABD"))
+	(Nombre "ABD")
+	(PreRequesit [ontologia_Class30006]))
 
 ([ontologia_Class40071] of  Asignatura
 
+	(CoRequesit [ontologia_Class30015])
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40013])
-	(Nombre "ASO"))
+	(Nombre "ASO")
+	(PreRequesit [ontologia_Class30010]))
 
 ([ontologia_Class40072] of  Asignatura
 
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40013])
-	(Nombre "PI"))
+	(Nombre "PI")
+	(PreRequesit
+		[ontologia_Class30015]
+		[ontologia_Class40021]))
 
 ([ontologia_Class40073] of  Asignatura
 
+	(CoRequesit
+		[ontologia_Class40071]
+		[ontologia_Class40072])
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "PTI"))
 
 ([ontologia_Class40074] of  Asignatura
 
+	(CoRequesit
+		[ontologia_Class30010]
+		[ontologia_Class30015])
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "SI"))
@@ -662,37 +681,49 @@
 
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40013])
-	(Nombre "SOA"))
+	(Nombre "SOA")
+	(PreRequesit [ontologia_Class30010]))
 
 ([ontologia_Class40076] of  Asignatura
 
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40013])
-	(Nombre "TXC"))
+	(Nombre "TXC")
+	(PreRequesit [ontologia_Class30015]))
 
 ([ontologia_Class40077] of  Asignatura
 
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40018])
-	(Nombre "AD"))
+	(Nombre "AD")
+	(PreRequesit [ontologia_Class30015]))
 
 ([ontologia_Class40080] of  Asignatura
 
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40018])
-	(Nombre "IM"))
+	(Nombre "IM")
+	(PreRequesit [ontologia_Class30015]))
 
 ([ontologia_Class40081] of  Asignatura
 
+	(CoRequesit
+		[ontologia_Class40072]
+		[ontologia_Class30010])
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40018])
-	(Nombre "SDX"))
+	(Nombre "SDX")
+	(PreRequesit [ontologia_Class30015]))
 
 ([ontologia_Class40082] of  Asignatura
 
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40018])
-	(Nombre "TCI"))
+	(Nombre "TCI")
+	(PreRequesit
+		[ontologia_Class0]
+		[ontologia_Class30004]
+		[ontologia_Class30005]))
 
 ([ontologia_Class40083] of  Asignatura
 
@@ -830,3 +861,11 @@
 	(Cuatrimentre "2")
 	(HorarioAsig [ontologia_Class10003])
 	(Nota 4.0))
+
+([ontologia_Class50009] of  Asignatura
+
+	(CoRequesit [ontologia_Class30010])
+	(HorarioAsig [ontologia_Class10002])
+	(ModalidadAsig [ontologia_Class40018])
+	(Nombre "CPD")
+	(PreRequesit [ontologia_Class30015]))
