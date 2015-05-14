@@ -1,0 +1,63 @@
+; Thu May 14 13:45:41 GMT+01:00 2015
+; 
+;+ (version "3.4.8")
+;+ (build "Build 629")
+
+([ontologia_Class10003] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class10004])
+	(Cuatrimentre "1")
+	(Nota 8.25))
+
+([ontologia_Class10004] of  Asignatura
+
+	(Matriculados 400)
+	(Nombre "FM")
+	(PrctAprobado 50))
+
+([ontologia_Class10008] of  Alumno
+
+	(Convocatorias [ontologia_Class10003])
+	(DificultadAsumible "NS")
+	(DNI "47254514")
+	(Nombre "Gonzalo")
+	(VolumenTrabajo "NS"))
+
+([ontologia_Class15] of  Asignatura
+
+	(Matriculados 50)
+	(Nombre "EDA")
+	(PrctAprobado 50))
+
+([ontologia_Class16] of  Asignatura
+
+	(Matriculados 2)
+	(Nombre "IA")
+	(PrctAprobado 40)
+	(PreRequesit [ontologia_Class3]))
+
+([ontologia_Class17] of  Asignatura
+
+	(Matriculados 12)
+	(Nombre "TC")
+	(PrctAprobado 30)
+	(PreRequesit [ontologia_Class3]))
+
+([ontologia_Class18] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class15])
+	(Cuatrimentre "2")
+	(Nota 4.0))
+
+([ontologia_Class20] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class17])
+	(Cuatrimentre "3")
+	(Nota 2.0))
+
+([ontologia_Class3] of  Asignatura
+
+	(Matriculados 200)
+	(Nombre "PROP")
+	(PrctAprobado 2)
+	(PreRequesit [ontologia_Class15]))

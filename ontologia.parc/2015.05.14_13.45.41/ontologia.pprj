@@ -1,4 +1,4 @@
-; Thu May 14 14:58:26 GMT+01:00 2015
+; Thu May 14 13:45:41 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -21,14 +21,12 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[ontologia_ProjectKB_Class10089]
-		[ontologia_ProjectKB_Class10090]
-		[ontologia_ProjectKB_Class10091]
-		[ontologia_ProjectKB_Class10092]
-		[ontologia_ProjectKB_Class10093]
-		[ontologia_ProjectKB_Class10094]
-		[ontologia_ProjectKB_Class10095]
-		[ontologia_ProjectKB_Class20096]))
+		[ontologia_ProjectKB_Class10214]
+		[ontologia_ProjectKB_Class10215]
+		[ontologia_ProjectKB_Class10216]
+		[ontologia_ProjectKB_Class10217]
+		[ontologia_ProjectKB_Class10218]
+		[ontologia_ProjectKB_Class10219]))
 
 ([CLSES_TAB] of  Widget
 
@@ -70,7 +68,7 @@
 
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
 
-([KB_449980_Class2] of  Map
+([KB_402463_Class2] of  Map
 )
 
 ([KB_893930_Class0] of  String
@@ -80,8 +78,8 @@
 
 ([KB_893930_Class1] of  Map
 
-	(entries [ontologia_ProjectKB_Class20098])
-	(referenced_maps [ontologia_ProjectKB_Class20097]))
+	(entries [ontologia_ProjectKB_Class10221])
+	(referenced_maps [ontologia_ProjectKB_Class10220]))
 
 ([KB_893930_Class100] of  Property_List
 )
@@ -183,87 +181,25 @@
 ([ontologia_ProjectKB_Class10] of  Property_List
 )
 
-([ontologia_ProjectKB_Class10083] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "DNI")
-	(property_list [ontologia_ProjectKB_Class10084])
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
-	(width 200)
-	(x 0)
-	(y 0))
-
-([ontologia_ProjectKB_Class10084] of  Property_List
-
-	(properties
-		[ontologia_ProjectKB_Class10085]
-		[ontologia_ProjectKB_Class10086]))
-
-([ontologia_ProjectKB_Class10085] of  Boolean
-
-	(boolean_value FALSE)
-	(name "ButtonDisplayed-View References to Value"))
-
-([ontologia_ProjectKB_Class10086] of  Boolean
-
-	(boolean_value FALSE)
-	(name "ButtonDisplayed-Delete Instance"))
-
-([ontologia_ProjectKB_Class10087] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "DNI")
-	(property_list [ontologia_ProjectKB_Class10088])
-	(widget_class_name "edu.stanford.smi.protege.widget.IntegerFieldWidget")
-	(width 100)
-	(x 0)
-	(y 0))
-
-([ontologia_ProjectKB_Class10088] of  Property_List
-)
-
-([ontologia_ProjectKB_Class10089] of  String
-
-	(name "Convocatoria")
-	(string_value "AsignaturaMatriculada{+Qt+}Cuatrimentre{+Nota+}Nota"))
-
-([ontologia_ProjectKB_Class10090] of  String
-
-	(name "Horario")
-	(string_value "Descripcion"))
-
-([ontologia_ProjectKB_Class10091] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([ontologia_ProjectKB_Class10092] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([ontologia_ProjectKB_Class10093] of  String
-
-	(name "Modalidad")
-	(string_value "Descripcion"))
-
-([ontologia_ProjectKB_Class10094] of  String
-
-	(name "Alumno")
-	(string_value "Nombre{+}DNI"))
-
-([ontologia_ProjectKB_Class10095] of  String
-
-	(name "Asignatura")
-	(string_value "Nombre"))
-
 ([ontologia_ProjectKB_Class10096] of  Property_List
 
 	(name "layout properties"))
 
 ([ontologia_ProjectKB_Class10097] of  Property_List
+)
+
+([ontologia_ProjectKB_Class10148] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "DNI")
+	(property_list [ontologia_ProjectKB_Class10149])
+	(widget_class_name "edu.stanford.smi.protege.widget.IntegerFieldWidget")
+	(width 100)
+	(x 0)
+	(y 180))
+
+([ontologia_ProjectKB_Class10149] of  Property_List
 )
 
 ([ontologia_ProjectKB_Class10158] of  Widget
@@ -279,6 +215,46 @@
 
 ([ontologia_ProjectKB_Class10159] of  Property_List
 )
+
+([ontologia_ProjectKB_Class10214] of  String
+
+	(name "Convocatoria")
+	(string_value "AsignaturaMatriculada{+Qt+}Cuatrimentre{+Nota+}Nota"))
+
+([ontologia_ProjectKB_Class10215] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([ontologia_ProjectKB_Class10216] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([ontologia_ProjectKB_Class10217] of  String
+
+	(name "Alumno")
+	(string_value "Nombre{+}DNI"))
+
+([ontologia_ProjectKB_Class10218] of  String
+
+	(name "Asignatura")
+	(string_value "Nombre"))
+
+([ontologia_ProjectKB_Class10219] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([ontologia_ProjectKB_Class10220] of  Map
+)
+
+([ontologia_ProjectKB_Class10221] of  Map_Entry
+
+	(key "InstanceDisplay.yellow_stickies")
+	(key_class "java.lang.String")
+	(value "ontologia_ProjectKB_Class10220")
+	(value_class "java.util.Map"))
 
 ([ontologia_ProjectKB_Class107] of  String
 
@@ -329,21 +305,6 @@
 ([ontologia_ProjectKB_Class20] of  Property_List
 )
 
-([ontologia_ProjectKB_Class20096] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([ontologia_ProjectKB_Class20097] of  Map
-)
-
-([ontologia_ProjectKB_Class20098] of  Map_Entry
-
-	(key "InstanceDisplay.yellow_stickies")
-	(key_class "java.lang.String")
-	(value "ontologia_ProjectKB_Class20097")
-	(value_class "java.util.Map"))
-
 ([ontologia_ProjectKB_Class21] of  Widget
 
 	(is_hidden TRUE)
@@ -393,34 +354,6 @@
 	(widget_class_name "TGViztab.TGVizTab"))
 
 ([ontologia_ProjectKB_Class30] of  Property_List
-)
-
-([ontologia_ProjectKB_Class30167] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "VolumenTrabajo")
-	(property_list [ontologia_ProjectKB_Class30168])
-	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
-	(width 200)
-	(x 0)
-	(y 240))
-
-([ontologia_ProjectKB_Class30168] of  Property_List
-)
-
-([ontologia_ProjectKB_Class30171] of  Widget
-
-	(height 60)
-	(is_hidden FALSE)
-	(name "DificultadAsumible")
-	(property_list [ontologia_ProjectKB_Class30172])
-	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
-	(width 200)
-	(x 0)
-	(y 300))
-
-([ontologia_ProjectKB_Class30172] of  Property_List
 )
 
 ([ontologia_ProjectKB_Class31] of  Widget
@@ -689,15 +622,29 @@
 
 	(properties
 		[ontologia_ProjectKB_Class85]
+		[ontologia_ProjectKB_Class86]
 		[ontologia_ProjectKB_Class88]
+		[ontologia_ProjectKB_Class92]
 		[ontologia_ProjectKB_Class94]
-		[ontologia_ProjectKB_Class30167]
-		[ontologia_ProjectKB_Class30171]
-		[ontologia_ProjectKB_Class10087]))
+		[ontologia_ProjectKB_Class10158]))
 
 ([ontologia_ProjectKB_Class85] of  Property_List
 
 	(name "layout properties"))
+
+([ontologia_ProjectKB_Class86] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "VolumenTrabajo")
+	(property_list [ontologia_ProjectKB_Class87])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 200)
+	(x 0)
+	(y 120))
+
+([ontologia_ProjectKB_Class87] of  Property_List
+)
 
 ([ontologia_ProjectKB_Class88] of  Widget
 
@@ -732,6 +679,20 @@
 	(boolean_value FALSE)
 	(name "ButtonDisplayed-Delete Instance"))
 
+([ontologia_ProjectKB_Class92] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "DificultadAsumible")
+	(property_list [ontologia_ProjectKB_Class93])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([ontologia_ProjectKB_Class93] of  Property_List
+)
+
 ([ontologia_ProjectKB_Class94] of  Widget
 
 	(height 60)
@@ -744,6 +705,20 @@
 	(y 60))
 
 ([ontologia_ProjectKB_Class95] of  Property_List
+)
+
+([ontologia_ProjectKB_Class96] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "DNI")
+	(property_list [ontologia_ProjectKB_Class97])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 200)
+	(x 0)
+	(y 180))
+
+([ontologia_ProjectKB_Class97] of  Property_List
 )
 
 ([option_instance] of  Options

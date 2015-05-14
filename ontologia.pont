@@ -1,4 +1,4 @@
-; Wed May 13 20:09:51 GMT+01:00 2015
+; Thu May 14 14:58:26 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -12,9 +12,9 @@
 ;+		(allowed-classes Asignatura)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Modalidad
-		(type STRING)
-;+		(value "Obligatoria" "Complementaria" "Optativa")
+	(single-slot AlumnoRecomendado
+		(type INSTANCE)
+;+		(allowed-classes Alumno)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot PrctAprobado
@@ -23,8 +23,12 @@
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot DificultadAsumible
+		(type SYMBOL)
+		(allowed-values Alto Medio Bajo)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot Descripcion
 		(type STRING)
-;+		(value "Alta" "Media" "Baja")
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Cuatrimentre
@@ -35,14 +39,18 @@
 		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
+	(single-slot DNI
+		(type INTEGER)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot Motivos
 		(type STRING)
 		(default "Io k ze tio equisde")
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot VolumenTrabajo
-		(type STRING)
-;+		(value "Alto" "Medio" "Bajo")
+		(type SYMBOL)
+		(allowed-values Alto Medio Bajo)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot PreRequesit
@@ -55,8 +63,8 @@
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
 	(single-slot HorarioAsig
-		(type STRING)
-;+		(value "Mananas" "Tardes" "Both")
+		(type INSTANCE)
+;+		(allowed-classes Horario)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Nota
@@ -76,23 +84,23 @@
 	(single-slot Matriculados
 ;+		(comment "Numero de alumnos matriculados.")
 		(type INTEGER)
-		(range 0 %3FVARIABLE)
+		(range 0 1000)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot Horario
-		(type STRING)
-;+		(value "Mananas" "Tardes")
-;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Puntuacion
 		(type INTEGER)
-		(range 0 %3FVARIABLE)
+		(range 0 10000)
 		(default 0)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot AsigName
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot ModalidadAsig
+		(type INSTANCE)
+;+		(allowed-classes Modalidad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
@@ -103,14 +111,14 @@
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
 		(create-accessor read-write))
-	(single-slot Modalidad
-		(type STRING)
-;+		(value "Obligatoria" "Complementaria" "Optativa")
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot HorarioAsig
-		(type STRING)
-;+		(value "Mananas" "Tardes" "Both")
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot ModalidadAsig
+		(type INSTANCE)
+;+		(allowed-classes Modalidad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot PrctAprobado
@@ -125,7 +133,7 @@
 	(single-slot Matriculados
 ;+		(comment "Numero de alumnos matriculados.")
 		(type INTEGER)
-		(range 0 %3FVARIABLE)
+		(range 0 1000)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Nombre
@@ -141,9 +149,9 @@
 ;+		(allowed-classes Asignatura)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Horario
-		(type STRING)
-;+		(value "Mananas" "Tardes")
+	(single-slot HorarioAsig
+		(type INSTANCE)
+;+		(allowed-classes Horario)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Cuatrimentre
@@ -160,8 +168,8 @@
 	(is-a USER)
 	(role concrete)
 	(single-slot VolumenTrabajo
-		(type STRING)
-;+		(value "Alto" "Medio" "Bajo")
+		(type SYMBOL)
+		(allowed-values Alto Medio Bajo)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot Convocatorias
@@ -170,18 +178,27 @@
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
 	(single-slot DificultadAsumible
-		(type STRING)
-;+		(value "Alta" "Media" "Baja")
+		(type SYMBOL)
+		(allowed-values Alto Medio Bajo)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Nombre
 		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot DNI
+		(type INTEGER)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass Resultado
 	(is-a USER)
 	(role concrete)
+	(single-slot AlumnoRecomendado
+		(type INSTANCE)
+;+		(allowed-classes Alumno)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(multislot AsignaturasRecomendadas
 		(type INSTANCE)
 ;+		(allowed-classes AsignaturaRecomendada)
@@ -203,7 +220,47 @@
 		(create-accessor read-write))
 	(single-slot Puntuacion
 		(type INTEGER)
-		(range 0 %3FVARIABLE)
+		(range 0 10000)
 		(default 0)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
+
+(defclass Horario
+	(is-a USER)
+	(role abstract)
+	(single-slot Descripcion
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))
+
+(defclass Tarde
+	(is-a Horario)
+	(role concrete))
+
+(defclass Manana
+	(is-a Horario)
+	(role concrete))
+
+(defclass Both
+	(is-a Horario)
+	(role concrete))
+
+(defclass Modalidad
+	(is-a USER)
+	(role abstract)
+	(single-slot Descripcion
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))
+
+(defclass Obligatoria
+	(is-a Modalidad)
+	(role concrete))
+
+(defclass Optativa
+	(is-a Modalidad)
+	(role concrete))
+
+(defclass Especialidad
+	(is-a Modalidad)
+	(role concrete))

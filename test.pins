@@ -1,48 +1,49 @@
-; Wed May 13 20:12:42 GMT+01:00 2015
+; Thu May 14 14:58:34 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
 
-([ontologia_Class15] of  Asignatura
+([ontologia_Class0] of  Asignatura
 
-	(Matriculados 50)
-	(Nombre "EDA")
-	(PrctAprobado 50))
+	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 400)
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "FM")
+	(PrctAprobado 60))
 
-([ontologia_Class16] of  Asignatura
+([ontologia_Class10001] of  Both
 
-	(Matriculados 2)
-	(Nombre "IA")
-	(PrctAprobado 40)
-	(PreRequesit [ontologia_Class3]))
+	(Descripcion "Manana y Tarde"))
 
-([ontologia_Class17] of  Asignatura
+([ontologia_Class10002] of  Manana
 
-	(Matriculados 12)
-	(Nombre "TC")
-	(PrctAprobado 30)
-	(PreRequesit [ontologia_Class3]))
+	(Descripcion "Manana"))
 
-([ontologia_Class18] of  Convocatoria
+([ontologia_Class10003] of  Tarde
 
-	(AsignaturaMatriculada [ontologia_Class15])
-	(Cuatrimentre "2")
-	(Nota 4.0))
+	(Descripcion "Tarde"))
 
-([ontologia_Class19] of  Alumno
+([ontologia_Class10004] of  Especialidad
 
-	(Convocatorias [ontologia_Class18])
-	(Nombre "Palote"))
+	(Descripcion "Especialidad"))
 
-([ontologia_Class20] of  Convocatoria
+([ontologia_Class10005] of  Obligatoria
 
-	(AsignaturaMatriculada [ontologia_Class17])
-	(Cuatrimentre "3")
-	(Nota 2.0))
+	(Descripcion "Obligatoria"))
 
-([ontologia_Class3] of  Asignatura
+([ontologia_Class10006] of  Optativa
 
-	(Matriculados 200)
-	(Nombre "PROP")
-	(PrctAprobado 2)
-	(PreRequesit [ontologia_Class15]))
+	(Descripcion "Optativa"))
+
+([ontologia_Class10008] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class0])
+	(Cuatrimentre "1")
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 8.5))
+
+([ontologia_Class10016] of  Alumno
+
+	(Convocatorias [ontologia_Class10008])
+	(DNI 47254514)
+	(Nombre "Gonzalo Diez"))
