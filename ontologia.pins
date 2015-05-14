@@ -1,4 +1,4 @@
-; Thu May 14 23:29:22 CEST 2015
+; Thu May 14 23:34:08 CEST 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -106,7 +106,8 @@
 		[ontologia_Class50002]
 		[ontologia_Class50003]
 		[ontologia_Class50004]
-		[ontologia_Class50006])
+		[ontologia_Class50006]
+		[ontologia_Class50007])
 	(DNI 1)
 	(Nombre "ULTRA FAST DNI"))
 
@@ -426,7 +427,8 @@
 
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40019])
-	(Nombre "MI"))
+	(Nombre "MI")
+	(PreRequesit [ontologia_Class30012]))
 
 ([ontologia_Class40039] of  Asignatura
 
@@ -595,7 +597,8 @@
 
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40015])
-	(Nombre "DSI"))
+	(Nombre "DSI")
+	(PreRequesit [ontologia_Class30013]))
 
 ([ontologia_Class40063] of  Asignatura
 
@@ -613,13 +616,17 @@
 
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40015])
-	(Nombre "SIO"))
+	(Nombre "SIO")
+	(PreRequesit
+		[ontologia_Class30012]
+		[ontologia_Class30006]))
 
 ([ontologia_Class40069] of  Asignatura
 
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40019])
-	(Nombre "VPE"))
+	(Nombre "VPE")
+	(PreRequesit [ontologia_Class30012]))
 
 ([ontologia_Class40070] of  Asignatura
 
@@ -816,3 +823,10 @@
 	(Cuatrimentre "1")
 	(HorarioAsig [ontologia_Class10003])
 	(Nota 10.0))
+
+([ontologia_Class50007] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20004])
+	(Cuatrimentre "2")
+	(HorarioAsig [ontologia_Class10003])
+	(Nota 4.0))
