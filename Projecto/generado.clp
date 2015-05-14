@@ -550,7 +550,7 @@
       then 
         (bind ?asig (send (instance-address * ?conv) get-AsignaturaMatriculada))
         (progn$ (?asigRecom $?recomendadas)
-          (bind ?asigR (send (instance-address * ?asigRecom) get-AsigName))    
+          (bind ?asigR (send (instance-address * (instance-name ?asigRecom)) get-AsigName))    
           (if (eq (instance-name ?asigR) (instance-name ?asig))
             then
               (printout t "Aprobada la asignatura" ?asig crlf) ; DEBUG

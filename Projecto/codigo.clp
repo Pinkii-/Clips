@@ -74,7 +74,8 @@
   =>
   (format t "Hola %s. " ?name)
   (printout t "Eres estudiante de la fib. Continuamos" crlf)
-  (make-instance of Resultado (AlumnoRecomendado ?t))
+  (bind ?estudiantes (find-all-instances ((?inst Alumno)) (neq ?inst:DNI ?dni)))
+  
   (retract ?x)
 )
 
@@ -109,7 +110,7 @@
 (defrule preguntas-acabadas
   ?a <- (pdificultad)
   ?b <- (pcarga)
-  (object (is-a Resultado) (AlumnoRecomendado ?alumno))
+  (object (is-a AlumnoElegido) (AlumnoRecomendado ?alumno))
   =>
   (retract ?a)
   (retract ?b)
@@ -128,7 +129,7 @@
 
 
   (printout t "" crlf)
-  (printout t "Empezamos a calcular tus mejores opciones para asignaturas" crlf)
+  (printout t "Empezamos a calcular tus mejores opciones para asignaturas" crlf crlf)
   (focus quitar-imposibles)
 )
 
@@ -138,20 +139,15 @@
   (export ?ALL)
 )
 
-(defrule seleccionar-todas-asignaturas
-  (declare (salience 1))
-  ?resultado <- (object (is-a Resultado) (AsignaturasRecomendadas $?asignaturas))
-  ?asig <- (object (is-a Asignatura) (Nombre ?nombre))
-  (test (not (member$ ?asig $?asignaturas)))
+; Todas las asignaturas son posibles inicialmente
+(defrule anadir-asignaturas
+  (declare (salience 10))
   =>
-  (printout t "Agregada la asignatura " ?nombre crlf) ; DEBUG
-
-  ;(if (member$ nil $?asignaturas)
-   ; then (replace$ ?asignaturas 0 0 $?asig)  
-    ;else
-      (bind $?asignaturas (insert$ ?asignaturas (+ (length ?asignaturas) 1) ?asig))
-      (send ?resultado put-AsignaturasRecomendadas $?asignaturas)
-  ;)
+  (bind $?lista (find-all-instances ((?inst Asignatura)) TRUE))
+  (progn$ (?curr-con ?lista)
+    (make-instance (gensym) of Recomendacion (contenido ?curr-con) (puntuacion (send ?curr-con get-puntuacion)))
+  ) 
+  (retract ?hecho)
 )
 
 ; Quita las asignaturas que ya están aprovadas
@@ -167,13 +163,12 @@
       then 
         (bind ?asig (send (instance-address * ?conv) get-AsignaturaMatriculada))
         (progn$ (?asigRecom $?recomendadas)
-          (bind ?asigR (send (instance-address * ?asigRecom) get-AsigName))    
+          (bind ?asigR (send (instance-address * (instance-name ?asigRecom)) get-AsigName))    
           (if (eq (instance-name ?asigR) (instance-name ?asig))
             then
               (printout t "Aprobada la asignatura" ?asig crlf) ; DEBUG
           )
         )
-    ;(format t "Has sacado un %d en la asignatura %s " ?nota ?nAsig)
     )
   ) 
 )

@@ -1,4 +1,4 @@
-; Thu May 14 21:07:16 CEST 2015
+; Thu May 14 20:20:45 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -58,9 +58,17 @@
 
 	(Convocatorias
 		[ontologia_Class10008]
-		[ontologia_Class20003])
+		[ontologia_Class20003]
+		[ontologia_Class20000])
 	(DNI 47254514)
 	(Nombre "Gonzalo Diez"))
+
+([ontologia_Class20000] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30012])
+	(Cuatrimentre "2")
+	(HorarioAsig [ontologia_Class10003])
+	(Nota 2.0))
 
 ([ontologia_Class20001] of  Asignatura
 
