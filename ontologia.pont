@@ -1,4 +1,4 @@
-; Thu May 14 19:53:14 GMT+01:00 2015
+; Thu May 14 21:07:15 CEST 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -7,78 +7,41 @@
 (defclass %3ACLIPS_TOP_LEVEL_SLOT_CLASS "Fake class to save top-level slot information"
 	(is-a USER)
 	(role abstract)
-	(single-slot AsignaturaMatriculada
-		(type INSTANCE)
-;+		(allowed-classes Asignatura)
-;+		(cardinality 1 1)
+	(single-slot VolumenTrabajo
+		(type SYMBOL)
+		(allowed-values alto medio bajo np)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot AlumnoRecomendado
 		(type INSTANCE)
 ;+		(allowed-classes Alumno)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot PrctAprobado
-		(type INTEGER)
-		(range 0 100)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot Descripcion
+	(single-slot Motivos
 		(type STRING)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot Cuatrimentre
-		(type STRING)
+		(default "Io k ze tio equisde")
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Nombre
 		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot DNI
-		(type INTEGER)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Motivos
+	(single-slot Cuatrimentre
 		(type STRING)
-		(default "Io k ze tio equisde")
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot VolumenTrabajo
-		(type SYMBOL)
-		(allowed-values alto medio bajo np)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot Dificultad
-		(type SYMBOL)
-		(allowed-values alto medio bajo np)
+	(single-slot Descripcion
+		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot PreRequesit
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
 		(create-accessor read-write))
-	(multislot AsignaturasRecomendadas
-		(type INSTANCE)
-;+		(allowed-classes AsignaturaRecomendada)
-		(create-accessor read-write))
 	(single-slot HorarioAsig
 		(type INSTANCE)
 ;+		(allowed-classes Horario)
 ;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Nota
-		(type FLOAT)
-		(range 0.0 10.0)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(multislot Convocatorias
-		(type INSTANCE)
-;+		(allowed-classes Convocatoria)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(multislot CoRequesit
-		(type INSTANCE)
-;+		(allowed-classes Asignatura)
 		(create-accessor read-write))
 	(single-slot Matriculados
 ;+		(comment "Numero de alumnos matriculados.")
@@ -86,27 +49,87 @@
 		(range 0 1000)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(single-slot AsigName
+		(type INSTANCE)
+;+		(allowed-classes Asignatura)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot DNI
+		(type INTEGER)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(multislot CoRequesit
+		(type INSTANCE)
+;+		(allowed-classes Asignatura)
+		(create-accessor read-write))
+	(multislot Convocatorias
+		(type INSTANCE)
+;+		(allowed-classes Convocatoria)
+		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot Nota
+		(type FLOAT)
+		(range 0.0 10.0)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Dificultad
+		(type SYMBOL)
+		(allowed-values alto medio bajo np)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot ModalidadAsig
+		(type INSTANCE)
+;+		(allowed-classes Modalidad)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot Puntuacion
 		(type INTEGER)
 		(range 0 10000)
 		(default 0)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot AsigName
+	(single-slot PrctAprobado
+		(type INTEGER)
+		(range 0 100)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot AsignaturasRecomendadas
+		(type INSTANCE)
+;+		(allowed-classes AsignaturaRecomendada)
+		(create-accessor read-write))
+	(single-slot AsignaturaMatriculada
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot ModalidadAsig
-		(type INSTANCE)
-;+		(allowed-classes Modalidad)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass Asignatura
 	(is-a USER)
 	(role concrete)
+	(single-slot Nombre
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Dificultad
+		(type SYMBOL)
+		(allowed-values alto medio bajo np)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(multislot PreRequesit
+		(type INSTANCE)
+;+		(allowed-classes Asignatura)
+		(create-accessor read-write))
+	(single-slot ModalidadAsig
+		(type INSTANCE)
+;+		(allowed-classes Modalidad)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot HorarioAsig
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(multislot CoRequesit
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
 		(create-accessor read-write))
@@ -114,30 +137,6 @@
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot Dificultad
-		(type SYMBOL)
-		(allowed-values alto medio bajo np)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot HorarioAsig
-		(type INSTANCE)
-;+		(allowed-classes Horario)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot ModalidadAsig
-		(type INSTANCE)
-;+		(allowed-classes Modalidad)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot PrctAprobado
-		(type INTEGER)
-		(range 0 100)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot CoRequesit
-		(type INSTANCE)
-;+		(allowed-classes Asignatura)
 		(create-accessor read-write))
 	(single-slot Matriculados
 ;+		(comment "Numero de alumnos matriculados.")
@@ -145,17 +144,42 @@
 		(range 0 1000)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot Nombre
+	(single-slot PrctAprobado
+		(type INTEGER)
+		(range 0 100)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))
+
+(defclass AsignaturaRecomendada
+	(is-a USER)
+	(role concrete)
+	(single-slot Puntuacion
+		(type INTEGER)
+		(range 0 10000)
+		(default 0)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot AsigName
+		(type INSTANCE)
+;+		(allowed-classes Asignatura)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Motivos
 		(type STRING)
+		(default "Io k ze tio equisde")
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass Convocatoria
 	(is-a USER)
 	(role concrete)
-	(single-slot AsignaturaMatriculada
-		(type INSTANCE)
-;+		(allowed-classes Asignatura)
+	(single-slot Nota
+		(type FLOAT)
+		(range 0.0 10.0)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Cuatrimentre
+		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot HorarioAsig
@@ -163,29 +187,15 @@
 ;+		(allowed-classes Horario)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Cuatrimentre
-		(type STRING)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Nota
-		(type FLOAT)
-		(range 0.0 10.0)
+	(single-slot AsignaturaMatriculada
+		(type INSTANCE)
+;+		(allowed-classes Asignatura)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass Alumno
 	(is-a USER)
 	(role concrete)
-	(single-slot VolumenTrabajo
-		(type SYMBOL)
-		(allowed-values alto medio bajo np)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot Dificultad
-		(type SYMBOL)
-		(allowed-values alto medio bajo np)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(multislot Convocatorias
 		(type INSTANCE)
 ;+		(allowed-classes Convocatoria)
@@ -195,42 +205,32 @@
 		(type STRING)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
+	(single-slot Dificultad
+		(type SYMBOL)
+		(allowed-values alto medio bajo np)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(single-slot DNI
 		(type INTEGER)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot VolumenTrabajo
+		(type SYMBOL)
+		(allowed-values alto medio bajo np)
+;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
 (defclass Resultado
 	(is-a USER)
 	(role concrete)
+	(multislot AsignaturasRecomendadas
+		(type INSTANCE)
+;+		(allowed-classes AsignaturaRecomendada)
+		(create-accessor read-write))
 	(single-slot AlumnoRecomendado
 		(type INSTANCE)
 ;+		(allowed-classes Alumno)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot AsignaturasRecomendadas
-		(type INSTANCE)
-;+		(allowed-classes AsignaturaRecomendada)
-		(create-accessor read-write)))
-
-(defclass AsignaturaRecomendada
-	(is-a USER)
-	(role concrete)
-	(single-slot Motivos
-		(type STRING)
-		(default "Io k ze tio equisde")
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot AsigName
-		(type INSTANCE)
-;+		(allowed-classes Asignatura)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Puntuacion
-		(type INTEGER)
-		(range 0 10000)
-		(default 0)
-;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass Horario
@@ -270,5 +270,9 @@
 	(role concrete))
 
 (defclass Especialidad
+	(is-a Modalidad)
+	(role concrete))
+
+(defclass OptativaEspecial
 	(is-a Modalidad)
 	(role concrete))

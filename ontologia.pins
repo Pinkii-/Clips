@@ -1,4 +1,4 @@
-; Thu May 14 19:53:14 GMT+01:00 2015
+; Thu May 14 21:07:16 CEST 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -99,3 +99,97 @@
 	(PrctAprobado 50)
 	(PreRequesit [ontologia_Class20001])
 	(VolumenTrabajo medio))
+
+([ontologia_Class30002] of  OptativaEspecial
+
+	(Descripcion "OptativaEspecial"))
+
+([ontologia_Class30003] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "EC"))
+
+([ontologia_Class30004] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "M1"))
+
+([ontologia_Class30005] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "M2"))
+
+([ontologia_Class30006] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "BD"))
+
+([ontologia_Class30007] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "CI"))
+
+([ontologia_Class30008] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "EDA"))
+
+([ontologia_Class30009] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "PE"))
+
+([ontologia_Class30010] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "SO"))
+
+([ontologia_Class30011] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "AC"))
+
+([ontologia_Class30012] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "EEE"))
+
+([ontologia_Class30013] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "IES"))
+
+([ontologia_Class30014] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "PROP"))
+
+([ontologia_Class30015] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "XC"))
+
+([ontologia_Class30016] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "IDI"))
+
+([ontologia_Class30017] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "PAR"))
