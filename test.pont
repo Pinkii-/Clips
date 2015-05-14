@@ -1,4 +1,4 @@
-; Thu May 14 20:38:36 GMT+01:00 2015
+; Thu May 14 21:47:23 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -41,7 +41,7 @@
 	(single-slot Motivos
 		(type STRING)
 		(default "Io k ze tio equisde")
-;+		(cardinality 1 1)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot VolumenTrabajo
 		(type SYMBOL)
@@ -90,12 +90,12 @@
 		(type INTEGER)
 		(range 0 10000)
 		(default 0)
-;+		(cardinality 1 1)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot AsigName
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
-;+		(cardinality 1 1)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot ModalidadAsig
 		(type INSTANCE)
@@ -156,18 +156,18 @@
 	(single-slot Motivos
 		(type STRING)
 		(default "Io k ze tio equisde")
-;+		(cardinality 1 1)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot AsigName
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
-;+		(cardinality 1 1)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Puntuacion
 		(type INTEGER)
 		(range 0 10000)
 		(default 0)
-;+		(cardinality 1 1)
+;+		(cardinality 0 1)
 		(create-accessor read-write)))
 
 (defclass Convocatoria
@@ -260,6 +260,46 @@
 	(is-a Modalidad)
 	(role concrete))
 
+(defclass Esp_Comp
+	(is-a Especialidad)
+	(role concrete))
+
+(defclass Esp_ES
+	(is-a Especialidad)
+	(role concrete))
+
+(defclass Esp_TI
+	(is-a Especialidad)
+	(role concrete))
+
+(defclass Esp_AC
+	(is-a Especialidad)
+	(role concrete))
+
+(defclass Esp_SI
+	(is-a Especialidad)
+	(role concrete))
+
 (defclass OptativaEspecial
 	(is-a Modalidad)
+	(role concrete))
+
+(defclass OptEsp_Comp
+	(is-a OptativaEspecial)
+	(role concrete))
+
+(defclass OptEsp_ES
+	(is-a OptativaEspecial)
+	(role concrete))
+
+(defclass OptEsp_TI
+	(is-a OptativaEspecial)
+	(role concrete))
+
+(defclass OptEsp_SI
+	(is-a OptativaEspecial)
+	(role concrete))
+
+(defclass OptEsp_AC
+	(is-a OptativaEspecial)
 	(role concrete))

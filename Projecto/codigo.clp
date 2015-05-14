@@ -76,7 +76,20 @@
   (format t "Hola %s. " ?name)
   (printout t "Eres estudiante de la fib. Continuamos" crlf)
   (bind ?estudiantes (find-all-instances ((?inst Alumno)) (neq ?inst:DNI ?dni)))
-
+  (progn$ (?muerto $?estudiantes)
+    (bind ?convocatorias (send ?muerto get-Convocatorias))
+    ; DEBUG
+    (bind ?dnimuerto (send ?muerto get-DNI))
+    (printout t "Borrando el alumno " ?dnimuerto crlf)
+    ; \DEBUG
+    (progn$ (?c $?convocatorias)
+      ; DEBUG
+    (printout t "Borrando Convocatoria" crlf)
+    ; \DEBUG
+      (send (instance-address * ?c) delete)
+    )
+    (send ?muerto delete)
+  )
   (retract ?x)
 )
 
@@ -151,24 +164,18 @@
 )
 
 ; Quita las asignaturas que ya están aprovadas
-;(defrule quitar-asignaturas-aprovadas
-;?alumno <- (object (is-a Alumno) (Convocatorias ?conv))
-;   ?resultado <- (object (is-a Resultado) (AlumnoRecomendado ?alumno) (AsignaturasRecomendadas $?recomendadas))
-;   =>
-;   (bind $?convocatorias (send ?alumno get-Convocatorias))
-
-;   (progn$ (?conv $?convocatorias)
-;     (bind ?nota (send (instance-address * ?conv) get-Nota))
-;     (if (> ?nota 5) 
-;       then 
-;         (bind ?asig (send (instance-address * ?conv) get-AsignaturaMatriculada))
-;         (progn$ (?asigRecom $?recomendadas)
-;           (bind ?asigR (send (instance-address * (instance-name ?asigRecom)) get-AsigName))    
-;           (if (eq (instance-name ?asigR) (instance-name ?asig))
-;             then
-;               (printout t "Aprobada la asignatura" ?asig crlf) ; DEBUG
-;           )
-;         )
-;     )
-;   ) 
-; )
+(defrule quitar-asignaturas-aprovadas
+  ?r <- (object (is-a AsignaturaRecomendada) (AsigName ?asig1))
+  ?c <- (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2))
+  ; (test (eq (instance-name  ?asig1) (instance-name ?asig2)))
+  =>
+  (bind ?n1 (send (instance-address * ?asig1) get-Nombre))
+  (bind ?n2 (send (instance-address * ?asig2) get-Nombre))
+  (if (eq ?n1 ?n2)
+    then
+    (printout t "olakase" crlf)
+    (send ?r delete)
+    else
+    (printout t "olakaseasdas" crlf)
+    )
+)
