@@ -60,10 +60,11 @@
 )
 
 (defrule pregunta-dni
-  (not (object (is-a Resultado)))
+  (not (tengoputodni))
   =>
   (bind ?dni (pregunta-general "Cual es su dni (unicamente los numeros)"))
   (assert (estudianteRand ?dni))
+  (assert (tengoputodni))
 )
 
 ; Mirar si el estudiante identificado por el dni introducido existe
@@ -75,7 +76,7 @@
   (format t "Hola %s. " ?name)
   (printout t "Eres estudiante de la fib. Continuamos" crlf)
   (bind ?estudiantes (find-all-instances ((?inst Alumno)) (neq ?inst:DNI ?dni)))
-  
+
   (retract ?x)
 )
 
@@ -90,7 +91,7 @@
 
 ; Preguntar por la carga de trabajo asumible
 (defrule pregunta-carga
-  ?resultado <- (object (is-a Resultado) (AlumnoRecomendado ?alumno))
+  ?alumno <- (object (is-a Alumno))
   =>
   (bind ?respuesta (pregunta "Que carga de trabajo quieres asumir" alto medio bajo np))
   (send ?alumno put-VolumenTrabajo ?respuesta)
@@ -99,7 +100,7 @@
 
 ; Preguntar por la dificultad asumible
 (defrule pregunta-dificultad
-  ?resultado <- (object (is-a Resultado) (AlumnoRecomendado ?alumno))
+  ?alumno <- (object (is-a Alumno))
   =>
   (bind ?respuesta (pregunta "Que dificultad quieres asumir" alto medio bajo np))
   (send ?alumno put-Dificultad ?respuesta)
@@ -110,7 +111,7 @@
 (defrule preguntas-acabadas
   ?a <- (pdificultad)
   ?b <- (pcarga)
-  (object (is-a AlumnoElegido) (AlumnoRecomendado ?alumno))
+  ?alumno <- (object (is-a Alumno))
   =>
   (retract ?a)
   (retract ?b)
@@ -145,30 +146,29 @@
   =>
   (bind $?lista (find-all-instances ((?inst Asignatura)) TRUE))
   (progn$ (?curr-con ?lista)
-    (make-instance (gensym) of Recomendacion (contenido ?curr-con) (puntuacion (send ?curr-con get-puntuacion)))
-  ) 
-  (retract ?hecho)
+    (make-instance (gensym) of AsignaturaRecomendada (AsigName ?curr-con))
+  )
 )
 
 ; Quita las asignaturas que ya están aprovadas
-(defrule quitar-asignaturas-aprovadas
-  ;?alumno <- (object (is-a Alumno) (Convocatorias ?conv))
-  ?resultado <- (object (is-a Resultado) (AlumnoRecomendado ?alumno) (AsignaturasRecomendadas $?recomendadas))
-  =>
-  (bind $?convocatorias (send ?alumno get-Convocatorias))
+;(defrule quitar-asignaturas-aprovadas
+;?alumno <- (object (is-a Alumno) (Convocatorias ?conv))
+;   ?resultado <- (object (is-a Resultado) (AlumnoRecomendado ?alumno) (AsignaturasRecomendadas $?recomendadas))
+;   =>
+;   (bind $?convocatorias (send ?alumno get-Convocatorias))
 
-  (progn$ (?conv $?convocatorias)
-    (bind ?nota (send (instance-address * ?conv) get-Nota))
-    (if (> ?nota 5) 
-      then 
-        (bind ?asig (send (instance-address * ?conv) get-AsignaturaMatriculada))
-        (progn$ (?asigRecom $?recomendadas)
-          (bind ?asigR (send (instance-address * (instance-name ?asigRecom)) get-AsigName))    
-          (if (eq (instance-name ?asigR) (instance-name ?asig))
-            then
-              (printout t "Aprobada la asignatura" ?asig crlf) ; DEBUG
-          )
-        )
-    )
-  ) 
-)
+;   (progn$ (?conv $?convocatorias)
+;     (bind ?nota (send (instance-address * ?conv) get-Nota))
+;     (if (> ?nota 5) 
+;       then 
+;         (bind ?asig (send (instance-address * ?conv) get-AsignaturaMatriculada))
+;         (progn$ (?asigRecom $?recomendadas)
+;           (bind ?asigR (send (instance-address * (instance-name ?asigRecom)) get-AsigName))    
+;           (if (eq (instance-name ?asigR) (instance-name ?asig))
+;             then
+;               (printout t "Aprobada la asignatura" ?asig crlf) ; DEBUG
+;           )
+;         )
+;     )
+;   ) 
+; )

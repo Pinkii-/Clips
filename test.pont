@@ -1,4 +1,4 @@
-; Thu May 14 19:48:08 GMT+01:00 2015
+; Thu May 14 20:38:36 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -12,14 +12,14 @@
 ;+		(allowed-classes Asignatura)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot AlumnoRecomendado
-		(type INSTANCE)
-;+		(allowed-classes Alumno)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot PrctAprobado
 		(type INTEGER)
 		(range 0 100)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot AlumnoRecomendado
+		(type INSTANCE)
+;+		(allowed-classes Alumno)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Descripcion
@@ -115,15 +115,15 @@
 		(allowed-values alto medio bajo np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot Dificultad
-		(type SYMBOL)
-		(allowed-values alto medio bajo np)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot HorarioAsig
 		(type INSTANCE)
 ;+		(allowed-classes Horario)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Dificultad
+		(type SYMBOL)
+		(allowed-values alto medio bajo np)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot ModalidadAsig
 		(type INSTANCE)
@@ -147,6 +147,26 @@
 		(create-accessor read-write))
 	(single-slot Nombre
 		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write)))
+
+(defclass AsignaturaRecomendada
+	(is-a USER)
+	(role concrete)
+	(single-slot Motivos
+		(type STRING)
+		(default "Io k ze tio equisde")
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot AsigName
+		(type INSTANCE)
+;+		(allowed-classes Asignatura)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Puntuacion
+		(type INTEGER)
+		(range 0 10000)
+		(default 0)
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
@@ -200,39 +220,6 @@
 ;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
-(defclass Resultado
-	(is-a USER)
-	(role concrete)
-	(single-slot AlumnoRecomendado
-		(type INSTANCE)
-;+		(allowed-classes Alumno)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot AsignaturasRecomendadas
-		(type INSTANCE)
-;+		(allowed-classes AsignaturaRecomendada)
-		(create-accessor read-write)))
-
-(defclass AsignaturaRecomendada
-	(is-a USER)
-	(role concrete)
-	(single-slot Motivos
-		(type STRING)
-		(default "Io k ze tio equisde")
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot AsigName
-		(type INSTANCE)
-;+		(allowed-classes Asignatura)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
-	(single-slot Puntuacion
-		(type INTEGER)
-		(range 0 10000)
-		(default 0)
-;+		(cardinality 1 1)
-		(create-accessor read-write)))
-
 (defclass Horario
 	(is-a USER)
 	(role abstract)
@@ -270,5 +257,9 @@
 	(role concrete))
 
 (defclass Especialidad
+	(is-a Modalidad)
+	(role concrete))
+
+(defclass OptativaEspecial
 	(is-a Modalidad)
 	(role concrete))

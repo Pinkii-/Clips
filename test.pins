@@ -1,4 +1,4 @@
-; Thu May 14 19:48:08 GMT+01:00 2015
+; Thu May 14 20:38:36 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -58,9 +58,17 @@
 
 	(Convocatorias
 		[ontologia_Class10008]
-		[ontologia_Class20003])
+		[ontologia_Class20003]
+		[ontologia_Class20000])
 	(DNI 47254514)
 	(Nombre "Gonzalo Diez"))
+
+([ontologia_Class20000] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30012])
+	(Cuatrimentre "2")
+	(HorarioAsig [ontologia_Class10003])
+	(Nota 2.0))
 
 ([ontologia_Class20001] of  Asignatura
 
@@ -99,3 +107,119 @@
 	(PrctAprobado 50)
 	(PreRequesit [ontologia_Class20001])
 	(VolumenTrabajo medio))
+
+([ontologia_Class30001] of  Alumno
+
+	(Convocatorias
+		[ontologia_Class40002]
+		[ontologia_Class40003])
+	(DNI 1)
+	(Nombre "Fast DNI"))
+
+([ontologia_Class30002] of  OptativaEspecial
+
+	(Descripcion "OptativaEspecial"))
+
+([ontologia_Class30003] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "EC"))
+
+([ontologia_Class30004] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "M1"))
+
+([ontologia_Class30005] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "M2"))
+
+([ontologia_Class30006] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "BD"))
+
+([ontologia_Class30007] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "CI"))
+
+([ontologia_Class30008] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "EDA"))
+
+([ontologia_Class30009] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "PE"))
+
+([ontologia_Class30010] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "SO"))
+
+([ontologia_Class30011] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "AC"))
+
+([ontologia_Class30012] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "EEE"))
+
+([ontologia_Class30013] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "IES"))
+
+([ontologia_Class30014] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "PROP"))
+
+([ontologia_Class30015] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "XC"))
+
+([ontologia_Class30016] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "IDI"))
+
+([ontologia_Class30017] of  Asignatura
+
+	(HorarioAsig [ontologia_Class10001])
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "PAR"))
+
+([ontologia_Class40002] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30007])
+	(Cuatrimentre "1")
+	(HorarioAsig [ontologia_Class10003])
+	(Nota 10.0))
+
+([ontologia_Class40003] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class10000])
+	(Cuatrimentre "1")
+	(HorarioAsig [ontologia_Class10003])
+	(Nota 10.0))

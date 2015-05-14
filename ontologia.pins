@@ -1,4 +1,4 @@
-; Thu May 14 20:20:45 GMT+01:00 2015
+; Thu May 14 20:43:05 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -108,6 +108,14 @@
 	(PreRequesit [ontologia_Class20001])
 	(VolumenTrabajo medio))
 
+([ontologia_Class30001] of  Alumno
+
+	(Convocatorias
+		[ontologia_Class40002]
+		[ontologia_Class40003])
+	(DNI 1)
+	(Nombre "Fast DNI"))
+
 ([ontologia_Class30002] of  OptativaEspecial
 
 	(Descripcion "OptativaEspecial"))
@@ -201,3 +209,17 @@
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "PAR"))
+
+([ontologia_Class40002] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30007])
+	(Cuatrimentre "1")
+	(HorarioAsig [ontologia_Class10003])
+	(Nota 10.0))
+
+([ontologia_Class40003] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class10000])
+	(Cuatrimentre "1")
+	(HorarioAsig [ontologia_Class10003])
+	(Nota 10.0))
