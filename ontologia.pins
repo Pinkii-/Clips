@@ -1,15 +1,27 @@
-; Thu May 14 14:58:26 GMT+01:00 2015
+; Thu May 14 19:53:14 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
 
 ([ontologia_Class0] of  Asignatura
 
+	(Dificultad alto)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 400)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "FM")
-	(PrctAprobado 60))
+	(PrctAprobado 60)
+	(VolumenTrabajo medio))
+
+([ontologia_Class10000] of  Asignatura
+
+	(Dificultad medio)
+	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 400)
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "F")
+	(PrctAprobado 50)
+	(VolumenTrabajo medio))
 
 ([ontologia_Class10001] of  Both
 
@@ -44,6 +56,46 @@
 
 ([ontologia_Class10016] of  Alumno
 
-	(Convocatorias [ontologia_Class10008])
+	(Convocatorias
+		[ontologia_Class10008]
+		[ontologia_Class20003])
 	(DNI 47254514)
 	(Nombre "Gonzalo Diez"))
+
+([ontologia_Class20001] of  Asignatura
+
+	(Dificultad bajo)
+	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 400)
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "PRO1")
+	(PrctAprobado 50)
+	(VolumenTrabajo medio))
+
+([ontologia_Class20002] of  Asignatura
+
+	(Dificultad medio)
+	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 400)
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "IC")
+	(PrctAprobado 50)
+	(VolumenTrabajo alto))
+
+([ontologia_Class20003] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20002])
+	(Cuatrimentre "1")
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 9.5))
+
+([ontologia_Class20004] of  Asignatura
+
+	(Dificultad medio)
+	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 280)
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "PRO2")
+	(PrctAprobado 50)
+	(PreRequesit [ontologia_Class20001])
+	(VolumenTrabajo medio))

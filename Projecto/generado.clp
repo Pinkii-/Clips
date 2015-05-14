@@ -1,6 +1,6 @@
 ;---------- Aqui empiezan las clases generadas por el protege ----------;
 
-; Thu May 14 14:58:34 GMT+01:00 2015
+; Thu May 14 19:48:08 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -22,11 +22,6 @@
 	(single-slot PrctAprobado
 		(type INTEGER)
 		(range 0 100)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot DificultadAsumible
-		(type SYMBOL)
-		(allowed-values Alto Medio Bajo)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Descripcion
@@ -52,7 +47,12 @@
 		(create-accessor read-write))
 	(single-slot VolumenTrabajo
 		(type SYMBOL)
-		(allowed-values Alto Medio Bajo)
+		(allowed-values alto medio bajo np)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot Dificultad
+		(type SYMBOL)
+		(allowed-values alto medio bajo np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot PreRequesit
@@ -62,7 +62,6 @@
 	(multislot AsignaturasRecomendadas
 		(type INSTANCE)
 ;+		(allowed-classes AsignaturaRecomendada)
-		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
 	(single-slot HorarioAsig
 		(type INSTANCE)
@@ -112,6 +111,16 @@
 	(multislot PreRequesit
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
+		(create-accessor read-write))
+	(single-slot VolumenTrabajo
+		(type SYMBOL)
+		(allowed-values alto medio bajo np)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot Dificultad
+		(type SYMBOL)
+		(allowed-values alto medio bajo np)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot HorarioAsig
 		(type INSTANCE)
@@ -171,18 +180,18 @@
 	(role concrete)
 	(single-slot VolumenTrabajo
 		(type SYMBOL)
-		(allowed-values Alto Medio Bajo)
+		(allowed-values alto medio bajo np)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot Dificultad
+		(type SYMBOL)
+		(allowed-values alto medio bajo np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot Convocatorias
 		(type INSTANCE)
 ;+		(allowed-classes Convocatoria)
 		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
-	(single-slot DificultadAsumible
-		(type SYMBOL)
-		(allowed-values Alto Medio Bajo)
-;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Nombre
 		(type STRING)
@@ -204,7 +213,6 @@
 	(multislot AsignaturasRecomendadas
 		(type INSTANCE)
 ;+		(allowed-classes AsignaturaRecomendada)
-		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write)))
 
 (defclass AsignaturaRecomendada
@@ -268,18 +276,30 @@
 	(role concrete))
 ;-------- Aqui empiezan las instancias generadas por el protege --------;
 (definstances instances
-; Thu May 14 14:58:34 GMT+01:00 2015
+; Thu May 14 19:48:08 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
 
 ([ontologia_Class0] of  Asignatura
 
+	(Dificultad alto)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 400)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "FM")
-	(PrctAprobado 60))
+	(PrctAprobado 60)
+	(VolumenTrabajo medio))
+
+([ontologia_Class10000] of  Asignatura
+
+	(Dificultad medio)
+	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 400)
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "F")
+	(PrctAprobado 50)
+	(VolumenTrabajo medio))
 
 ([ontologia_Class10001] of  Both
 
@@ -314,9 +334,49 @@
 
 ([ontologia_Class10016] of  Alumno
 
-	(Convocatorias [ontologia_Class10008])
+	(Convocatorias
+		[ontologia_Class10008]
+		[ontologia_Class20003])
 	(DNI 47254514)
 	(Nombre "Gonzalo Diez"))
+
+([ontologia_Class20001] of  Asignatura
+
+	(Dificultad bajo)
+	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 400)
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "PRO1")
+	(PrctAprobado 50)
+	(VolumenTrabajo medio))
+
+([ontologia_Class20002] of  Asignatura
+
+	(Dificultad medio)
+	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 400)
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "IC")
+	(PrctAprobado 50)
+	(VolumenTrabajo alto))
+
+([ontologia_Class20003] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20002])
+	(Cuatrimentre "1")
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 9.5))
+
+([ontologia_Class20004] of  Asignatura
+
+	(Dificultad medio)
+	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 280)
+	(ModalidadAsig [ontologia_Class10005])
+	(Nombre "PRO2")
+	(PrctAprobado 50)
+	(PreRequesit [ontologia_Class20001])
+	(VolumenTrabajo medio))
 )
 
 ;------------------ Aqui empieza el sistema experto --------------------;
@@ -389,21 +449,114 @@
   (assert (estudianteRand ?dni))
 )
 
+; Mirar si el estudiante identificado por el dni introducido existe
 (defrule buscar-estudiante
   (declare (salience 1))
   ?x <- (estudianteRand ?dni)
-  ?t <- (object (is-a Alumno) (DNI ?dni))
+  ?t <- (object (is-a Alumno) (DNI ?dni) (Nombre ?name))
   =>
-  (format t "Hola %d. " ?dni)
+  (format t "Hola %s. " ?name)
   (printout t "Eres estudiante de la fib. Continuamos" crlf)
   (make-instance of Resultado (AlumnoRecomendado ?t))
   (retract ?x)
 )
 
+; Si no existe, a iorar
 (defrule estudiate-random
   (declare (salience -1))
   (estudianteRand ?dni)
   =>
-  (format t "%d " ?dni)
-  (printout t "No eres estudiante de la fib. Ha ver hestudiao" crlf)
+  (format t "No hay ni ha habido ningun estudiandte con el dni %d." ?dni)
+  (printout t "Ha ver hestudiao" crlf)
+)
+
+; Preguntar por la carga de trabajo asumible
+(defrule pregunta-carga
+  ?resultado <- (object (is-a Resultado) (AlumnoRecomendado ?alumno))
+  =>
+  (bind ?respuesta (pregunta "Que carga de trabajo quieres asumir" alto medio bajo np))
+  (send ?alumno put-VolumenTrabajo ?respuesta)
+  (assert (pcarga))
+)
+
+; Preguntar por la dificultad asumible
+(defrule pregunta-dificultad
+  ?resultado <- (object (is-a Resultado) (AlumnoRecomendado ?alumno))
+  =>
+  (bind ?respuesta (pregunta "Que dificultad quieres asumir" alto medio bajo np))
+  (send ?alumno put-Dificultad ?respuesta)
+  (assert (pdificultad))
+)
+
+; Mira si ya hemos hecho todas las preguntas
+(defrule preguntas-acabadas
+  ?a <- (pdificultad)
+  ?b <- (pcarga)
+  (object (is-a Resultado) (AlumnoRecomendado ?alumno))
+  =>
+  (retract ?a)
+  (retract ?b)
+  (bind ?nombre (send ?alumno get-Nombre))
+  (bind ?dni (send ?alumno get-DNI))
+  (bind ?volumen (send ?alumno get-VolumenTrabajo))
+  (bind ?dificultad (send ?alumno get-Dificultad))
+
+  (printout t "" crlf)
+  (format t "Hola %s, %d  " ?nombre ?dni)
+  (printout t "" crlf)
+  (format t "Has elegido un volumen de trabajo: %s" ?volumen)
+  (printout t "" crlf)
+  (format t "Has elegido una dificultad: %s" ?dificultad)
+  (printout t "" crlf)
+
+
+  (printout t "" crlf)
+  (printout t "Empezamos a calcular tus mejores opciones para asignaturas" crlf)
+  (focus quitar-imposibles)
+)
+
+
+(defmodule quitar-imposibles "Modulo encargado de seleccionar las asignaturas posibles"
+  (import MAIN ?ALL)
+  (export ?ALL)
+)
+
+(defrule seleccionar-todas-asignaturas
+  (declare (salience 1))
+  ?resultado <- (object (is-a Resultado) (AsignaturasRecomendadas $?asignaturas))
+  ?asig <- (object (is-a Asignatura) (Nombre ?nombre))
+  (test (not (member$ ?asig $?asignaturas)))
+  =>
+  (printout t "Agregada la asignatura " ?nombre crlf) ; DEBUG
+
+  ;(if (member$ nil $?asignaturas)
+   ; then (replace$ ?asignaturas 0 0 $?asig)  
+    ;else
+      (bind $?asignaturas (insert$ ?asignaturas (+ (length ?asignaturas) 1) ?asig))
+      (send ?resultado put-AsignaturasRecomendadas $?asignaturas)
+  ;)
+)
+
+; Quita las asignaturas que ya están aprovadas
+(defrule quitar-asignaturas-aprovadas
+  ;?alumno <- (object (is-a Alumno) (Convocatorias ?conv))
+  ?resultado <- (object (is-a Resultado) (AlumnoRecomendado ?alumno) (AsignaturasRecomendadas $?recomendadas))
+  =>
+  (bind $?convocatorias (send ?alumno get-Convocatorias))
+
+  (progn$ (?conv $?convocatorias)
+    (bind ?nota (send (instance-address * ?conv) get-Nota))
+    (if (> ?nota 5) 
+      then 
+        (bind ?asig (send (instance-address * ?conv) get-AsignaturaMatriculada))
+        (progn$ (?asigRecom $?recomendadas)
+          (bind ?asigR (send (instance-address * ?asigRecom) get-AsigName))    
+          (if (eq (instance-name ?asigR) (instance-name ?asig))
+            then
+              (printout t "Aprobada la asignatura" ?asig crlf) ; DEBUG
+          )
+        )
+    ;(format t "Has sacado un %d en la asignatura %s " ?nota ?nAsig)
+    )
+  ) 
 )
