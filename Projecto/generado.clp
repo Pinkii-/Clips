@@ -1,6 +1,6 @@
 ;---------- Aqui empiezan las clases generadas por el protege ----------;
 
-; Thu May 14 21:44:25 GMT+01:00 2015
+; Thu May 14 21:47:23 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -307,7 +307,7 @@
 	(role concrete))
 ;-------- Aqui empiezan las instancias generadas por el protege --------;
 (definstances instances
-; Thu May 14 21:44:25 GMT+01:00 2015
+; Thu May 14 21:47:23 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -1087,11 +1087,13 @@
   (bind ?dni (pregunta-general "Cual es su dni (unicamente los numeros)"))
   (assert (estudianteRand ?dni))
   (assert (tengoputodni))
+  (assert (noIdeaQuienEs))
 )
 
-; Mirar si el estudiante identificado por el dni introducido existe
+;Mirar si el estudiante identificado por el dni introducido existe
 (defrule buscar-estudiante
   (declare (salience 1))
+  ?z <-(noIdeaQuienEs)
   ?x <- (estudianteRand ?dni)
   ?t <- (object (is-a Alumno) (DNI ?dni) (Nombre ?name))
   =>
@@ -1111,13 +1113,15 @@
       (send (instance-address * ?c) delete)
     )
     (send ?muerto delete)
-  )
+  ) 
   (retract ?x)
+  (retract ?z)
 )
 
 ; Si no existe, a iorar
 (defrule estudiate-random
   (declare (salience -1))
+  (noIdeaQuienEs)
   (estudianteRand ?dni)
   =>
   (format t "No hay ni ha habido ningun estudiandte con el dni %d." ?dni)
@@ -1126,6 +1130,7 @@
 
 ; Preguntar por la carga de trabajo asumible
 (defrule pregunta-carga
+  (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
   =>
   (bind ?respuesta (pregunta "Que carga de trabajo quieres asumir" alto medio bajo np))
@@ -1135,6 +1140,7 @@
 
 ; Preguntar por la dificultad asumible
 (defrule pregunta-dificultad
+  (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
   =>
   (bind ?respuesta (pregunta "Que dificultad quieres asumir" alto medio bajo np))
@@ -1144,6 +1150,7 @@
 
 ; Mira si ya hemos hecho todas las preguntas
 (defrule preguntas-acabadas
+  (not (noIdeaQuienEs))
   ?a <- (pdificultad)
   ?b <- (pcarga)
   ?alumno <- (object (is-a Alumno))
@@ -1176,12 +1183,12 @@
 )
 
 ; Todas las asignaturas son posibles inicialmente
-(defrule anadir-asignaturas
+(defrule quitar-imposibles::anadir-asignaturas
   (declare (salience 10))
   =>
   (bind $?lista (find-all-instances ((?inst Asignatura)) TRUE))
   (progn$ (?curr-con ?lista)
-    (make-instance (gensym) of AsignaturaRecomendada (AsigName ?curr-con))
+    (make-instance (gensym) of AsignaturaRecomendada (AsigName ?curr-con) (Motivos "olo") (Puntuacion 0))
   )
 )
 
@@ -1189,15 +1196,8 @@
 (defrule quitar-asignaturas-aprovadas
   ?r <- (object (is-a AsignaturaRecomendada) (AsigName ?asig1))
   ?c <- (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2))
-  ; (test (eq (instance-name  ?asig1) (instance-name ?asig2)))
+  (test (eq (send ?asig1 get-Nombre) (send (instance-address * ?asig2) get-Nombre)))
   =>
-  (bind ?n1 (send (instance-address * ?asig1) get-Nombre))
-  (bind ?n2 (send (instance-address * ?asig2) get-Nombre))
-  (if (eq ?n1 ?n2)
-    then
-    (printout t "olakase" crlf)
+    (printout t "La asignatura " (send ?asig1 get-Nombre) " se descarta porque está aprovada" crlf)
     (send ?r delete)
-    else
-    (printout t "olakaseasdas" crlf)
-    )
 )
