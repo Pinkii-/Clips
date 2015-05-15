@@ -1,6 +1,6 @@
 # Clips
 
-./sh refrehOnto.sh
+./sh refrehsOnto.sh
 
 (reset)
 
