@@ -1281,18 +1281,21 @@
 )
 
 (defrule pregunta-dni
+  (declare (salience 10))
   (not (tengoputodni))
   =>
   (bind ?dni (pregunta-general "Cual es su dni (unicamente los numeros)"))
   (assert (estudianteRand ?dni))
   (assert (tengoputodni))
   (assert (noIdeaQuienEs))
+  (assert (miraQuienEs))
 )
 
 ;Mirar si el estudiante identificado por el dni introducido existe
 (defrule buscar-estudiante
   (declare (salience 1))
-  ?z <-(noIdeaQuienEs)
+  ?z <- (noIdeaQuienEs)
+  ?y <- (miraQuienEs)
   ?x <- (estudianteRand ?dni)
   ?t <- (object (is-a Alumno) (DNI ?dni) (Nombre ?name))
   =>
@@ -1320,11 +1323,15 @@
 ; Si no existe, a iorar
 (defrule estudiate-random
   (declare (salience -1))
-  (noIdeaQuienEs)
-  (estudianteRand ?dni)
+  ?z <- (tengoputodni)
+  ?y <- (noIdeaQuienEs)
+  ?x <- (estudianteRand ?dni)
   =>
   (format t "No hay ni ha habido ningun estudiandte con el dni %d." ?dni)
   (printout t "Llama a secretaria o Ha ver hestudiao" crlf)
+  (retract ?z)
+  (retract ?y)
+  (retract ?x)
 )
 
 ; Preguntar por la carga de trabajo asumible
@@ -1347,19 +1354,38 @@
   (assert (pdificultad))
 )
 
+; Preguntar por la dificultad asumible
+(defrule pregunta-numeroAsig
+  (not (noIdeaQuienEs))
+  ?alumno <- (object (is-a Alumno))
+  =>
+  (if (si-o-no-p "Quieres elegir el numero de asignatura que el sistema te recomendara")
+    then
+      (bind ?respuesta (pregunta "Cuantas asignaturas quieres cursar?" 1 2 3 4 5 6 7 ))
+      (send ?alumno put-NumeroAsignaturas ?respuesta)    
+    else      
+      (assert (calcularNasig))
+      (send ?alumno put-NumeroAsignaturas np)  
+  )
+  (assert (nAsig))
+)
+
 ; Mira si ya hemos hecho todas las preguntas
 (defrule preguntas-acabadas
   (not (noIdeaQuienEs))
   ?a <- (pdificultad)
   ?b <- (pcarga)
+  ?c <- (nAsig)
   ?alumno <- (object (is-a Alumno))
   =>
   (retract ?a)
   (retract ?b)
+  (retract ?c)
   (bind ?nombre (send ?alumno get-Nombre))
   (bind ?dni (send ?alumno get-DNI))
   (bind ?volumen (send ?alumno get-VolumenTrabajo))
   (bind ?dificultad (send ?alumno get-Dificultad))
+  (bind ?nAsignaturas (send ?alumno get-NumeroAsignaturas))
 
   (printout t "" crlf)
   (format t "Hola %s, %d  " ?nombre ?dni)
@@ -1368,6 +1394,9 @@
   (printout t "" crlf)
   (format t "Has elegido una dificultad: %s" ?dificultad)
   (printout t "" crlf)
+  (format t "Has decidido cursar: %s asignaturas" ?nAsignaturas)
+  (printout t "" crlf)
+  
 
 
   (printout t "" crlf)
@@ -1398,11 +1427,20 @@
 )
 
 ; TODO hacer una regla que calcule el numero de asignaturas que el alumno quiere hacer
+; Regla encargada de sacar el numero de asignaturas que suele hacer el alumno
+(defrule calcular-numero-asignaturas
+  ?a <- (calcularNasig)
+  ?alumno <- (object (is-a Alumno))
+  =>
+  (printout t "DEBUG: Como el alumno ha elegido np en el numero de asignaturas, lo calculamos nosotros" crlf) ; DEBUG
+  (send ?alumno put-NumeroAsignaturas 5)
+  (retract ?a)
+)
 
 (defrule pasar-a-calcular
   ?alumno <- (object (is-a Alumno) (VolumenTrabajo alto|medio|bajo) (Dificultad alto|medio|bajo))
+  (not (calcularNasig))
   =>
-  (send ?alumno put-NumeroAsignaturas 5)
   (focus quitar-imposibles)
 )
 

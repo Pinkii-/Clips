@@ -169,11 +169,10 @@
   =>
   (if (si-o-no-p "Quieres elegir el numero de asignatura que el sistema te recomendara")
     then
-      (bind ?respuesta (pregunta "Cuantas asignaturas quieres cursar?" 1 2 3 4 5 6 7 ))
+      (bind ?respuesta (pregunta "Cuantas asignaturas quieres cursar?" 1 2 3 4 5 6 7))
       (send ?alumno put-NumeroAsignaturas ?respuesta)    
     else      
       (assert (calcularNasig))
-      (send ?alumno put-NumeroAsignaturas np)  
   )
   (assert (nAsig))
 )
