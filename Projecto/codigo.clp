@@ -14,9 +14,9 @@
 
 (defmodule MAIN (export ?ALL))
 
-; Aquí van los mensage handlers, las funciones de pregunta
+; Aquí van los mensage handlers, las funciones de pregunta, los templates
 
-;;; Obtiene una respuesta del conjunto de posibles respuestas
+; Obtiene una respuesta del conjunto de posibles respuestas
 (deffunction pregunta (?pregunta $?valores-permitidos)
   (progn$ (?var ?valores-permitidos) (lowcase ?var))
   (format t "¿%s? (%s) " ?pregunta (implode$ ?valores-permitidos))
@@ -28,14 +28,14 @@
   ?respuesta
 )
 
-;;; Obtiene una respuesta 
+; Obtiene una respuesta 
 (deffunction pregunta-general (?pregunta)
   (format t "¿%s? " ?pregunta)
   (bind ?respuesta (read))
   ?respuesta
 )
 
-;;; Realiza una pregunta binaria
+; Realiza una pregunta binaria
 (deffunction si-o-no-p (?pregunta)
   (bind ?respuesta (pregunta ?pregunta si no s n))
   (if (or (eq (lowcase ?respuesta) si) (eq (lowcase ?respuesta) s))
@@ -43,6 +43,34 @@
     else FALSE
   )
 )
+
+
+; Template de lista de recomendaciones sin orden
+(deftemplate MAIN::lista-asig-desordenada
+  (multislot recomendaciones (type INSTANCE))
+)
+
+; Template de lista de recomendaciones con orden
+(deftemplate MAIN::lista-asig-ordenada
+  (multislot recomendaciones (type INSTANCE))
+)
+
+; Funcion que retorna el elemento con puntuacion maxima
+(deffunction max-puntuacion ($?lista)
+  (bind ?max -1)
+  (bind ?ret nil)
+  (progn$ (?elemento $?lista)
+    (bind ?puntuacion (send ?elemento get-Puntuacion))
+    (if (> ?puntuacion ?max)
+      then 
+      (bind ?max ?puntuacion)
+      (bind ?ret ?elemento)
+    )
+  )
+  ?ret
+)
+
+;
 
 (defrule olakase
   (declare (salience 10))
@@ -54,6 +82,7 @@
   (focus preguntas-preferencias)
 )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Nuevo modulo ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defmodule preguntas-preferencias "Modulo para conocer mejor al usuario"
   (import MAIN ?ALL)
   (export ?ALL)
@@ -82,11 +111,11 @@
     (bind ?convocatorias (send ?muerto get-Convocatorias))
     ; DEBUG
     (bind ?dnimuerto (send ?muerto get-DNI))
-    (printout t "Borrando el alumno " ?dnimuerto crlf)
+    (printout t "DEBUG: Borrando el alumno " ?dnimuerto crlf)
     ; \DEBUG
     (progn$ (?c $?convocatorias)
       ; DEBUG
-    (printout t "Borrando Convocatoria" crlf)
+    (printout t "DEBUG: Borrando Convocatoria" crlf)
     ; \DEBUG
       (send (instance-address * ?c) delete)
     )
@@ -103,7 +132,7 @@
   (estudianteRand ?dni)
   =>
   (format t "No hay ni ha habido ningun estudiandte con el dni %d." ?dni)
-  (printout t "Ha ver hestudiao" crlf)
+  (printout t "Llama a secretaria o Ha ver hestudiao" crlf)
 )
 
 ; Preguntar por la carga de trabajo asumible
@@ -151,17 +180,48 @@
 
   (printout t "" crlf)
   (printout t "Empezamos a calcular tus mejores opciones para asignaturas" crlf crlf)
+  (focus calcular-preferencias)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Nuevo modulo ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defmodule calcular-preferencias "Modulo encargado de calcular las preferencias que no nos dice el usuario"
+  (import MAIN ?ALL)
+  (export ?ALL)
+)
+
+;Funcion encargada de calcular el volumen de trabajo a partir de las ultimas convocatorias
+(defrule calcular-volumen ; TODO hacer que haga algo inteligente
+  ?alumno <- (object (is-a Alumno) (VolumenTrabajo np))
+  =>
+  (printout t "DEBUG: Como el alumno ha elegido np en  el volumen de trabajo, lo calculamos nosotros" crlf) ; DEBUG
+  (send ?alumno put-VolumenTrabajo alto)
+)
+
+;Funcion encargada de calcular la dificultad asumible a partir de las ultimas convocatorias
+(defrule calcular-dificultad ; TODO hacer que haga algo inteligente
+  ?alumno <- (object (is-a Alumno) (Dificultad np))
+  =>
+  (printout t "DEBUG: Como el alumno ha elegido np en la eleccion de dificultad, lo calculamos nosotros" crlf) ; DEBUG
+  (send ?alumno put-Dificultad alto)
+)
+
+; TODO hacer una regla que calcule el numero de asignaturas que el alumno quiere hacer
+
+(defrule pasar-a-calcular
+  ?alumno <- (object (is-a Alumno) (VolumenTrabajo alto|medio|bajo) (Dificultad alto|medio|bajo))
+  =>
+  (send ?alumno put-NumeroAsignaturas 5)
   (focus quitar-imposibles)
 )
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Nuevo modulo ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defmodule quitar-imposibles "Modulo encargado de seleccionar las asignaturas posibles"
   (import MAIN ?ALL)
   (export ?ALL)
 )
 
 ; Todas las asignaturas son posibles inicialmente
-(defrule quitar-imposibles::anadir-asignaturas
+(defrule anadir-asignaturas
   (declare (salience 10))
   =>
   (bind $?lista (find-all-instances ((?inst Asignatura)) TRUE))
@@ -173,9 +233,94 @@
 ; Quita las asignaturas que ya están aprovadas
 (defrule quitar-asignaturas-aprovadas
   ?r <- (object (is-a AsignaturaRecomendada) (AsigName ?asig1))
-  ?c <- (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2))
+  ?c <- (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2) (Nota ?nota&:(> ?nota 4.99)))
   (test (eq (send ?asig1 get-Nombre) (send (instance-address * ?asig2) get-Nombre)))
   =>
-    (printout t "La asignatura " (send ?asig1 get-Nombre) " se descarta porque está aprovada" crlf)
+    (printout t "DEBUG: La asignatura " (send ?asig1 get-Nombre) " se descarta con nota " ?nota crlf)
     (send ?r delete)
+)
+
+; TODO hacer regla que quite las asignaturas que tengan un volumen de trabajo mayor al asumible
+; TODO hacer regla que quite las asignaturas que tengan una dificultad mayor a la asumible
+; TODO hacer regla que quite las asignaturas con prerrequisitos que no cumple (se haga de lo ultimo)
+
+
+(defrule saltar-a-calculo
+  (declare (salience -10))
+  =>
+  (printout t "Ha acabado de quitar asignaturas imposibles" crlf)
+  (focus calcular)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Nuevo modulo ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defmodule calcular "Modulo encargado de darle mas puntos a las asignaturas mas afines con el usuario"
+  (import MAIN ?ALL)
+  (export ?ALL)
+)
+; TODO Hacer este modulo entero huehue
+; TODO Hacer regla que le de puntos a las asignaturas (suspendidas el ultimo cuatrimestre | no aprovadas)
+
+
+
+(defrule saltar-a-presentacion
+  (declare (salience -10))
+  =>
+  (printout t "Ha acabado de buscar las mejores asignaturas solo para ti." crlf)
+  (focus ordenar-e-imprimir)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Nuevo modulo ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defmodule ordenar-e-imprimir "Modulo encargado de presentar la solucion al usuario"
+  (import MAIN ?ALL)
+  (export ?ALL)
+)
+; Inicializa la lista desordenada
+(defrule crear-desordenada
+  (not (lista-asig-desordenada))
+  =>
+  (assert (lista-asig-desordenada))
+  (printout t "DEBUG: creando lista desordenada." crlf)
+)
+
+(defrule insertar-asignaturas
+  ?asigrec <- (object (is-a AsignaturaRecomendada))
+  ?desor <- (lista-asig-desordenada (recomendaciones $?l))
+  (test (not (member$ ?asigrec $?l)))
+  =>
+  (bind $?l (insert$ $?l (+ (length$ $?l) 1) ?asigrec))
+  (modify ?desor (recomendaciones $?l))
+  (printout t "DEBUG: insertando asignaturas en lista desordenada." crlf)
+)
+
+; Regla que ordena la lista desordenada
+(defrule ordenar
+  (declare (salience -5))
+  (not (lista-asig-ordenada))
+  (lista-asig-desordenada (recomendaciones $?l))
+  (object (is-a Alumno) (NumeroAsignaturas ?n))
+  =>
+  (bind $?r (create$))
+  (while (and (< (length$ $?r) (+ ?n 1)) (not (eq (length$ $?l) 0)))
+    (bind ?elemento (max-puntuacion $?l))
+    (bind $?l (delete-member$ $?l ?elemento))
+    (bind $?r (insert$ $?r (+ (length $?r) 1) ?elemento))
+  )
+  (assert (lista-asig-ordenada (recomendaciones $?r)))
+  (printout t "DEBUG: ordenado." crlf)
+)
+
+
+; regla encargada de imprimir la solucion
+(defrule imprimir ; TODO Hacer que se imprima de una manera bonita :D
+  (object (is-a Alumno) (Nombre ?nombre))
+  (lista-asig-ordenada (recomendaciones $?l))
+  =>
+  (printout t "Hola " ?nombre ". Aqui tienes tu recomendacion" crlf)
+  (progn$ (?asigRec $?l)
+    (bind ?asig (send ?asigRec get-AsigName))
+    (printout t "=======================================" crlf)
+    (printout t "Nombre: " (send ?asig get-Nombre) crlf)
+    (printout t "Puntuacion: " (send ?asigRec get-Puntuacion) crlf)
+    (printout t "Razones: " (send ?asigRec get-Motivos) crlf)
+  )
 )

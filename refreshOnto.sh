@@ -7,6 +7,8 @@ echo "" >> Projecto/generado.clp
 echo ";-------- Aqui empiezan las instancias generadas por el protege --------;" >> Projecto/generado.clp
 
 echo "(definstances instances" >> Projecto/generado.clp
+cp test.pins testMAIN.pins
+sed -i 's/\[/\[MAIN::/g' testMAIN.pins
 cat test.pins >> Projecto/generado.clp
 echo ")" >> Projecto/generado.clp
 

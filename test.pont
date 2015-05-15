@@ -1,4 +1,4 @@
-; Thu May 14 21:47:23 GMT+01:00 2015
+; Fri May 15 14:29:16 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -84,6 +84,10 @@
 ;+		(comment "Numero de alumnos matriculados.")
 		(type INTEGER)
 		(range 0 1000)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot NumeroAsignaturas
+		(type INTEGER)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Puntuacion
@@ -196,6 +200,10 @@
 (defclass Alumno
 	(is-a USER)
 	(role concrete)
+	(single-slot NumeroAsignaturas
+		(type INTEGER)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(single-slot VolumenTrabajo
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
