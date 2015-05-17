@@ -1,6 +1,6 @@
 ;---------- Aqui empiezan las clases generadas por el protege ----------;
 
-; Sun May 17 12:57:40 GMT+01:00 2015
+; Sun May 17 21:14:35 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -19,14 +19,14 @@
 ;+		(allowed-classes Especialidad)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot AlumnoRecomendado
-		(type INSTANCE)
-;+		(allowed-classes Alumno)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot PrctAprobado
 		(type INTEGER)
 		(range 0 100)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot AlumnoRecomendado
+		(type INSTANCE)
+;+		(allowed-classes Alumno)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Descripcion
@@ -129,16 +129,16 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(single-slot HorarioAsig
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
 		(default np)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot HorarioAsig
-		(type INSTANCE)
-;+		(allowed-classes Horario)
-;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot ModalidadAsig
 		(type INSTANCE)
@@ -331,7 +331,7 @@
 	(role concrete))
 ;-------- Aqui empiezan las instancias generadas por el protege --------;
 (definstances instances
-; Sun May 17 12:57:40 GMT+01:00 2015
+; Sun May 17 21:14:35 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -451,16 +451,18 @@
 	(PreRequesit [ontologia_Class20001])
 	(VolumenTrabajo medio))
 
-([ontologia_Class30001] of  Alumno
+([ontologia_Class30000] of  Alumno
 
 	(Convocatorias
-		[ontologia_Class50002]
 		[ontologia_Class50003]
-		[ontologia_Class50004]
+		[ontologia_Class50002]
 		[ontologia_Class50006]
+		[ontologia_Class50004]
 		[ontologia_Class50007])
+	(Dificultad np)
 	(DNI 1)
-	(Nombre "ULTRA FAST DNI"))
+	(Nombre "ULTRA FAST DNI")
+	(VolumenTrabajo np))
 
 ([ontologia_Class30002] of  OptativaEspecial
 
@@ -1475,7 +1477,7 @@
 
 ; ==================HECHO DESDE LA ULTIMA ITERACION===============================
 ; Si el alumno le faltan asignaturas obligatorias por aprovar, +1000 a esas asig
-;
+; El sistema pregunta por la especialidad que prefiere el alumno
 ;
 ;
 ;
@@ -1605,14 +1607,9 @@
   (bind ?estudiantes (find-all-instances ((?inst Alumno)) (neq ?inst:DNI ?dni)))
   (progn$ (?muerto $?estudiantes)
     (bind ?convocatorias (send ?muerto get-Convocatorias))
-    ; DEBUG
-    (bind ?dnimuerto (send ?muerto get-DNI))
-    (printout t "DEBUG: Borrando el alumno " ?dnimuerto crlf)
-    ; \DEBUG
+    (printout t "DEBUG: Borrando el alumno " (send ?muerto get-DNI) crlf)
     (progn$ (?c $?convocatorias)
-      ; DEBUG
-    (printout t "DEBUG: Borrando Convocatoria" crlf)
-    ; \DEBUG
+      (printout t "DEBUG: Borrando Convocatoria" crlf)
       (send (instance-address * ?c) delete)
     )
     (send ?muerto delete)
@@ -1678,7 +1675,7 @@
     then
       (bind ?respuesta (pregunta "Cual" AC Comp ES SI TI))
       (switch ?respuesta
-        (case "ac" then 
+        (case ac then 
           (bind ?especialidad (find-instance ((?inst Esp_AC)) TRUE))
           (send ?alumno put-EspecialidadPref ?especialidad)
         )
@@ -1953,6 +1950,22 @@
   (send ?asigRec put-Motivos ?m)
   (assert (asignatura-obligatoria ?asig))
   (printout t "DEBUG: +1000 La asignaura " (send ?asig get-Nombre) " es obligatoria y no esta aprovada" crlf)
+)
+
+; Regla que le da puntos a las asignaturas de la especialidad preferida
+(defrule asignaturas-especialidad
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
+  (object (is-a Alumno) (EspecialidadPref ?especialidad))
+  (test (eq (send (instance-address * (send ?asig get-ModalidadAsig)) get-Descripcion) (send ?especialidad get-Descripcion)))
+  (not (asignatura-especialidad ?asig))
+  =>
+  (bind ?p (+ ?p 400))
+  (bind ?motivo (str-cat "La asignatura es de la especilidad " (send ?especialidad get-Descripcion )" y obligatoria +400"))
+  (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+  (send ?asigRec put-Puntuacion ?p)
+  (send ?asigRec put-Motivos ?m)
+  (assert (asignatura-especialidad ?asig))
+  (printout t "DEBUG: +400 La asignaura " (send ?asig get-Nombre) " es de la especialidad preferida del usuario" crlf)  
 )
 
 

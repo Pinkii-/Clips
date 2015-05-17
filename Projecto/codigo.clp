@@ -1,8 +1,8 @@
 
 ; ==================HECHO DESDE LA ULTIMA ITERACION===============================
-; Si el alumno le faltan asignaturas obligatorias por aprovar, +1000 a esas asig
+; Si el alumno le faltan asignaturas obligatorias por aprobar, +1000 a esas asig
 ; El sistema pregunta por la especialidad que prefiere el alumno
-;
+; Si al alumno le faltan asignatura obligatorias de especialidad por aprobar, +400
 ;
 ;
 ;=================================================================================
@@ -199,7 +199,7 @@
     then
       (bind ?respuesta (pregunta "Cual" AC Comp ES SI TI))
       (switch ?respuesta
-        (case "ac" then 
+        (case ac then 
           (bind ?especialidad (find-instance ((?inst Esp_AC)) TRUE))
           (send ?alumno put-EspecialidadPref ?especialidad)
         )
@@ -474,6 +474,22 @@
   (send ?asigRec put-Motivos ?m)
   (assert (asignatura-obligatoria ?asig))
   (printout t "DEBUG: +1000 La asignaura " (send ?asig get-Nombre) " es obligatoria y no esta aprovada" crlf)
+)
+
+; Regla que le da puntos a las asignaturas de la especialidad preferida
+(defrule asignaturas-especialidad
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
+  (object (is-a Alumno) (EspecialidadPref ?especialidad))
+  (test (eq (send (instance-address * (send ?asig get-ModalidadAsig)) get-Descripcion) (send ?especialidad get-Descripcion)))
+  (not (asignatura-especialidad ?asig))
+  =>
+  (bind ?p (+ ?p 400))
+  (bind ?motivo (str-cat "La asignatura es de la especilidad " (send ?especialidad get-Descripcion )" y obligatoria +400"))
+  (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+  (send ?asigRec put-Puntuacion ?p)
+  (send ?asigRec put-Motivos ?m)
+  (assert (asignatura-especialidad ?asig))
+  (printout t "DEBUG: +400 La asignaura " (send ?asig get-Nombre) " es de la especialidad preferida del usuario" crlf)  
 )
 
 

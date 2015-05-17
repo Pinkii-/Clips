@@ -1,4 +1,4 @@
-; Sun May 17 12:57:40 GMT+01:00 2015
+; Sun May 17 21:14:35 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -118,16 +118,18 @@
 	(PreRequesit [MAIN::ontologia_Class20001])
 	(VolumenTrabajo medio))
 
-([MAIN::ontologia_Class30001] of  Alumno
+([MAIN::ontologia_Class30000] of  Alumno
 
 	(Convocatorias
-		[MAIN::ontologia_Class50002]
 		[MAIN::ontologia_Class50003]
-		[MAIN::ontologia_Class50004]
+		[MAIN::ontologia_Class50002]
 		[MAIN::ontologia_Class50006]
+		[MAIN::ontologia_Class50004]
 		[MAIN::ontologia_Class50007])
+	(Dificultad np)
 	(DNI 1)
-	(Nombre "ULTRA FAST DNI"))
+	(Nombre "ULTRA FAST DNI")
+	(VolumenTrabajo np))
 
 ([MAIN::ontologia_Class30002] of  OptativaEspecial
 
