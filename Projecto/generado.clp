@@ -1,6 +1,6 @@
 ;---------- Aqui empiezan las clases generadas por el protege ----------;
 
-; Sun May 17 01:31:34 GMT+01:00 2015
+; Sun May 17 02:09:40 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -321,7 +321,7 @@
 	(role concrete))
 ;-------- Aqui empiezan las instancias generadas por el protege --------;
 (definstances instances
-; Sun May 17 01:31:34 GMT+01:00 2015
+; Sun May 17 02:09:40 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -375,15 +375,33 @@
 	(AsignaturaMatriculada [ontologia_Class0])
 	(Cuatrimestre 1)
 	(HorarioAsig [ontologia_Class10002])
-	(Nota 8.5))
+	(Nota 8.0))
 
 ([ontologia_Class10016] of  Alumno
 
 	(Convocatorias
 		[ontologia_Class10008]
-		[ontologia_Class20003])
+		[ontologia_Class20003]
+		[ontologia_Class20000]
+		[ontologia_Class40001]
+		[ontologia_Class60002]
+		[ontologia_Class60003]
+		[ontologia_Class60004]
+		[ontologia_Class60005]
+		[ontologia_Class60006]
+		[ontologia_Class60007]
+		[ontologia_Class60008]
+		[ontologia_Class60009]
+		[ontologia_Class60010])
 	(DNI 47254514)
 	(Nombre "Gonzalo Diez"))
+
+([ontologia_Class20000] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20001])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 8.1))
 
 ([ontologia_Class20001] of  Asignatura
 
@@ -590,6 +608,13 @@
 		[ontologia_Class30008]
 		[ontologia_Class30010])
 	(VolumenTrabajo np))
+
+([ontologia_Class40001] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class10000])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 7.4))
 
 ([ontologia_Class40002] of  Asignatura
 
@@ -1370,6 +1395,69 @@
 	(Nombre "CPD")
 	(PreRequesit [ontologia_Class30015])
 	(VolumenTrabajo np))
+
+([ontologia_Class60002] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20004])
+	(Cuatrimestre 2)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 7.0))
+
+([ontologia_Class60003] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30003])
+	(Cuatrimestre 2)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.9))
+
+([ontologia_Class60004] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30004])
+	(Cuatrimestre 2)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.0))
+
+([ontologia_Class60005] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30005])
+	(Cuatrimestre 2)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.0))
+
+([ontologia_Class60006] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30008])
+	(Cuatrimestre 3)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.1))
+
+([ontologia_Class60007] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30007])
+	(Cuatrimestre 3)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.4))
+
+([ontologia_Class60008] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30009])
+	(Cuatrimestre 3)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.8))
+
+([ontologia_Class60009] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30006])
+	(Cuatrimestre 3)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.0))
+
+([ontologia_Class60010] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30010])
+	(Cuatrimestre 3)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 4.5))
 )
 
 ;------------------ Aqui empieza el sistema experto --------------------;

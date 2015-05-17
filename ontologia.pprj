@@ -1,4 +1,4 @@
-; Sun May 17 01:31:22 GMT+01:00 2015
+; Sun May 17 02:09:28 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -21,14 +21,14 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[ontologia_ProjectKB_Class20172]
-		[ontologia_ProjectKB_Class20173]
-		[ontologia_ProjectKB_Class20174]
-		[ontologia_ProjectKB_Class20175]
-		[ontologia_ProjectKB_Class20176]
-		[ontologia_ProjectKB_Class20177]
-		[ontologia_ProjectKB_Class20178]
-		[ontologia_ProjectKB_Class20179]))
+		[ontologia_ProjectKB_Class20197]
+		[ontologia_ProjectKB_Class20198]
+		[ontologia_ProjectKB_Class20199]
+		[ontologia_ProjectKB_Class20200]
+		[ontologia_ProjectKB_Class20201]
+		[ontologia_ProjectKB_Class20202]
+		[ontologia_ProjectKB_Class20203]
+		[ontologia_ProjectKB_Class20204]))
 
 ([CLSES_TAB] of  Widget
 
@@ -80,8 +80,8 @@
 
 ([KB_893930_Class1] of  Map
 
-	(entries [ontologia_ProjectKB_Class20181])
-	(referenced_maps [ontologia_ProjectKB_Class20180]))
+	(entries [ontologia_ProjectKB_Class20206])
+	(referenced_maps [ontologia_ProjectKB_Class20205]))
 
 ([KB_893930_Class100] of  Property_List
 )
@@ -267,54 +267,54 @@
 ([ontologia_ProjectKB_Class20084] of  Property_List
 )
 
-([ontologia_ProjectKB_Class20172] of  String
+([ontologia_ProjectKB_Class20197] of  String
 
 	(name "Convocatoria")
 	(string_value "AsignaturaMatriculada{+Qt+}Cuatrimestre{+Nota+}Nota"))
 
-([ontologia_ProjectKB_Class20173] of  String
+([ontologia_ProjectKB_Class20198] of  String
 
 	(name "Horario")
 	(string_value "Descripcion"))
 
-([ontologia_ProjectKB_Class20174] of  String
+([ontologia_ProjectKB_Class20199] of  String
 
 	(name ":INSTANCE-ANNOTATION")
 	(string_value "%3AANNOTATION-TEXT"))
 
-([ontologia_ProjectKB_Class20175] of  String
+([ontologia_ProjectKB_Class20200] of  String
 
 	(name "Modalidad")
 	(string_value "Descripcion"))
 
-([ontologia_ProjectKB_Class20176] of  String
+([ontologia_ProjectKB_Class20201] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
 
-([ontologia_ProjectKB_Class20177] of  String
+([ontologia_ProjectKB_Class20202] of  String
 
 	(name "Alumno")
 	(string_value "Nombre{+}DNI"))
 
-([ontologia_ProjectKB_Class20178] of  String
+([ontologia_ProjectKB_Class20203] of  String
 
 	(name "Asignatura")
 	(string_value "Nombre"))
 
-([ontologia_ProjectKB_Class20179] of  String
+([ontologia_ProjectKB_Class20204] of  String
 
 	(name ":PAL-CONSTRAINT")
 	(string_value "%3APAL-NAME"))
 
-([ontologia_ProjectKB_Class20180] of  Map
+([ontologia_ProjectKB_Class20205] of  Map
 )
 
-([ontologia_ProjectKB_Class20181] of  Map_Entry
+([ontologia_ProjectKB_Class20206] of  Map_Entry
 
 	(key "InstanceDisplay.yellow_stickies")
 	(key_class "java.lang.String")
-	(value "ontologia_ProjectKB_Class20180")
+	(value "ontologia_ProjectKB_Class20205")
 	(value_class "java.util.Map"))
 
 ([ontologia_ProjectKB_Class21] of  Widget
