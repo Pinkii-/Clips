@@ -1,4 +1,4 @@
-; Sun May 17 02:09:28 GMT+01:00 2015
+; Sun May 17 12:57:28 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -21,14 +21,14 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[ontologia_ProjectKB_Class20197]
-		[ontologia_ProjectKB_Class20198]
-		[ontologia_ProjectKB_Class20199]
-		[ontologia_ProjectKB_Class20200]
-		[ontologia_ProjectKB_Class20201]
-		[ontologia_ProjectKB_Class20202]
-		[ontologia_ProjectKB_Class20203]
-		[ontologia_ProjectKB_Class20204]))
+		[ontologia_ProjectKB_Class20133]
+		[ontologia_ProjectKB_Class20134]
+		[ontologia_ProjectKB_Class20135]
+		[ontologia_ProjectKB_Class20136]
+		[ontologia_ProjectKB_Class20137]
+		[ontologia_ProjectKB_Class20138]
+		[ontologia_ProjectKB_Class20139]
+		[ontologia_ProjectKB_Class20140]))
 
 ([CLSES_TAB] of  Widget
 
@@ -70,7 +70,7 @@
 
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
 
-([KB_684206_Class2] of  Map
+([KB_724924_Class2] of  Map
 )
 
 ([KB_893930_Class0] of  String
@@ -80,8 +80,8 @@
 
 ([KB_893930_Class1] of  Map
 
-	(entries [ontologia_ProjectKB_Class20206])
-	(referenced_maps [ontologia_ProjectKB_Class20205]))
+	(entries [ontologia_ProjectKB_Class20142])
+	(referenced_maps [ontologia_ProjectKB_Class20141]))
 
 ([KB_893930_Class100] of  Property_List
 )
@@ -267,54 +267,95 @@
 ([ontologia_ProjectKB_Class20084] of  Property_List
 )
 
-([ontologia_ProjectKB_Class20197] of  String
+([ontologia_ProjectKB_Class20127] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "EspecialidadPref")
+	(property_list [ontologia_ProjectKB_Class20128])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 200)
+	(x 0)
+	(y 420))
+
+([ontologia_ProjectKB_Class20128] of  Property_List
+)
+
+([ontologia_ProjectKB_Class20129] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "EspecialidadPref")
+	(property_list [ontologia_ProjectKB_Class20130])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 200)
+	(x 0)
+	(y 420))
+
+([ontologia_ProjectKB_Class20130] of  Property_List
+
+	(properties
+		[ontologia_ProjectKB_Class20131]
+		[ontologia_ProjectKB_Class20132]))
+
+([ontologia_ProjectKB_Class20131] of  Boolean
+
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-View References to Value"))
+
+([ontologia_ProjectKB_Class20132] of  Boolean
+
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([ontologia_ProjectKB_Class20133] of  String
 
 	(name "Convocatoria")
 	(string_value "AsignaturaMatriculada{+Qt+}Cuatrimestre{+Nota+}Nota"))
 
-([ontologia_ProjectKB_Class20198] of  String
+([ontologia_ProjectKB_Class20134] of  String
 
 	(name "Horario")
 	(string_value "Descripcion"))
 
-([ontologia_ProjectKB_Class20199] of  String
+([ontologia_ProjectKB_Class20135] of  String
 
 	(name ":INSTANCE-ANNOTATION")
 	(string_value "%3AANNOTATION-TEXT"))
 
-([ontologia_ProjectKB_Class20200] of  String
-
-	(name "Modalidad")
-	(string_value "Descripcion"))
-
-([ontologia_ProjectKB_Class20201] of  String
+([ontologia_ProjectKB_Class20136] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
 
-([ontologia_ProjectKB_Class20202] of  String
+([ontologia_ProjectKB_Class20137] of  String
+
+	(name "Modalidad")
+	(string_value "Descripcion"))
+
+([ontologia_ProjectKB_Class20138] of  String
 
 	(name "Alumno")
 	(string_value "Nombre{+}DNI"))
 
-([ontologia_ProjectKB_Class20203] of  String
+([ontologia_ProjectKB_Class20139] of  String
 
 	(name "Asignatura")
 	(string_value "Nombre"))
 
-([ontologia_ProjectKB_Class20204] of  String
+([ontologia_ProjectKB_Class20140] of  String
 
 	(name ":PAL-CONSTRAINT")
 	(string_value "%3APAL-NAME"))
 
-([ontologia_ProjectKB_Class20205] of  Map
+([ontologia_ProjectKB_Class20141] of  Map
 )
 
-([ontologia_ProjectKB_Class20206] of  Map_Entry
+([ontologia_ProjectKB_Class20142] of  Map_Entry
 
 	(key "InstanceDisplay.yellow_stickies")
 	(key_class "java.lang.String")
-	(value "ontologia_ProjectKB_Class20205")
+	(value "ontologia_ProjectKB_Class20141")
 	(value_class "java.util.Map"))
 
 ([ontologia_ProjectKB_Class21] of  Widget
@@ -667,7 +708,8 @@
 		[ontologia_ProjectKB_Class30167]
 		[ontologia_ProjectKB_Class30171]
 		[ontologia_ProjectKB_Class10087]
-		[ontologia_ProjectKB_Class20083]))
+		[ontologia_ProjectKB_Class20083]
+		[ontologia_ProjectKB_Class20129]))
 
 ([ontologia_ProjectKB_Class85] of  Property_List
 

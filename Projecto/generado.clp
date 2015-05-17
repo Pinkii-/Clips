@@ -1,6 +1,6 @@
 ;---------- Aqui empiezan las clases generadas por el protege ----------;
 
-; Sun May 17 02:09:40 GMT+01:00 2015
+; Sun May 17 12:57:40 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -14,14 +14,19 @@
 ;+		(allowed-classes Asignatura)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot PrctAprobado
-		(type INTEGER)
-		(range 0 100)
+	(single-slot EspecialidadPref
+		(type INSTANCE)
+;+		(allowed-classes Especialidad)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot AlumnoRecomendado
 		(type INSTANCE)
 ;+		(allowed-classes Alumno)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot PrctAprobado
+		(type INTEGER)
+		(range 0 100)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Descripcion
@@ -124,16 +129,16 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot HorarioAsig
-		(type INSTANCE)
-;+		(allowed-classes Horario)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
 		(default np)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot HorarioAsig
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot ModalidadAsig
 		(type INSTANCE)
@@ -227,6 +232,11 @@
 ;+		(allowed-classes Convocatoria)
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
+	(single-slot EspecialidadPref
+		(type INSTANCE)
+;+		(allowed-classes Especialidad)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(single-slot Nombre
 		(type STRING)
 ;+		(cardinality 1 1)
@@ -238,7 +248,7 @@
 
 (defclass Horario
 	(is-a USER)
-	(role abstract)
+	(role concrete)
 	(single-slot Descripcion
 		(type STRING)
 ;+		(cardinality 0 1)
@@ -258,7 +268,7 @@
 
 (defclass Modalidad
 	(is-a USER)
-	(role abstract)
+	(role concrete)
 	(single-slot Descripcion
 		(type STRING)
 ;+		(cardinality 0 1)
@@ -321,7 +331,7 @@
 	(role concrete))
 ;-------- Aqui empiezan las instancias generadas por el protege --------;
 (definstances instances
-; Sun May 17 02:09:40 GMT+01:00 2015
+; Sun May 17 12:57:40 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -1463,7 +1473,13 @@
 ;------------------ Aqui empieza el sistema experto --------------------;
 
 
-
+; ==================HECHO DESDE LA ULTIMA ITERACION===============================
+; Si el alumno le faltan asignaturas obligatorias por aprovar, +1000 a esas asig
+;
+;
+;
+;
+;=================================================================================
 ;str-cat = string concat
 
 ;progn$ (?elemento ?lista) (cosa a aplicar)
@@ -1482,10 +1498,13 @@
 
 ; Obtiene una respuesta del conjunto de posibles respuestas
 (deffunction pregunta (?pregunta $?valores-permitidos)
-  (progn$ (?var ?valores-permitidos) (lowcase ?var))
+  (bind $?lowcase-valores (create$))
+  (progn$ (?var ?valores-permitidos) 
+    (bind $?lowcase-valores (insert$ $?lowcase-valores (+ (length $?lowcase-valores) 1) (lowcase ?var)))
+  )
   (format t "¿%s? (%s) " ?pregunta (implode$ ?valores-permitidos))
   (bind ?respuesta (read))
-  (while (not (member (lowcase ?respuesta) ?valores-permitidos)) do
+  (while (not (member (lowcase ?respuesta) ?lowcase-valores)) do
     (format t "¿%s? (%s) " ?pregunta (implode$ ?valores-permitidos))
     (bind ?respuesta (read))
   )
@@ -1621,7 +1640,7 @@
   (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
   =>
-  (bind ?respuesta (pregunta "Que carga de trabajo quieres asumir" alto medio bajo np))
+  (bind ?respuesta (pregunta "Que carga de trabajo quieres asumir" Alto Medio Bajo np))
   (send ?alumno put-VolumenTrabajo ?respuesta)
   (assert (pcarga))
 )
@@ -1631,7 +1650,7 @@
   (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
   =>
-  (bind ?respuesta (pregunta "Que dificultad quieres asumir" alto medio bajo np))
+  (bind ?respuesta (pregunta "Que dificultad quieres asumir" Alto Medio Bajo np))
   (send ?alumno put-Dificultad ?respuesta)
   (assert (pdificultad))
 )
@@ -1651,12 +1670,48 @@
   (assert (nAsig))
 )
 
+(defrule pregunta-especialidad
+  (not (noIdeaQuienEs))
+  ?alumno <- (object (is-a Alumno))
+  =>
+  (if (si-o-no-p "Tienes preferencia por alguna especialidad")
+    then
+      (bind ?respuesta (pregunta "Cual" AC Comp ES SI TI))
+      (switch ?respuesta
+        (case "ac" then 
+          (bind ?especialidad (find-instance ((?inst Esp_AC)) TRUE))
+          (send ?alumno put-EspecialidadPref ?especialidad)
+        )
+        (case comp then
+          (bind ?especialidad (find-instance ((?inst Esp_Comp)) TRUE))
+          (send ?alumno put-EspecialidadPref ?especialidad)
+        )
+        (case es then
+          (bind ?especialidad (find-instance ((?inst Esp_ES)) TRUE))
+          (send ?alumno put-EspecialidadPref ?especialidad)
+        )
+        (case si then
+          (bind ?especialidad (find-instance ((?inst Esp_SI)) TRUE))
+          (send ?alumno put-EspecialidadPref ?especialidad)
+        )
+        (case ti then
+          (bind ?especialidad (find-instance ((?inst Esp_TI)) TRUE))
+          (send ?alumno put-EspecialidadPref ?especialidad)
+        )
+      )
+      (assert (pespecialidad si))
+    else
+      (assert (pespecialidad no))
+  )
+)
+
 ; Mira si ya hemos hecho todas las preguntas
 (defrule preguntas-acabadas
   (not (noIdeaQuienEs))
   ?a <- (pdificultad)
   ?b <- (pcarga)
   ?c <- (nAsig)
+  ?d <- (pespecialidad ?siono)
   ?alumno <- (object (is-a Alumno))
   =>
   (retract ?a)
@@ -1677,7 +1732,14 @@
   (printout t "" crlf)
   (format t "Has decidido cursar: %s asignaturas" (str-cat ?nAsignaturas ""))
   (printout t "" crlf)
-  
+  (if (eq ?siono si)
+    then
+      (bind ?especialidad (send ?alumno get-EspecialidadPref))
+      (format t "Tienes preferencia por la especialidad %s" (send ?especialidad get-Descripcion))
+    else
+      (printout t "No tienes preferencia por ninguna especialidad (El sistema tratara de deducir tu preferencia)")
+  )
+  (printout t "" crlf)
 
 
   (printout t "" crlf)
@@ -1835,8 +1897,7 @@
   (if (eq ?borrar TRUE) 
     then 
       (send ?asigRec delete)
-      (bind ?n (send ?asig get-Nombre))
-      (printout t "DEBUG: La asignaura " ?n " ha sido borrada ya que no cumple los prerequesitos" crlf)
+      (printout t "DEBUG: La asignaura " (send ?asig get-Nombre) " ha sido borrada ya que no cumple los prerequesitos" crlf)
     
   )
   (assert (q-prerequesitos))
@@ -1859,7 +1920,9 @@
   (export ?ALL)
 )
 ; TODO Hacer este modulo entero huehue
-; TODO Hacer regla que le de puntos a las asignaturas (suspendidas el ultimo cuatrimestre | no aprovadas)
+; TODO HAcer regla que mire en que periodo estas, y le de mas puntos a las asignaturas te ese periodo (acabar las obligatorias antes que las obligatorias de especialidad)
+
+; Regla que le da puntos a las asignaturas (suspendidas el ultimo cuatrimestre | no aprovadas)
 (defrule asignaturas-suspendidas
   ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig1) (Puntuacion ?p) (Motivos $?m))
   (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2) (Nota ?nota&:(< ?nota 5)))
@@ -1872,9 +1935,25 @@
   (send ?asigRec put-Puntuacion ?p)
   (send ?asigRec put-Motivos ?m)
   (assert (asignatura-suspendida ?asig1))
+  (printout t "DEBUG: +150 La asignaura " (send ?asig1 get-Nombre) " ha sido cursada y no esta aprovada" crlf)
+
 )
 
-; TODO HAcer regla que mire en que periodo estas, y le de mas puntos a las asignaturas te ese periodo (acabar las obligatorias antes que las obligatorias de especialidad)
+; Regla que le da puntos a las asignaturas obligatorias que faltan por aprovar
+(defrule asignaturas-obligatorias
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
+  (object (is-a Obligatoria) (Descripcion ?d))
+  (test (eq (send (instance-address * (send ?asig get-ModalidadAsig)) get-Descripcion) ?d))
+  (not (asignatura-obligatoria ?asig))
+  =>
+  (bind ?p (+ ?p 1000))
+  (bind ?motivo "La asignatura es obligatoria +1000")
+  (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+  (send ?asigRec put-Puntuacion ?p)
+  (send ?asigRec put-Motivos ?m)
+  (assert (asignatura-obligatoria ?asig))
+  (printout t "DEBUG: +1000 La asignaura " (send ?asig get-Nombre) " es obligatoria y no esta aprovada" crlf)
+)
 
 
 (defrule saltar-a-presentacion

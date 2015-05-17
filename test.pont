@@ -1,4 +1,4 @@
-; Sun May 17 02:09:40 GMT+01:00 2015
+; Sun May 17 12:57:40 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -12,14 +12,19 @@
 ;+		(allowed-classes Asignatura)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot PrctAprobado
-		(type INTEGER)
-		(range 0 100)
+	(single-slot EspecialidadPref
+		(type INSTANCE)
+;+		(allowed-classes Especialidad)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot AlumnoRecomendado
 		(type INSTANCE)
 ;+		(allowed-classes Alumno)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot PrctAprobado
+		(type INTEGER)
+		(range 0 100)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Descripcion
@@ -122,16 +127,16 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot HorarioAsig
-		(type INSTANCE)
-;+		(allowed-classes Horario)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
 		(default np)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot HorarioAsig
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot ModalidadAsig
 		(type INSTANCE)
@@ -225,6 +230,11 @@
 ;+		(allowed-classes Convocatoria)
 		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
+	(single-slot EspecialidadPref
+		(type INSTANCE)
+;+		(allowed-classes Especialidad)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(single-slot Nombre
 		(type STRING)
 ;+		(cardinality 1 1)
@@ -236,7 +246,7 @@
 
 (defclass Horario
 	(is-a USER)
-	(role abstract)
+	(role concrete)
 	(single-slot Descripcion
 		(type STRING)
 ;+		(cardinality 0 1)
@@ -256,7 +266,7 @@
 
 (defclass Modalidad
 	(is-a USER)
-	(role abstract)
+	(role concrete)
 	(single-slot Descripcion
 		(type STRING)
 ;+		(cardinality 0 1)
