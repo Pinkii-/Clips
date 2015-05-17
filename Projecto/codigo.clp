@@ -44,14 +44,24 @@
   )
 )
 
+; Funcion para hacer una pregunta con respuesta numerica unica
+(deffunction pregunta-numerica (?pregunta ?rangini ?rangfi)
+  (format t "%s [%d, %d] " ?pregunta ?rangini ?rangfi)
+  (bind ?respuesta (read))
+  (while (not(and(>= ?respuesta ?rangini)(<= ?respuesta ?rangfi))) do
+    (format t "%s [%d, %d] " ?pregunta ?rangini ?rangfi)
+    (bind ?respuesta (read))
+  )
+  ?respuesta
+)
 
 ; Template de lista de recomendaciones sin orden
-(deftemplate MAIN::lista-asig-desordenada
+(deftemplate lista-asig-desordenada
   (multislot recomendaciones (type INSTANCE))
 )
 
 ; Template de lista de recomendaciones con orden
-(deftemplate MAIN::lista-asig-ordenada
+(deftemplate lista-asig-ordenada
   (multislot recomendaciones (type INSTANCE))
 )
 
@@ -169,10 +179,9 @@
   =>
   (if (si-o-no-p "Quieres elegir el numero de asignatura que el sistema te recomendara")
     then
-      (bind ?respuesta (pregunta "Cuantas asignaturas quieres cursar?" 1 2 3 4 5 6 7 ))
+      (bind ?respuesta (pregunta-numerica "Cuantas asignaturas quieres cursar" 1 10 ))
       (send ?alumno put-NumeroAsignaturas ?respuesta)    
     else      
-      (assert (calcularNasig))
       (send ?alumno put-NumeroAsignaturas np)  
   )
   (assert (nAsig))
@@ -202,7 +211,7 @@
   (printout t "" crlf)
   (format t "Has elegido una dificultad: %s" ?dificultad)
   (printout t "" crlf)
-  (format t "Has decidido cursar: %s asignaturas" ?nAsignaturas)
+  (format t "Has decidido cursar: %s asignaturas" (str-cat ?nAsignaturas ""))
   (printout t "" crlf)
   
 
@@ -216,6 +225,22 @@
 (defmodule calcular-preferencias "Modulo encargado de calcular las preferencias que no nos dice el usuario"
   (import MAIN ?ALL)
   (export ?ALL)
+)
+
+(defrule calcular-ultimo-cuatrimestre
+  (not (ultimoCuatri))
+  =>
+  (bind $?convs (find-all-instances ((?inst Convocatoria)) TRUE))
+  (bind ?ultimo-cuatri 0)
+  (progn$ (?conv $?convs)
+    (bind ?cuatri (send ?conv get-Cuatrimestre))
+    (if (> ?cuatri ?ultimo-cuatri)
+      then (bind ?ultimo-cuatri ?cuatri)
+    )
+  )
+  (assert (ultimoCuatri ?ultimo-cuatri))
+  (printout t "DEBUG: El ultimo cuatri es el " ?ultimo-cuatri crlf) ; DEBUG
+  
 )
 
 ;Funcion encargada de calcular el volumen de trabajo a partir de las ultimas convocatorias
@@ -237,17 +262,25 @@
 ; TODO hacer una regla que calcule el numero de asignaturas que el alumno quiere hacer
 ; Regla encargada de sacar el numero de asignaturas que suele hacer el alumno
 (defrule calcular-numero-asignaturas
-  ?a <- (calcularNasig)
-  ?alumno <- (object (is-a Alumno))
+  ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (NumeroAsignaturas ?na))
+  (ultimoCuatri ?cuatri)
+  (test (eq ?na np))
   =>
   (printout t "DEBUG: Como el alumno ha elegido np en el numero de asignaturas, lo calculamos nosotros" crlf) ; DEBUG
-  (send ?alumno put-NumeroAsignaturas 5)
-  (retract ?a)
+  (bind ?num-asig 0)
+  (progn$ (?conv ?convs)
+    (bind ?c (send (instance-address * ?conv) get-Cuatrimestre))
+    (if (eq ?cuatri ?c)
+      then (bind ?num-asig (+ ?num-asig 1))
+    )
+  )
+  (send ?alumno put-NumeroAsignaturas ?num-asig)
+  (printout t "DEBUG: El numero de asignaturas es " ?num-asig crlf) ; DEBUG
 )
 
 (defrule pasar-a-calcular
-  ?alumno <- (object (is-a Alumno) (VolumenTrabajo alto|medio|bajo) (Dificultad alto|medio|bajo))
-  (not (calcularNasig))
+  ?alumno <- (object (is-a Alumno) (VolumenTrabajo alto|medio|bajo) (Dificultad alto|medio|bajo) (NumeroAsignaturas ?na))
+  (test (neq ?na np))
   =>
   (focus quitar-imposibles)
 )
@@ -264,12 +297,13 @@
   =>
   (bind $?lista (find-all-instances ((?inst Asignatura)) TRUE))
   (progn$ (?curr-con ?lista)
-    (make-instance (gensym) of AsignaturaRecomendada (AsigName ?curr-con) (Motivos "olo") (Puntuacion 0))
+    (make-instance (gensym) of AsignaturaRecomendada (AsigName ?curr-con) (Puntuacion 0))
   )
 )
 
 ; Quita las asignaturas que ya están aprovadas
 (defrule quitar-asignaturas-aprovadas
+  (declare (salience 9))
   ?r <- (object (is-a AsignaturaRecomendada) (AsigName ?asig1))
   ?c <- (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2) (Nota ?nota&:(> ?nota 4.99)))
   (test (eq (send ?asig1 get-Nombre) (send (instance-address * ?asig2) get-Nombre)))
@@ -278,9 +312,74 @@
     (send ?r delete)
 )
 
-; TODO hacer regla que quite las asignaturas que tengan un volumen de trabajo mayor al asumible
-; TODO hacer regla que quite las asignaturas que tengan una dificultad mayor a la asumible
-; TODO hacer regla que quite las asignaturas con prerrequisitos que no cumple (se haga de lo ultimo)
+; Regla que quita las asignaturas que tengan un volumen de trabajo mayor al asumible
+(defrule quitar-volumen-alto
+  ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+  (object (is-a Alumno) (VolumenTrabajo medio))
+  (test (eq alto (send ?asig get-VolumenTrabajo)))
+  =>
+  (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto " crlf)
+  (send ?a delete)
+)
+
+(defrule quitar-volumen-medio
+  ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+  (object (is-a Alumno) (VolumenTrabajo bajo))
+  (test (or (eq alto (send ?asig get-VolumenTrabajo)) (eq medio (send ?asig get-VolumenTrabajo))))
+  =>
+  (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto o medio " crlf)
+  (send ?a delete)
+)
+
+; Regla que quita las asignaturas que tengan una dificultad mayor a la asumible
+(defrule quitar-dificultad-alta
+  ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+  (object (is-a Alumno) (Dificultad medio))
+  (test (eq alto (send ?asig get-Dificultad)))
+  =>
+  (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta " crlf)
+  (send ?a delete)
+)
+
+(defrule quitar-dificultad-media
+  ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+  (object (is-a Alumno) (Dificultad bajo))
+  (test (or (eq alto (send ?asig get-Dificultad)) (eq medio (send ?asig get-Dificultad))))
+  =>
+  (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta o media " crlf)
+  (send ?a delete)
+)
+
+; Regla que quita las asignaturas con prerequisitos que no cumple 
+(defrule quitar-prerequesitos
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+  =>
+  (bind ?borrar FALSE)
+  (bind $?preres (send ?asig get-PreRequesit))
+  (progn$ (?prere ?preres)
+    (bind ?encontrado FALSE)
+    (bind ?nombre (send (instance-address * ?prere) get-Nombre))
+    (bind $?convs (find-all-instances ((?inst Convocatoria)) (eq (send (instance-address * ?inst:AsignaturaMatriculada) get-Nombre) ?nombre)))
+    (progn$ (?conv $?convs)
+      (bind ?alguno TRUE)
+      (if (> (send ?conv get-Nota) 4.99)
+        then (bind ?encontrado TRUE)
+      )
+    )
+    (if (eq ?encontrado FALSE) then (bind ?borrar TRUE))
+  )
+  (if (eq ?borrar TRUE) 
+    then 
+      (send ?asigRec delete)
+      (bind ?n (send ?asig get-Nombre))
+      (printout t "DEBUG: La asignaura " ?n " ha sido borrada ya que no cumple los prerequesitos" crlf)
+    
+  )
+  (assert (q-prerequesitos))
+)
+
+
+
 
 
 (defrule saltar-a-calculo
@@ -297,7 +396,21 @@
 )
 ; TODO Hacer este modulo entero huehue
 ; TODO Hacer regla que le de puntos a las asignaturas (suspendidas el ultimo cuatrimestre | no aprovadas)
+(defrule asignaturas-suspendidas
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig1) (Puntuacion ?p) (Motivos $?m))
+  (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2) (Nota ?nota&:(< ?nota 5)))
+  (test (eq (send ?asig1 get-Nombre) (send (instance-address * ?asig2) get-Nombre)))
+  (not (asignatura-suspendida ?asig1))
+  =>
+  (bind ?p (+ ?p 150))
+  (bind ?motivo "La asignatura no está aprovada +150")
+  (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+  (send ?asigRec put-Puntuacion ?p)
+  (send ?asigRec put-Motivos ?m)
+  (assert (asignatura-suspendida ?asig1))
+)
 
+; TODO HAcer regla que mire en que periodo estas, y le de mas puntos a las asignaturas te ese periodo (acabar las obligatorias antes que las obligatorias de especialidad)
 
 
 (defrule saltar-a-presentacion
@@ -338,7 +451,7 @@
   (object (is-a Alumno) (NumeroAsignaturas ?n))
   =>
   (bind $?r (create$))
-  (while (and (< (length$ $?r) (+ ?n 1)) (not (eq (length$ $?l) 0)))
+  (while (and (< (length$ $?r) (+ ?n 0 )) (not (eq (length$ $?l) 0)))
     (bind ?elemento (max-puntuacion $?l))
     (bind $?l (delete-member$ $?l ?elemento))
     (bind $?r (insert$ $?r (+ (length $?r) 1) ?elemento))
@@ -359,6 +472,9 @@
     (printout t "=======================================" crlf)
     (printout t "Nombre: " (send ?asig get-Nombre) crlf)
     (printout t "Puntuacion: " (send ?asigRec get-Puntuacion) crlf)
-    (printout t "Razones: " (send ?asigRec get-Motivos) crlf)
+    (printout t "Razones: "crlf)
+    (progn$ (?motivo (send ?asigRec get-Motivos))
+      (printout t " * " ?motivo crlf)
+    )
   )
 )

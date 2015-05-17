@@ -1,4 +1,4 @@
-; Fri May 15 14:29:06 GMT+01:00 2015
+; Sun May 17 01:31:22 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -26,10 +26,6 @@
 		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot Cuatrimentre
-		(type STRING)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
 	(single-slot Nombre
 		(type STRING)
 ;+		(cardinality 1 1)
@@ -38,19 +34,20 @@
 		(type INTEGER)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Motivos
+	(multislot Motivos
 		(type STRING)
 		(default "Io k ze tio equisde")
-;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot VolumenTrabajo
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
+		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
+		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot PreRequesit
@@ -105,6 +102,11 @@
 		(type INSTANCE)
 ;+		(allowed-classes Modalidad)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Cuatrimestre
+;+		(comment "Es el numero de cuatrimestre que cursa el alumno. Dos convocatorias de una misma asignatura jamas tendrán el mimsmo numero")
+		(type INTEGER)
+;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass Asignatura
@@ -117,6 +119,7 @@
 	(single-slot VolumenTrabajo
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
+		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot HorarioAsig
@@ -127,6 +130,7 @@
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
+		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot ModalidadAsig
@@ -157,10 +161,9 @@
 (defclass AsignaturaRecomendada
 	(is-a USER)
 	(role concrete)
-	(single-slot Motivos
+	(multislot Motivos
 		(type STRING)
 		(default "Io k ze tio equisde")
-;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot AsigName
 		(type INSTANCE)
@@ -187,8 +190,9 @@
 ;+		(allowed-classes Horario)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Cuatrimentre
-		(type STRING)
+	(single-slot Cuatrimestre
+;+		(comment "Es el numero de cuatrimestre que cursa el alumno. Dos convocatorias de una misma asignatura jamas tendrán el mimsmo numero")
+		(type INTEGER)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Nota
@@ -207,11 +211,13 @@
 	(single-slot VolumenTrabajo
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
+		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
+		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot Convocatorias

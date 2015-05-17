@@ -1,6 +1,6 @@
 ;---------- Aqui empiezan las clases generadas por el protege ----------;
 
-; Fri May 15 14:29:16 GMT+01:00 2015
+; Sun May 17 01:31:34 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -28,10 +28,6 @@
 		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot Cuatrimentre
-		(type STRING)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
 	(single-slot Nombre
 		(type STRING)
 ;+		(cardinality 1 1)
@@ -40,19 +36,20 @@
 		(type INTEGER)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Motivos
+	(multislot Motivos
 		(type STRING)
 		(default "Io k ze tio equisde")
-;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot VolumenTrabajo
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
+		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
+		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot PreRequesit
@@ -107,6 +104,11 @@
 		(type INSTANCE)
 ;+		(allowed-classes Modalidad)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot Cuatrimestre
+;+		(comment "Es el numero de cuatrimestre que cursa el alumno. Dos convocatorias de una misma asignatura jamas tendrán el mimsmo numero")
+		(type INTEGER)
+;+		(cardinality 1 1)
 		(create-accessor read-write)))
 
 (defclass Asignatura
@@ -119,6 +121,7 @@
 	(single-slot VolumenTrabajo
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
+		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot HorarioAsig
@@ -129,6 +132,7 @@
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
+		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot ModalidadAsig
@@ -159,10 +163,9 @@
 (defclass AsignaturaRecomendada
 	(is-a USER)
 	(role concrete)
-	(single-slot Motivos
+	(multislot Motivos
 		(type STRING)
 		(default "Io k ze tio equisde")
-;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot AsigName
 		(type INSTANCE)
@@ -189,8 +192,9 @@
 ;+		(allowed-classes Horario)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
-	(single-slot Cuatrimentre
-		(type STRING)
+	(single-slot Cuatrimestre
+;+		(comment "Es el numero de cuatrimestre que cursa el alumno. Dos convocatorias de una misma asignatura jamas tendrán el mimsmo numero")
+		(type INTEGER)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot Nota
@@ -209,11 +213,13 @@
 	(single-slot VolumenTrabajo
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
+		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
+		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot Convocatorias
@@ -315,7 +321,7 @@
 	(role concrete))
 ;-------- Aqui empiezan las instancias generadas por el protege --------;
 (definstances instances
-; Fri May 15 14:29:16 GMT+01:00 2015
+; Sun May 17 01:31:34 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -367,7 +373,7 @@
 ([ontologia_Class10008] of  Convocatoria
 
 	(AsignaturaMatriculada [ontologia_Class0])
-	(Cuatrimentre "1")
+	(Cuatrimestre 1)
 	(HorarioAsig [ontologia_Class10002])
 	(Nota 8.5))
 
@@ -402,13 +408,13 @@
 ([ontologia_Class20003] of  Convocatoria
 
 	(AsignaturaMatriculada [ontologia_Class20002])
-	(Cuatrimentre "1")
+	(Cuatrimestre 1)
 	(HorarioAsig [ontologia_Class10002])
 	(Nota 9.5))
 
 ([ontologia_Class20004] of  Asignatura
 
-	(Dificultad medio)
+	(Dificultad alto)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 280)
 	(ModalidadAsig [ontologia_Class10005])
@@ -434,135 +440,167 @@
 
 ([ontologia_Class30003] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
-	(Nombre "EC"))
+	(Nombre "EC")
+	(VolumenTrabajo np))
 
 ([ontologia_Class30004] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
-	(Nombre "M1"))
+	(Nombre "M1")
+	(VolumenTrabajo np))
 
 ([ontologia_Class30005] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
-	(Nombre "M2"))
+	(Nombre "M2")
+	(VolumenTrabajo np))
 
 ([ontologia_Class30006] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "BD")
 	(PreRequesit
 		[ontologia_Class20001]
-		[ontologia_Class20004]))
+		[ontologia_Class20004])
+	(VolumenTrabajo np))
 
 ([ontologia_Class30007] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "CI")
 	(PreRequesit
 		[ontologia_Class30003]
-		[ontologia_Class20002]))
+		[ontologia_Class20002])
+	(VolumenTrabajo np))
 
 ([ontologia_Class30008] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "EDA")
 	(PreRequesit
 		[ontologia_Class20001]
-		[ontologia_Class20004]))
+		[ontologia_Class20004])
+	(VolumenTrabajo np))
 
 ([ontologia_Class30009] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "PE")
 	(PreRequesit
 		[ontologia_Class30004]
-		[ontologia_Class30005]))
+		[ontologia_Class30005])
+	(VolumenTrabajo np))
 
 ([ontologia_Class30010] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "SO")
 	(PreRequesit
 		[ontologia_Class30007]
-		[ontologia_Class30003]))
+		[ontologia_Class30003])
+	(VolumenTrabajo np))
 
 ([ontologia_Class30011] of  Asignatura
 
 	(CoRequesit [ontologia_Class30009])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "AC")
 	(PreRequesit
 		[ontologia_Class30003]
-		[ontologia_Class30010]))
+		[ontologia_Class30010])
+	(VolumenTrabajo np))
 
 ([ontologia_Class30012] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
-	(Nombre "EEE"))
+	(Nombre "EEE")
+	(VolumenTrabajo np))
 
 ([ontologia_Class30013] of  Asignatura
 
 	(CoRequesit [ontologia_Class30008])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "IES")
-	(PreRequesit [ontologia_Class30006]))
+	(PreRequesit [ontologia_Class30006])
+	(VolumenTrabajo np))
 
 ([ontologia_Class30014] of  Asignatura
 
 	(CoRequesit
 		[ontologia_Class30006]
 		[ontologia_Class30013])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "PROP")
-	(PreRequesit [ontologia_Class30008]))
+	(PreRequesit [ontologia_Class30008])
+	(VolumenTrabajo np))
 
 ([ontologia_Class30015] of  Asignatura
 
 	(CoRequesit [ontologia_Class30010])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
-	(Nombre "XC"))
+	(Nombre "XC")
+	(VolumenTrabajo np))
 
 ([ontologia_Class30016] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "IDI")
 	(PreRequesit
 		[ontologia_Class30008]
-		[ontologia_Class30004]))
+		[ontologia_Class30004])
+	(VolumenTrabajo np))
 
 ([ontologia_Class30017] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "PAR")
 	(PreRequesit
 		[ontologia_Class30011]
 		[ontologia_Class30008]
-		[ontologia_Class30010]))
+		[ontologia_Class30010])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40002] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40003])
 	(Nombre "G")
 	(PreRequesit
 		[ontologia_Class30016]
-		[ontologia_Class30014]))
+		[ontologia_Class30014])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40003] of  Esp_Comp
 
@@ -609,119 +647,149 @@
 	(CoRequesit
 		[ontologia_Class30009]
 		[ontologia_Class30014])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40003])
 	(Nombre "A")
-	(PreRequesit [ontologia_Class30008]))
+	(PreRequesit [ontologia_Class30008])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40022] of  Asignatura
 
 	(CoRequesit [ontologia_Class30014])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40003])
 	(Nombre "IA")
-	(PreRequesit [ontologia_Class30008]))
+	(PreRequesit [ontologia_Class30008])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40023] of  Asignatura
 
 	(CoRequesit [ontologia_Class30014])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40003])
 	(Nombre "LI")
-	(PreRequesit [ontologia_Class30008]))
+	(PreRequesit [ontologia_Class30008])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40024] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40003])
 	(Nombre "LP")
-	(PreRequesit [ontologia_Class30014]))
+	(PreRequesit [ontologia_Class30014])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40025] of  Asignatura
 
 	(CoRequesit [ontologia_Class30014])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40003])
 	(Nombre "TC")
-	(PreRequesit [ontologia_Class30008]))
+	(PreRequesit [ontologia_Class30008])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40026] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "AA")
-	(PreRequesit [ontologia_Class40021]))
+	(PreRequesit [ontologia_Class40021])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40027] of  Asignatura
 
 	(CoRequesit [ontologia_Class30014])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "APA")
-	(PreRequesit [ontologia_Class30009]))
+	(PreRequesit [ontologia_Class30009])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40028] of  Asignatura
 
 	(CoRequesit [ontologia_Class30014])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "CAIM")
 	(PreRequesit
 		[ontologia_Class30006]
-		[ontologia_Class30009]))
+		[ontologia_Class30009])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40029] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "CL")
-	(PreRequesit [ontologia_Class40025]))
+	(PreRequesit [ontologia_Class40025])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40030] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "CN")
 	(PreRequesit
 		[ontologia_Class30004]
-		[ontologia_Class30005]))
+		[ontologia_Class30005])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40031] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "IO")
-	(PreRequesit [ontologia_Class30009]))
+	(PreRequesit [ontologia_Class30009])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40032] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "SID")
-	(PreRequesit [ontologia_Class40022]))
+	(PreRequesit [ontologia_Class40022])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40033] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "AC2")
-	(PreRequesit [ontologia_Class30011]))
+	(PreRequesit [ontologia_Class30011])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40034] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "DSBM")
-	(PreRequesit [ontologia_Class30007]))
+	(PreRequesit [ontologia_Class30007])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40035] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "MP")
 	(PreRequesit
 		[ontologia_Class40033]
-		[ontologia_Class30017]))
+		[ontologia_Class30017])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40036] of  Asignatura
 
@@ -729,463 +797,579 @@
 		[ontologia_Class40033]
 		[ontologia_Class40034]
 		[ontologia_Class40037])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40014])
-	(Nombre "PEC"))
+	(Nombre "PEC")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40037] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "SO2")
-	(PreRequesit [ontologia_Class30010]))
+	(PreRequesit [ontologia_Class30010])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40038] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40019])
 	(Nombre "MI")
-	(PreRequesit [ontologia_Class30012]))
+	(PreRequesit [ontologia_Class30012])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40039] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40014])
-	(Nombre "XC2"))
+	(Nombre "XC2")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40040] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "CASO")
 	(PreRequesit
 		[ontologia_Class40037]
-		[ontologia_Class40075]))
+		[ontologia_Class40075])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40041] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "CPD")
-	(PreRequesit [ontologia_Class30015]))
+	(PreRequesit [ontologia_Class30015])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40042] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "PAP")
-	(PreRequesit [ontologia_Class30017]))
+	(PreRequesit [ontologia_Class30017])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40043] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "PCA")
-	(PreRequesit [ontologia_Class30011]))
+	(PreRequesit [ontologia_Class30011])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40044] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "PDS")
-	(PreRequesit [ontologia_Class30007]))
+	(PreRequesit [ontologia_Class30007])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40045] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "STR")
 	(PreRequesit
 		[ontologia_Class40034]
-		[ontologia_Class30010]))
+		[ontologia_Class30010])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40046] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "VLSI")
-	(PreRequesit [ontologia_Class40033]))
+	(PreRequesit [ontologia_Class40033])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40047] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40004])
 	(Nombre "AS")
-	(PreRequesit [ontologia_Class30013]))
+	(PreRequesit [ontologia_Class30013])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40048] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40004])
 	(Nombre "ASW")
-	(PreRequesit [ontologia_Class40047]))
+	(PreRequesit [ontologia_Class40047])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40049] of  Asignatura
 
 	(CoRequesit [ontologia_Class30013])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40004])
 	(Nombre "DBD")
-	(PreRequesit [ontologia_Class30006]))
+	(PreRequesit [ontologia_Class30006])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40050] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40004])
 	(Nombre "ER")
 	(PreRequesit
 		[ontologia_Class30012]
-		[ontologia_Class30013]))
+		[ontologia_Class30013])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40051] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40004])
 	(Nombre "GPS")
 	(PreRequesit
 		[ontologia_Class30012]
-		[ontologia_Class30013]))
+		[ontologia_Class30013])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40053] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40004])
 	(Nombre "PES")
 	(PreRequesit
 		[ontologia_Class40050]
 		[ontologia_Class40051]
-		[ontologia_Class40047]))
+		[ontologia_Class40047])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40054] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40017])
 	(Nombre "CBDE")
 	(PreRequesit
 		[ontologia_Class40070]
-		[ontologia_Class40049]))
+		[ontologia_Class40049])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40055] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40017])
 	(Nombre "CSI")
 	(PreRequesit
 		[ontologia_Class30006]
-		[ontologia_Class30012]))
+		[ontologia_Class30012])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40056] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40017])
 	(Nombre "ECSDI")
-	(PreRequesit [ontologia_Class40047]))
+	(PreRequesit [ontologia_Class40047])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40057] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40017])
 	(Nombre "SIM")
-	(PreRequesit [ontologia_Class30009]))
+	(PreRequesit [ontologia_Class30009])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40058] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40017])
 	(Nombre "SOAD")
-	(PreRequesit [ontologia_Class30010]))
+	(PreRequesit [ontologia_Class30010])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40059] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40017])
 	(Nombre "CAP")
 	(PreRequesit
 		[ontologia_Class30013]
-		[ontologia_Class30014]))
+		[ontologia_Class30014])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40060] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "ADEI")
 	(PreRequesit
 		[ontologia_Class30006]
-		[ontologia_Class30009]))
+		[ontologia_Class30009])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40061] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "DSI")
-	(PreRequesit [ontologia_Class30013]))
+	(PreRequesit [ontologia_Class30013])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40063] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40015])
-	(Nombre "NE"))
+	(Nombre "NE")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40064] of  Asignatura
 
 	(CoRequesit
 		[ontologia_Class40050]
 		[ontologia_Class40063])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "PSI")
-	(PreRequesit [ontologia_Class40061]))
+	(PreRequesit [ontologia_Class40061])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40065] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "SIO")
 	(PreRequesit
 		[ontologia_Class30012]
-		[ontologia_Class30006]))
+		[ontologia_Class30006])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40069] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40019])
 	(Nombre "VPE")
-	(PreRequesit [ontologia_Class30012]))
+	(PreRequesit [ontologia_Class30012])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40070] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
 	(ModalidadAsig [ontologia_Class40019])
 	(Nombre "ABD")
-	(PreRequesit [ontologia_Class30006]))
+	(PreRequesit [ontologia_Class30006])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40071] of  Asignatura
 
 	(CoRequesit [ontologia_Class30015])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "ASO")
-	(PreRequesit [ontologia_Class30010]))
+	(PreRequesit [ontologia_Class30010])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40072] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "PI")
 	(PreRequesit
 		[ontologia_Class30015]
-		[ontologia_Class40021]))
+		[ontologia_Class40021])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40073] of  Asignatura
 
 	(CoRequesit
 		[ontologia_Class40071]
 		[ontologia_Class40072])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40013])
-	(Nombre "PTI"))
+	(Nombre "PTI")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40074] of  Asignatura
 
 	(CoRequesit
 		[ontologia_Class30010]
 		[ontologia_Class30015])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40013])
-	(Nombre "SI"))
+	(Nombre "SI")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40075] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "SOA")
-	(PreRequesit [ontologia_Class30010]))
+	(PreRequesit [ontologia_Class30010])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40076] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "TXC")
-	(PreRequesit [ontologia_Class30015]))
+	(PreRequesit [ontologia_Class30015])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40077] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40018])
 	(Nombre "AD")
-	(PreRequesit [ontologia_Class30015]))
+	(PreRequesit [ontologia_Class30015])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40080] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40018])
 	(Nombre "IM")
-	(PreRequesit [ontologia_Class30015]))
+	(PreRequesit [ontologia_Class30015])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40081] of  Asignatura
 
 	(CoRequesit
 		[ontologia_Class40072]
 		[ontologia_Class30010])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40018])
 	(Nombre "SDX")
-	(PreRequesit [ontologia_Class30015]))
+	(PreRequesit [ontologia_Class30015])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40082] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40018])
 	(Nombre "TCI")
 	(PreRequesit
 		[ontologia_Class0]
 		[ontologia_Class30004]
-		[ontologia_Class30005]))
+		[ontologia_Class30005])
+	(VolumenTrabajo np))
 
 ([ontologia_Class40083] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "APSS"))
+	(Nombre "APSS")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40084] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "ASDP"))
+	(Nombre "ASDP")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40085] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "ASMI"))
+	(Nombre "ASMI")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40086] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "C"))
+	(Nombre "C")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40087] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "CCQ"))
+	(Nombre "CCQ")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40088] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "CDI"))
+	(Nombre "CDI")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40089] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "DCS"))
+	(Nombre "DCS")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40090] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "FOMAR"))
+	(Nombre "FOMAR")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40091] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "GEOC"))
+	(Nombre "GEOC")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40092] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "MD"))
+	(Nombre "MD")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40093] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "ROB"))
+	(Nombre "ROB")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40094] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "SLDS"))
+	(Nombre "SLDS")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40095] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "TGA"))
+	(Nombre "TGA")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40096] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "VC"))
+	(Nombre "VC")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40097] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "VJ"))
+	(Nombre "VJ")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40098] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "WSE"))
+	(Nombre "WSE")
+	(VolumenTrabajo np))
 
 ([ontologia_Class40099] of  Asignatura
 
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
 	(ModalidadAsig [ontologia_Class10006])
-	(Nombre "APC"))
+	(Nombre "APC")
+	(VolumenTrabajo np))
 
 ([ontologia_Class50002] of  Convocatoria
 
 	(AsignaturaMatriculada [ontologia_Class0])
-	(Cuatrimentre "1")
+	(Cuatrimestre 1)
 	(HorarioAsig [ontologia_Class10003])
 	(Nota 10.0))
 
 ([ontologia_Class50003] of  Convocatoria
 
 	(AsignaturaMatriculada [ontologia_Class10000])
-	(Cuatrimentre "1")
+	(Cuatrimestre 1)
 	(HorarioAsig [ontologia_Class10003])
 	(Nota 10.0))
 
 ([ontologia_Class50004] of  Convocatoria
 
 	(AsignaturaMatriculada [ontologia_Class20001])
-	(Cuatrimentre "1")
+	(Cuatrimestre 1)
 	(HorarioAsig [ontologia_Class10003])
 	(Nota 10.0))
 
 ([ontologia_Class50006] of  Convocatoria
 
 	(AsignaturaMatriculada [ontologia_Class20002])
-	(Cuatrimentre "1")
+	(Cuatrimestre 1)
 	(HorarioAsig [ontologia_Class10003])
 	(Nota 10.0))
 
 ([ontologia_Class50007] of  Convocatoria
 
 	(AsignaturaMatriculada [ontologia_Class20004])
-	(Cuatrimentre "2")
+	(Cuatrimestre 2)
 	(HorarioAsig [ontologia_Class10003])
 	(Nota 4.0))
 
 ([ontologia_Class50009] of  Asignatura
 
 	(CoRequesit [ontologia_Class30010])
+	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40018])
 	(Nombre "CPD")
-	(PreRequesit [ontologia_Class30015]))
+	(PreRequesit [ontologia_Class30015])
+	(VolumenTrabajo np))
 )
 
 ;------------------ Aqui empieza el sistema experto --------------------;
@@ -1236,14 +1420,24 @@
   )
 )
 
+; Funcion para hacer una pregunta con respuesta numerica unica
+(deffunction pregunta-numerica (?pregunta ?rangini ?rangfi)
+  (format t "%s [%d, %d] " ?pregunta ?rangini ?rangfi)
+  (bind ?respuesta (read))
+  (while (not(and(>= ?respuesta ?rangini)(<= ?respuesta ?rangfi))) do
+    (format t "%s [%d, %d] " ?pregunta ?rangini ?rangfi)
+    (bind ?respuesta (read))
+  )
+  ?respuesta
+)
 
 ; Template de lista de recomendaciones sin orden
-(deftemplate MAIN::lista-asig-desordenada
+(deftemplate lista-asig-desordenada
   (multislot recomendaciones (type INSTANCE))
 )
 
 ; Template de lista de recomendaciones con orden
-(deftemplate MAIN::lista-asig-ordenada
+(deftemplate lista-asig-ordenada
   (multislot recomendaciones (type INSTANCE))
 )
 
@@ -1361,10 +1555,9 @@
   =>
   (if (si-o-no-p "Quieres elegir el numero de asignatura que el sistema te recomendara")
     then
-      (bind ?respuesta (pregunta "Cuantas asignaturas quieres cursar?" 1 2 3 4 5 6 7 ))
+      (bind ?respuesta (pregunta-numerica "Cuantas asignaturas quieres cursar" 1 10 ))
       (send ?alumno put-NumeroAsignaturas ?respuesta)    
     else      
-      (assert (calcularNasig))
       (send ?alumno put-NumeroAsignaturas np)  
   )
   (assert (nAsig))
@@ -1394,7 +1587,7 @@
   (printout t "" crlf)
   (format t "Has elegido una dificultad: %s" ?dificultad)
   (printout t "" crlf)
-  (format t "Has decidido cursar: %s asignaturas" ?nAsignaturas)
+  (format t "Has decidido cursar: %s asignaturas" (str-cat ?nAsignaturas ""))
   (printout t "" crlf)
   
 
@@ -1408,6 +1601,22 @@
 (defmodule calcular-preferencias "Modulo encargado de calcular las preferencias que no nos dice el usuario"
   (import MAIN ?ALL)
   (export ?ALL)
+)
+
+(defrule calcular-ultimo-cuatrimestre
+  (not (ultimoCuatri))
+  =>
+  (bind $?convs (find-all-instances ((?inst Convocatoria)) TRUE))
+  (bind ?ultimo-cuatri 0)
+  (progn$ (?conv $?convs)
+    (bind ?cuatri (send ?conv get-Cuatrimestre))
+    (if (> ?cuatri ?ultimo-cuatri)
+      then (bind ?ultimo-cuatri ?cuatri)
+    )
+  )
+  (assert (ultimoCuatri ?ultimo-cuatri))
+  (printout t "DEBUG: El ultimo cuatri es el " ?ultimo-cuatri crlf) ; DEBUG
+  
 )
 
 ;Funcion encargada de calcular el volumen de trabajo a partir de las ultimas convocatorias
@@ -1429,17 +1638,25 @@
 ; TODO hacer una regla que calcule el numero de asignaturas que el alumno quiere hacer
 ; Regla encargada de sacar el numero de asignaturas que suele hacer el alumno
 (defrule calcular-numero-asignaturas
-  ?a <- (calcularNasig)
-  ?alumno <- (object (is-a Alumno))
+  ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (NumeroAsignaturas ?na))
+  (ultimoCuatri ?cuatri)
+  (test (eq ?na np))
   =>
   (printout t "DEBUG: Como el alumno ha elegido np en el numero de asignaturas, lo calculamos nosotros" crlf) ; DEBUG
-  (send ?alumno put-NumeroAsignaturas 5)
-  (retract ?a)
+  (bind ?num-asig 0)
+  (progn$ (?conv ?convs)
+    (bind ?c (send (instance-address * ?conv) get-Cuatrimestre))
+    (if (eq ?cuatri ?c)
+      then (bind ?num-asig (+ ?num-asig 1))
+    )
+  )
+  (send ?alumno put-NumeroAsignaturas ?num-asig)
+  (printout t "DEBUG: El numero de asignaturas es " ?num-asig crlf) ; DEBUG
 )
 
 (defrule pasar-a-calcular
-  ?alumno <- (object (is-a Alumno) (VolumenTrabajo alto|medio|bajo) (Dificultad alto|medio|bajo))
-  (not (calcularNasig))
+  ?alumno <- (object (is-a Alumno) (VolumenTrabajo alto|medio|bajo) (Dificultad alto|medio|bajo) (NumeroAsignaturas ?na))
+  (test (neq ?na np))
   =>
   (focus quitar-imposibles)
 )
@@ -1456,12 +1673,13 @@
   =>
   (bind $?lista (find-all-instances ((?inst Asignatura)) TRUE))
   (progn$ (?curr-con ?lista)
-    (make-instance (gensym) of AsignaturaRecomendada (AsigName ?curr-con) (Motivos "olo") (Puntuacion 0))
+    (make-instance (gensym) of AsignaturaRecomendada (AsigName ?curr-con) (Puntuacion 0))
   )
 )
 
 ; Quita las asignaturas que ya están aprovadas
 (defrule quitar-asignaturas-aprovadas
+  (declare (salience 9))
   ?r <- (object (is-a AsignaturaRecomendada) (AsigName ?asig1))
   ?c <- (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2) (Nota ?nota&:(> ?nota 4.99)))
   (test (eq (send ?asig1 get-Nombre) (send (instance-address * ?asig2) get-Nombre)))
@@ -1470,9 +1688,74 @@
     (send ?r delete)
 )
 
-; TODO hacer regla que quite las asignaturas que tengan un volumen de trabajo mayor al asumible
-; TODO hacer regla que quite las asignaturas que tengan una dificultad mayor a la asumible
-; TODO hacer regla que quite las asignaturas con prerrequisitos que no cumple (se haga de lo ultimo)
+; Regla que quita las asignaturas que tengan un volumen de trabajo mayor al asumible
+(defrule quitar-volumen-alto
+  ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+  (object (is-a Alumno) (VolumenTrabajo medio))
+  (test (eq alto (send ?asig get-VolumenTrabajo)))
+  =>
+  (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto " crlf)
+  (send ?a delete)
+)
+
+(defrule quitar-volumen-medio
+  ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+  (object (is-a Alumno) (VolumenTrabajo bajo))
+  (test (or (eq alto (send ?asig get-VolumenTrabajo)) (eq medio (send ?asig get-VolumenTrabajo))))
+  =>
+  (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto o medio " crlf)
+  (send ?a delete)
+)
+
+; Regla que quita las asignaturas que tengan una dificultad mayor a la asumible
+(defrule quitar-dificultad-alta
+  ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+  (object (is-a Alumno) (Dificultad medio))
+  (test (eq alto (send ?asig get-Dificultad)))
+  =>
+  (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta " crlf)
+  (send ?a delete)
+)
+
+(defrule quitar-dificultad-media
+  ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+  (object (is-a Alumno) (Dificultad bajo))
+  (test (or (eq alto (send ?asig get-Dificultad)) (eq medio (send ?asig get-Dificultad))))
+  =>
+  (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta o media " crlf)
+  (send ?a delete)
+)
+
+; Regla que quita las asignaturas con prerequisitos que no cumple 
+(defrule quitar-prerequesitos
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+  =>
+  (bind ?borrar FALSE)
+  (bind $?preres (send ?asig get-PreRequesit))
+  (progn$ (?prere ?preres)
+    (bind ?encontrado FALSE)
+    (bind ?nombre (send (instance-address * ?prere) get-Nombre))
+    (bind $?convs (find-all-instances ((?inst Convocatoria)) (eq (send (instance-address * ?inst:AsignaturaMatriculada) get-Nombre) ?nombre)))
+    (progn$ (?conv $?convs)
+      (bind ?alguno TRUE)
+      (if (> (send ?conv get-Nota) 4.99)
+        then (bind ?encontrado TRUE)
+      )
+    )
+    (if (eq ?encontrado FALSE) then (bind ?borrar TRUE))
+  )
+  (if (eq ?borrar TRUE) 
+    then 
+      (send ?asigRec delete)
+      (bind ?n (send ?asig get-Nombre))
+      (printout t "DEBUG: La asignaura " ?n " ha sido borrada ya que no cumple los prerequesitos" crlf)
+    
+  )
+  (assert (q-prerequesitos))
+)
+
+
+
 
 
 (defrule saltar-a-calculo
@@ -1489,7 +1772,21 @@
 )
 ; TODO Hacer este modulo entero huehue
 ; TODO Hacer regla que le de puntos a las asignaturas (suspendidas el ultimo cuatrimestre | no aprovadas)
+(defrule asignaturas-suspendidas
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig1) (Puntuacion ?p) (Motivos $?m))
+  (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2) (Nota ?nota&:(< ?nota 5)))
+  (test (eq (send ?asig1 get-Nombre) (send (instance-address * ?asig2) get-Nombre)))
+  (not (asignatura-suspendida ?asig1))
+  =>
+  (bind ?p (+ ?p 150))
+  (bind ?motivo "La asignatura no está aprovada +150")
+  (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+  (send ?asigRec put-Puntuacion ?p)
+  (send ?asigRec put-Motivos ?m)
+  (assert (asignatura-suspendida ?asig1))
+)
 
+; TODO HAcer regla que mire en que periodo estas, y le de mas puntos a las asignaturas te ese periodo (acabar las obligatorias antes que las obligatorias de especialidad)
 
 
 (defrule saltar-a-presentacion
@@ -1530,7 +1827,7 @@
   (object (is-a Alumno) (NumeroAsignaturas ?n))
   =>
   (bind $?r (create$))
-  (while (and (< (length$ $?r) (+ ?n 1)) (not (eq (length$ $?l) 0)))
+  (while (and (< (length$ $?r) (+ ?n 0 )) (not (eq (length$ $?l) 0)))
     (bind ?elemento (max-puntuacion $?l))
     (bind $?l (delete-member$ $?l ?elemento))
     (bind $?r (insert$ $?r (+ (length $?r) 1) ?elemento))
@@ -1551,6 +1848,9 @@
     (printout t "=======================================" crlf)
     (printout t "Nombre: " (send ?asig get-Nombre) crlf)
     (printout t "Puntuacion: " (send ?asigRec get-Puntuacion) crlf)
-    (printout t "Razones: " (send ?asigRec get-Motivos) crlf)
+    (printout t "Razones: "crlf)
+    (progn$ (?motivo (send ?asigRec get-Motivos))
+      (printout t " * " ?motivo crlf)
+    )
   )
 )
