@@ -6,7 +6,8 @@
 ; Si al alumno le faltan asignatura obligatorias de especialidad por aprobar, +400
 ; Si el usuario no especifica dificultad asumible, el sistema elige la maxima dificultad asumida el ultimo cuatrimestre
 ; Si el usuario no especifica volumen de trabjo asumible, el sistema elige el maximo volumen asumido el ultimo cuatrimestre
-;
+; El sistema pregunta por el horario preferido del usuario. Si no lo da, se elige cualquier horario como preferido
+; El sistema elimina de recomendaciones las asignaturas imcompatibles con el horario deseado
 ;=================================================================================
 ;str-cat = string concat
 
@@ -36,7 +37,7 @@
     (format t "¿%s? (%s) " ?pregunta (implode$ ?valores-permitidos))
     (bind ?respuesta (read))
   )
-  ?respuesta
+  (lowcase ?respuesta)
 )
 
 ; Obtiene una respuesta 
@@ -288,6 +289,7 @@
   (bind ?volumen (send ?alumno get-VolumenTrabajo))
   (bind ?dificultad (send ?alumno get-Dificultad))
   (bind ?nAsignaturas (send ?alumno get-NumeroAsignaturas))
+  (bind ?horario (send (send ?alumno get-HorarioPref) get-Descripcion))
 
   (printout t "" crlf)
   (format t "Hola %s, %d  " ?nombre ?dni)
@@ -306,6 +308,7 @@
       (printout t "No tienes preferencia por ninguna especialidad (El sistema tratara de deducir tu preferencia)")
   )
   (printout t "" crlf)
+  (printout t "Como preferencia horaria tienes: " ?horario crlf)
 
 
   (printout t "" crlf)
@@ -315,6 +318,7 @@
   (retract ?b)
   (retract ?c)
   (retract ?d)
+  (retract ?e)
 
   (focus calcular-preferencias)
 )
@@ -574,7 +578,15 @@
 
 ; Regla que quita las asignaturas de mañanas si el usuario quiere solo de tardes, o viceversa
 (defrule quitar-horario-incompatible
-  ?asigRec <- (object (is-a AsignaturaRecomendada))
+  ?alumno <- (object (is-a Alumno) (HorarioPref ?pref))
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+  (test (neq (send ?pref get-Descripcion) "Both"))
+  (test (neq (send (instance-address * (send ?asig get-HorarioAsig)) get-Descripcion) "Both"))
+  (test (neq (send (instance-address * (send ?asig get-HorarioAsig)) get-Descripcion) (send ?pref get-Descripcion)))
+  =>
+  (bind ?desc (send (instance-address * (send ?asig get-HorarioAsig)) get-Descripcion))
+  (printout t "DEBUG: Preferencia horaria " (send ?pref get-Descripcion) " y asig " (send ?asig get-Nombre) " " ?desc  crlf)
+  (send ?asigRec delete)
 )
 
 
