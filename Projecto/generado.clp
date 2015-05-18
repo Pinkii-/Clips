@@ -1,6 +1,6 @@
 ;---------- Aqui empiezan las clases generadas por el protege ----------;
 
-; Sun May 17 21:14:35 GMT+01:00 2015
+; Mon May 18 21:07:12 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -60,6 +60,11 @@
 	(multislot PreRequesit
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
+		(create-accessor read-write))
+	(single-slot HorarioPref
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot AsignaturasRecomendadas
 		(type INSTANCE)
@@ -227,6 +232,11 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(single-slot HorarioPref
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(multislot Convocatorias
 		(type INSTANCE)
 ;+		(allowed-classes Convocatoria)
@@ -331,7 +341,7 @@
 	(role concrete))
 ;-------- Aqui empiezan las instancias generadas por el protege --------;
 (definstances instances
-; Sun May 17 21:14:35 GMT+01:00 2015
+; Mon May 18 21:07:12 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -340,25 +350,25 @@
 
 	(Dificultad alto)
 	(HorarioAsig [ontologia_Class10001])
-	(Matriculados 400)
+	(Matriculados 417)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "FM")
-	(PrctAprobado 60)
+	(PrctAprobado 36)
 	(VolumenTrabajo medio))
 
 ([ontologia_Class10000] of  Asignatura
 
 	(Dificultad medio)
 	(HorarioAsig [ontologia_Class10001])
-	(Matriculados 400)
+	(Matriculados 398)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "F")
-	(PrctAprobado 50)
+	(PrctAprobado 60)
 	(VolumenTrabajo medio))
 
 ([ontologia_Class10001] of  Both
 
-	(Descripcion "Manana y Tarde"))
+	(Descripcion "Both"))
 
 ([ontologia_Class10002] of  Manana
 
@@ -417,20 +427,20 @@
 
 	(Dificultad bajo)
 	(HorarioAsig [ontologia_Class10001])
-	(Matriculados 400)
+	(Matriculados 436)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "PRO1")
-	(PrctAprobado 50)
+	(PrctAprobado 33)
 	(VolumenTrabajo medio))
 
 ([ontologia_Class20002] of  Asignatura
 
 	(Dificultad medio)
 	(HorarioAsig [ontologia_Class10001])
-	(Matriculados 400)
+	(Matriculados 422)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "IC")
-	(PrctAprobado 50)
+	(PrctAprobado 52)
 	(VolumenTrabajo alto))
 
 ([ontologia_Class20003] of  Convocatoria
@@ -444,7 +454,7 @@
 
 	(Dificultad alto)
 	(HorarioAsig [ontologia_Class10001])
-	(Matriculados 280)
+	(Matriculados 210)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "PRO2")
 	(PrctAprobado 50)
@@ -472,32 +482,40 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 102)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "EC")
+	(PrctAprobado 34)
 	(VolumenTrabajo np))
 
 ([ontologia_Class30004] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 105)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "M1")
+	(PrctAprobado 43)
 	(VolumenTrabajo np))
 
 ([ontologia_Class30005] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 101)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "M2")
+	(PrctAprobado 48)
 	(VolumenTrabajo np))
 
 ([ontologia_Class30006] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 163)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "BD")
+	(PrctAprobado 76)
 	(PreRequesit
 		[ontologia_Class20001]
 		[ontologia_Class20004])
@@ -507,8 +525,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 209)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "CI")
+	(PrctAprobado 87)
 	(PreRequesit
 		[ontologia_Class30003]
 		[ontologia_Class20002])
@@ -518,8 +538,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 184)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "EDA")
+	(PrctAprobado 68)
 	(PreRequesit
 		[ontologia_Class20001]
 		[ontologia_Class20004])
@@ -529,8 +551,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 196)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "PE")
+	(PrctAprobado 86)
 	(PreRequesit
 		[ontologia_Class30004]
 		[ontologia_Class30005])
@@ -540,8 +564,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 203)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "SO")
+	(PrctAprobado 84)
 	(PreRequesit
 		[ontologia_Class30007]
 		[ontologia_Class30003])
@@ -552,8 +578,10 @@
 	(CoRequesit [ontologia_Class30009])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 125)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "AC")
+	(PrctAprobado 77)
 	(PreRequesit
 		[ontologia_Class30003]
 		[ontologia_Class30010])
@@ -563,8 +591,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 96)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "EEE")
+	(PrctAprobado 89)
 	(VolumenTrabajo np))
 
 ([ontologia_Class30013] of  Asignatura
@@ -572,8 +602,10 @@
 	(CoRequesit [ontologia_Class30008])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 135)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "IES")
+	(PrctAprobado 61)
 	(PreRequesit [ontologia_Class30006])
 	(VolumenTrabajo np))
 
@@ -584,8 +616,10 @@
 		[ontologia_Class30013])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 101)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "PROP")
+	(PrctAprobado 84)
 	(PreRequesit [ontologia_Class30008])
 	(VolumenTrabajo np))
 
@@ -594,16 +628,20 @@
 	(CoRequesit [ontologia_Class30010])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 135)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "XC")
+	(PrctAprobado 64)
 	(VolumenTrabajo np))
 
 ([ontologia_Class30016] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 173)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "IDI")
+	(PrctAprobado 55)
 	(PreRequesit
 		[ontologia_Class30008]
 		[ontologia_Class30004])
@@ -613,12 +651,25 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 145)
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "PAR")
+	(PrctAprobado 71)
 	(PreRequesit
 		[ontologia_Class30011]
 		[ontologia_Class30008]
 		[ontologia_Class30010])
+	(VolumenTrabajo np))
+
+([ontologia_Class40000] of  Asignatura
+
+	(Dificultad np)
+	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
+	(ModalidadAsig [ontologia_Class40020])
+	(Nombre "CASO")
+	(PrctAprobado 100)
+	(PreRequesit [ontologia_Class40037])
 	(VolumenTrabajo np))
 
 ([ontologia_Class40001] of  Convocatoria
@@ -632,8 +683,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 40)
 	(ModalidadAsig [ontologia_Class40003])
 	(Nombre "G")
+	(PrctAprobado 90)
 	(PreRequesit
 		[ontologia_Class30016]
 		[ontologia_Class30014])
@@ -686,8 +739,10 @@
 		[ontologia_Class30014])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 48)
 	(ModalidadAsig [ontologia_Class40003])
 	(Nombre "A")
+	(PrctAprobado 81)
 	(PreRequesit [ontologia_Class30008])
 	(VolumenTrabajo np))
 
@@ -696,8 +751,10 @@
 	(CoRequesit [ontologia_Class30014])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 48)
 	(ModalidadAsig [ontologia_Class40003])
 	(Nombre "IA")
+	(PrctAprobado 92)
 	(PreRequesit [ontologia_Class30008])
 	(VolumenTrabajo np))
 
@@ -706,8 +763,10 @@
 	(CoRequesit [ontologia_Class30014])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 51)
 	(ModalidadAsig [ontologia_Class40003])
 	(Nombre "LI")
+	(PrctAprobado 63)
 	(PreRequesit [ontologia_Class30008])
 	(VolumenTrabajo np))
 
@@ -715,8 +774,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 61)
 	(ModalidadAsig [ontologia_Class40003])
 	(Nombre "LP")
+	(PrctAprobado 67)
 	(PreRequesit [ontologia_Class30014])
 	(VolumenTrabajo np))
 
@@ -725,8 +786,10 @@
 	(CoRequesit [ontologia_Class30014])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 48)
 	(ModalidadAsig [ontologia_Class40003])
 	(Nombre "TC")
+	(PrctAprobado 71)
 	(PreRequesit [ontologia_Class30008])
 	(VolumenTrabajo np))
 
@@ -734,8 +797,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "AA")
+	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class40021])
 	(VolumenTrabajo np))
 
@@ -744,8 +809,10 @@
 	(CoRequesit [ontologia_Class30014])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "APA")
+	(PrctAprobado 95)
 	(PreRequesit [ontologia_Class30009])
 	(VolumenTrabajo np))
 
@@ -754,8 +821,10 @@
 	(CoRequesit [ontologia_Class30014])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 19)
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "CAIM")
+	(PrctAprobado 95)
 	(PreRequesit
 		[ontologia_Class30006]
 		[ontologia_Class30009])
@@ -765,8 +834,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "CL")
+	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class40025])
 	(VolumenTrabajo np))
 
@@ -774,8 +845,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "CN")
+	(PrctAprobado 79)
 	(PreRequesit
 		[ontologia_Class30004]
 		[ontologia_Class30005])
@@ -785,8 +858,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 11)
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "IO")
+	(PrctAprobado 63)
 	(PreRequesit [ontologia_Class30009])
 	(VolumenTrabajo np))
 
@@ -794,8 +869,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40016])
 	(Nombre "SID")
+	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class40022])
 	(VolumenTrabajo np))
 
@@ -803,8 +880,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "AC2")
+	(PrctAprobado 65)
 	(PreRequesit [ontologia_Class30011])
 	(VolumenTrabajo np))
 
@@ -812,8 +891,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 23)
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "DSBM")
+	(PrctAprobado 91)
 	(PreRequesit [ontologia_Class30007])
 	(VolumenTrabajo np))
 
@@ -821,8 +902,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 24)
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "MP")
+	(PrctAprobado 92)
 	(PreRequesit
 		[ontologia_Class40033]
 		[ontologia_Class30017])
@@ -836,16 +919,20 @@
 		[ontologia_Class40037])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "PEC")
+	(PrctAprobado 100)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40037] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 24)
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "SO2")
+	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class30010])
 	(VolumenTrabajo np))
 
@@ -853,8 +940,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
+	(Matriculados 25)
 	(ModalidadAsig [ontologia_Class40019])
 	(Nombre "MI")
+	(PrctAprobado 96)
 	(PreRequesit [ontologia_Class30012])
 	(VolumenTrabajo np))
 
@@ -862,36 +951,44 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 24)
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "XC2")
+	(PrctAprobado 96)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40040] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
-	(ModalidadAsig [ontologia_Class40020])
+	(Matriculados 20)
+	(ModalidadAsig [ontologia_Class40018])
 	(Nombre "CASO")
-	(PreRequesit
-		[ontologia_Class40037]
-		[ontologia_Class40075])
+	(PrctAprobado 100)
+	(PreRequesit [ontologia_Class40075])
 	(VolumenTrabajo np))
 
 ([ontologia_Class40041] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "CPD")
-	(PreRequesit [ontologia_Class30015])
+	(PrctAprobado 79)
+	(PreRequesit
+		[ontologia_Class30015]
+		[ontologia_Class30010])
 	(VolumenTrabajo np))
 
 ([ontologia_Class40042] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "PAP")
+	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30017])
 	(VolumenTrabajo np))
 
@@ -899,8 +996,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "PCA")
+	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30011])
 	(VolumenTrabajo np))
 
@@ -908,8 +1007,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 19)
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "PDS")
+	(PrctAprobado 95)
 	(PreRequesit [ontologia_Class30007])
 	(VolumenTrabajo np))
 
@@ -917,8 +1018,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "STR")
+	(PrctAprobado 79)
 	(PreRequesit
 		[ontologia_Class40034]
 		[ontologia_Class30010])
@@ -928,8 +1031,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "VLSI")
+	(PrctAprobado 80)
 	(PreRequesit [ontologia_Class40033])
 	(VolumenTrabajo np))
 
@@ -937,8 +1042,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 60)
 	(ModalidadAsig [ontologia_Class40004])
 	(Nombre "AS")
+	(PrctAprobado 87)
 	(PreRequesit [ontologia_Class30013])
 	(VolumenTrabajo np))
 
@@ -946,8 +1053,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 42)
 	(ModalidadAsig [ontologia_Class40004])
 	(Nombre "ASW")
+	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class40047])
 	(VolumenTrabajo np))
 
@@ -956,8 +1065,10 @@
 	(CoRequesit [ontologia_Class30013])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 40)
 	(ModalidadAsig [ontologia_Class40004])
 	(Nombre "DBD")
+	(PrctAprobado 87)
 	(PreRequesit [ontologia_Class30006])
 	(VolumenTrabajo np))
 
@@ -965,8 +1076,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
-	(ModalidadAsig [ontologia_Class40004])
+	(Matriculados 60)
+	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "ER")
+	(PrctAprobado 92)
 	(PreRequesit
 		[ontologia_Class30012]
 		[ontologia_Class30013])
@@ -976,8 +1089,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 60)
 	(ModalidadAsig [ontologia_Class40004])
 	(Nombre "GPS")
+	(PrctAprobado 95)
 	(PreRequesit
 		[ontologia_Class30012]
 		[ontologia_Class30013])
@@ -987,8 +1102,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40004])
 	(Nombre "PES")
+	(PrctAprobado 100)
 	(PreRequesit
 		[ontologia_Class40050]
 		[ontologia_Class40051]
@@ -999,8 +1116,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 23)
 	(ModalidadAsig [ontologia_Class40017])
 	(Nombre "CBDE")
+	(PrctAprobado 83)
 	(PreRequesit
 		[ontologia_Class40070]
 		[ontologia_Class40049])
@@ -1010,8 +1129,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 37)
 	(ModalidadAsig [ontologia_Class40017])
 	(Nombre "CSI")
+	(PrctAprobado 100)
 	(PreRequesit
 		[ontologia_Class30006]
 		[ontologia_Class30012])
@@ -1021,8 +1142,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40017])
 	(Nombre "ECSDI")
+	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class40047])
 	(VolumenTrabajo np))
 
@@ -1030,8 +1153,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40017])
 	(Nombre "SIM")
+	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30009])
 	(VolumenTrabajo np))
 
@@ -1039,8 +1164,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 19)
 	(ModalidadAsig [ontologia_Class40017])
 	(Nombre "SOAD")
+	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class30010])
 	(VolumenTrabajo np))
 
@@ -1048,8 +1175,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 25)
 	(ModalidadAsig [ontologia_Class40017])
 	(Nombre "CAP")
+	(PrctAprobado 100)
 	(PreRequesit
 		[ontologia_Class30013]
 		[ontologia_Class30014])
@@ -1059,8 +1188,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
+	(Matriculados 18)
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "ADEI")
+	(PrctAprobado 83)
 	(PreRequesit
 		[ontologia_Class30006]
 		[ontologia_Class30009])
@@ -1070,8 +1201,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
+	(Matriculados 19)
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "DSI")
+	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class30013])
 	(VolumenTrabajo np))
 
@@ -1079,8 +1212,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
+	(Matriculados 14)
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "NE")
+	(PrctAprobado 100)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40064] of  Asignatura
@@ -1090,8 +1225,10 @@
 		[ontologia_Class40063])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
+	(Matriculados 9)
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "PSI")
+	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class40061])
 	(VolumenTrabajo np))
 
@@ -1099,8 +1236,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
+	(Matriculados 30)
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "SIO")
+	(PrctAprobado 100)
 	(PreRequesit
 		[ontologia_Class30012]
 		[ontologia_Class30006])
@@ -1110,8 +1249,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
+	(Matriculados 24)
 	(ModalidadAsig [ontologia_Class40019])
 	(Nombre "VPE")
+	(PrctAprobado 96)
 	(PreRequesit [ontologia_Class30012])
 	(VolumenTrabajo np))
 
@@ -1119,8 +1260,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10003])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40019])
 	(Nombre "ABD")
+	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30006])
 	(VolumenTrabajo np))
 
@@ -1129,8 +1272,10 @@
 	(CoRequesit [ontologia_Class30015])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 34)
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "ASO")
+	(PrctAprobado 94)
 	(PreRequesit [ontologia_Class30010])
 	(VolumenTrabajo np))
 
@@ -1138,8 +1283,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 24)
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "PI")
+	(PrctAprobado 87)
 	(PreRequesit
 		[ontologia_Class30015]
 		[ontologia_Class40021])
@@ -1152,8 +1299,10 @@
 		[ontologia_Class40072])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 8)
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "PTI")
+	(PrctAprobado 100)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40074] of  Asignatura
@@ -1163,16 +1312,20 @@
 		[ontologia_Class30015])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 46)
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "SI")
+	(PrctAprobado 86)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40075] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "SOA")
+	(PrctAprobado 95)
 	(PreRequesit [ontologia_Class30010])
 	(VolumenTrabajo np))
 
@@ -1180,8 +1333,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 23)
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "TXC")
+	(PrctAprobado 82)
 	(PreRequesit [ontologia_Class30015])
 	(VolumenTrabajo np))
 
@@ -1189,8 +1344,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 22)
 	(ModalidadAsig [ontologia_Class40018])
 	(Nombre "AD")
+	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class30015])
 	(VolumenTrabajo np))
 
@@ -1198,8 +1355,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40018])
 	(Nombre "IM")
+	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30015])
 	(VolumenTrabajo np))
 
@@ -1210,8 +1369,10 @@
 		[ontologia_Class30010])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40018])
 	(Nombre "SDX")
+	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30015])
 	(VolumenTrabajo np))
 
@@ -1219,8 +1380,10 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 19)
 	(ModalidadAsig [ontologia_Class40018])
 	(Nombre "TCI")
+	(PrctAprobado 68)
 	(PreRequesit
 		[ontologia_Class0]
 		[ontologia_Class30004]
@@ -1231,136 +1394,181 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 27)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "APSS")
+	(PrctAprobado 100)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40084] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 25)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "ASDP")
+	(PrctAprobado 92)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40085] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "ASMI")
+	(PrctAprobado 79)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40086] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 10)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "C")
+	(PrctAprobado 100)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40087] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 19)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "CCQ")
+	(PrctAprobado 95)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40088] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "CDI")
+	(PrctAprobado 79)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40089] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "DCS")
+	(PrctAprobado 79)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40090] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 12)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "FOMAR")
+	(PrctAprobado 83)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40091] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 12)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "GEOC")
+	(PrctAprobado 42)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40092] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "MD")
+	(PrctAprobado 79)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40093] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 15)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "ROB")
+	(PrctAprobado 73)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40094] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 18)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "SLDS")
+	(PrctAprobado 94)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40095] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "TGA")
+	(PrctAprobado 79)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40096] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 27)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "VC")
+	(PrctAprobado 85)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40097] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 30)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "VJ")
+	(PrctAprobado 87)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40098] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 27)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "WSE")
+	(PrctAprobado 96)
 	(VolumenTrabajo np))
 
 ([ontologia_Class40099] of  Asignatura
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10001])
+	(Matriculados 18)
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "APC")
+	(PrctAprobado 94)
+	(VolumenTrabajo np))
+
+([ontologia_Class50001] of  Asignatura
+
+	(Dificultad np)
+	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 11)
+	(ModalidadAsig [ontologia_Class40019])
+	(Nombre "IO")
+	(PrctAprobado 63)
+	(PreRequesit [ontologia_Class30009])
 	(VolumenTrabajo np))
 
 ([ontologia_Class50002] of  Convocatoria
@@ -1403,8 +1611,10 @@
 	(CoRequesit [ontologia_Class30010])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 20)
 	(ModalidadAsig [ontologia_Class40018])
 	(Nombre "CPD")
+	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30015])
 	(VolumenTrabajo np))
 
@@ -1470,6 +1680,19 @@
 	(Cuatrimestre 3)
 	(HorarioAsig [ontologia_Class10002])
 	(Nota 4.5))
+
+([ontologia_Class70002] of  Asignatura
+
+	(Dificultad np)
+	(HorarioAsig [ontologia_Class10002])
+	(Matriculados 60)
+	(ModalidadAsig [ontologia_Class40004])
+	(Nombre "ER")
+	(PrctAprobado 92)
+	(PreRequesit
+		[ontologia_Class30012]
+		[ontologia_Class30013])
+	(VolumenTrabajo np))
 )
 
 ;------------------ Aqui empieza el sistema experto --------------------;
@@ -1480,7 +1703,8 @@
 ; El sistema pregunta por la especialidad que prefiere el alumno
 ; Si el usuario no especifica la especialidad, el sistema elige como especialidad preferida a la que se ha matriculado mas (aprobados y suspendidos)
 ; Si al alumno le faltan asignatura obligatorias de especialidad por aprobar, +400
-; 
+; Si el usuario no especifica dificultad asumible, el sistema elige la maxima dificultad asumida el ultimo cuatrimestre
+; Si el usuario no especifica volumen de trabjo asumible, el sistema elige el maximo volumen asumido el ultimo cuatrimestre
 ;
 ;=================================================================================
 ;str-cat = string concat
@@ -1717,6 +1941,33 @@
     else
       (assert (pespecialidad no))
       (send ?alumno put-EspecialidadPref nil)
+  )
+)
+
+(defrule pregunta-horario
+  (not (noIdeaQuienEs))
+  ?alumno <- (object (is-a Alumno))
+  =>
+  (if (si-o-no-p "Tienes alguna preferencia de horario")
+    then
+      (bind ?respuesta (pregunta "Cual" Manana Tarde Both))
+      (switch ?respuesta
+        (case manana then
+          (bind ?h (find-instance ((?inst Manana)) TRUE))
+          (send ?alumno put-HorarioPref ?h)
+        )
+        (case tarde then
+          (bind ?h (find-instance ((?inst Tarde)) TRUE))
+          (send ?alumno put-HorarioPref ?h)
+        )
+        (case both then
+          (bind ?h (find-instance ((?inst Both)) TRUE))
+          (send ?alumno put-HorarioPref ?h)
+        )
+      )
+    else
+      (bind ?h (find-instance ((?inst Both)) TRUE))
+      (send ?alumno put-HorarioPref ?h)
   )
 )
 
