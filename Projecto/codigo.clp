@@ -2,8 +2,10 @@
 ; ==================HECHO DESDE LA ULTIMA ITERACION===============================
 ; Si el alumno le faltan asignaturas obligatorias por aprobar, +1000 a esas asig
 ; El sistema pregunta por la especialidad que prefiere el alumno
+; Si el usuario no especifica la especialidad, el sistema elige como especialidad preferida a la que se ha matriculado mas (aprobados y suspendidos)
 ; Si al alumno le faltan asignatura obligatorias de especialidad por aprobar, +400
-;
+; Si el usuario no especifica dificultad asumible, el sistema elige la maxima dificultad asumida el ultimo cuatrimestre
+; Si el usuario no especifica volumen de trabjo asumible, el sistema elige el maximo volumen asumido el ultimo cuatrimestre
 ;
 ;=================================================================================
 ;str-cat = string concat
@@ -84,6 +86,22 @@
       then 
       (bind ?max ?puntuacion)
       (bind ?ret ?elemento)
+    )
+  )
+  ?ret
+)
+
+; Funcion que retorna el elemento maximo
+(deffunction max-element ($?lista)
+  (bind ?max 0)
+  (bind ?ret 0)
+  (bind ?i 0)
+  (progn$ (?elemento $?lista)
+    (bind ?i (+ ?i 1))
+    (if (> ?elemento ?max)
+      then 
+      (bind ?max ?elemento)
+      (bind ?ret ?i)
     )
   )
   ?ret
@@ -236,9 +254,6 @@
   ?d <- (pespecialidad ?siono)
   ?alumno <- (object (is-a Alumno))
   =>
-  (retract ?a)
-  (retract ?b)
-  (retract ?c)
   (bind ?nombre (send ?alumno get-Nombre))
   (bind ?dni (send ?alumno get-DNI))
   (bind ?volumen (send ?alumno get-VolumenTrabajo))
@@ -266,6 +281,12 @@
 
   (printout t "" crlf)
   (printout t "Empezamos a calcular tus mejores opciones para asignaturas" crlf crlf)
+
+  (retract ?a)
+  (retract ?b)
+  (retract ?c)
+  (retract ?d)
+
   (focus calcular-preferencias)
 )
 
@@ -293,18 +314,56 @@
 
 ;Funcion encargada de calcular el volumen de trabajo a partir de las ultimas convocatorias
 (defrule calcular-volumen ; TODO hacer que haga algo inteligente
-  ?alumno <- (object (is-a Alumno) (VolumenTrabajo np))
+  ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (VolumenTrabajo np))
+  (ultimoCuatri ?cuatri)
   =>
   (printout t "DEBUG: Como el alumno ha elegido np en  el volumen de trabajo, lo calculamos nosotros" crlf) ; DEBUG
-  (send ?alumno put-VolumenTrabajo alto)
+  (bind ?alto FALSE)
+  (bind ?medio FALSE)
+  (bind ?bajo FALSE)
+  (progn$ (?conv ?convs)
+    (bind ?c (send (instance-address * ?conv) get-Cuatrimestre))
+    (if (eq ?cuatri ?c)
+      then
+        (bind ?asig (send (instance-address * ?conv) get-AsignaturaMatriculada))
+        (bind ?volumen (send (instance-address * ?asig) get-VolumenTrabajo))
+        (if (eq ?volumen alto) then (bind ?alto TRUE) else
+        (if (eq ?volumen medio) then (bind ?medio TRUE) else
+        (if (eq ?volumen bajo) then (bind ?bajo TRUE)) ))
+    )
+  )
+  (if (eq ?alto TRUE) then (send ?alumno put-VolumenTrabajo alto)
+    else (if (eq ?medio TRUE) then (send ?alumno put-VolumenTrabajo medio)
+      else (if (eq ?bajo TRUE) then (send ?alumno put-VolumenTrabajo bajo)
+        else (send ?alumno put-VolumenTrabajo alto))))
+  ;(send ?alumno put-VolumenTrabajo alto)
 )
 
 ;Funcion encargada de calcular la dificultad asumible a partir de las ultimas convocatorias
 (defrule calcular-dificultad ; TODO hacer que haga algo inteligente
-  ?alumno <- (object (is-a Alumno) (Dificultad np))
+  ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (Dificultad np))
+  (ultimoCuatri ?cuatri)
   =>
   (printout t "DEBUG: Como el alumno ha elegido np en la eleccion de dificultad, lo calculamos nosotros" crlf) ; DEBUG
-  (send ?alumno put-Dificultad alto)
+  (bind ?alto FALSE)
+  (bind ?medio FALSE)
+  (bind ?bajo FALSE)
+  (progn$ (?conv ?convs)
+    (bind ?c (send (instance-address * ?conv) get-Cuatrimestre))
+    (if (eq ?cuatri ?c)
+      then
+        (bind ?asig (send (instance-address * ?conv) get-AsignaturaMatriculada))
+        (bind ?volumen (send (instance-address * ?asig) get-Dificultad))
+        (if (eq ?volumen alto) then (bind ?alto TRUE) else
+        (if (eq ?volumen medio) then (bind ?medio TRUE) else
+        (if (eq ?volumen bajo) then (bind ?bajo TRUE)) ))
+    )
+  )
+  (if (eq ?alto TRUE) then (send ?alumno put-Dificultad alto)
+    else (if (eq ?medio TRUE) then (send ?alumno put-Dificultad medio)
+      else (if (eq ?bajo TRUE) then (send ?alumno put-Dificultad bajo)
+        else (send ?alumno put-Dificultad alto))))
+  
 )
 
 ; Regla encargada de sacar el numero de asignaturas que suele hacer el alumno
@@ -326,14 +385,66 @@
 )
 
 ; Regla que busca la especialidad mas afin al usuario
-(defrule calcular-especialidad ; TODO Buscar a especialidad mas acertada
+(defrule calcular-especialidad 
   ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (EspecialidadPref ?e))
   (test (eq ?e nil))
+  (not (calculado-especialidad))
   =>
-  (printout t "DERP" crlf)
+  (bind ?ac 0)
+  (bind ?comp 0)
+  (bind ?es 0)
+  (bind ?si 0)
+  (bind ?ti 0)
+  (progn$ (?conv $?convs)
+    (bind ?asig (send (instance-address * ?conv) get-AsignaturaMatriculada))
+    (switch (send (instance-address * ?asig) get-ModalidadAsig)
+      (case Esp_AC then 
+        (bind ?ac (+ ?ac 1))
+      )
+      (case Esp_Comp then
+        (bind ?comp (+ ?comp 1))
+      )
+      (case Esp_ES then
+        (bind ?es (+ ?es 1))
+      )
+      (case Esp_SI then
+        (bind ?si (+ ?si 1))
+      )
+      (case Esp_TI then
+        (bind ?ti (+ ?ti 1))
+      )
+    )
+  )
+  (bind $?res (create$))
+  (bind $?res (insert$ $?res 1 ?ac))
+  (bind $?res (insert$ $?res 2 ?comp))
+  (bind $?res (insert$ $?res 3 ?es))
+  (bind $?res (insert$ $?res 4 ?si))
+  (bind $?res (insert$ $?res 5 ?ti))
+  (switch (max-element $?res)
+    (case 1 then
+      (send ?alumno put-EspecialidadPref (find-instance ((?inst Esp_AC)) TRUE))
+    )
+    (case 2 then
+      (send ?alumno put-EspecialidadPref (find-instance ((?inst Esp_Comp)) TRUE))
+    )
+    (case 3 then
+      (send ?alumno put-EspecialidadPref (find-instance ((?inst Esp_ES)) TRUE))
+    )
+    (case 4 then
+      (send ?alumno put-EspecialidadPref (find-instance ((?inst Esp_SI)) TRUE))
+    )
+    (case 5 then
+      (send ?alumno put-EspecialidadPref (find-instance ((?inst Esp_TI)) TRUE))
+    )
+    (case 0 then
+      (printout t "DEBUG: No ha hecho nada de especialidad" crlf))
+  )
+  (assert (calculado-especialidad))
 )
 
 (defrule pasar-a-seleccion
+  (declare (salience -10))
   ?alumno <- (object (is-a Alumno) (VolumenTrabajo alto|medio|bajo) (Dificultad alto|medio|bajo) (NumeroAsignaturas ?na))
   (test (neq ?na np))
   =>
@@ -484,7 +595,7 @@
   (printout t "DEBUG: +1000 La asignaura " (send ?asig get-Nombre) " es obligatoria y no esta aprovada" crlf)
 )
 
-; Regla que le da puntos a las asignaturas de la especialidad preferida
+; Regla que le da puntos a las asignaturas obligatorias de la especialidad preferida
 (defrule asignaturas-especialidad
   ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
   (object (is-a Alumno) (EspecialidadPref ?especialidad))
