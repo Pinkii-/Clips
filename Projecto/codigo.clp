@@ -245,6 +245,34 @@
   )
 )
 
+(defrule pregunta-horario
+  (not (noIdeaQuienEs))
+  ?alumno <- (object (is-a Alumno))
+  =>
+  (if (si-o-no-p "Tienes alguna preferencia de horario")
+    then
+      (bind ?respuesta (pregunta "Cual" Manana Tarde Both))
+      (switch ?respuesta
+        (case manana then
+          (bind ?h (find-instance ((?inst Manana)) TRUE))
+          (send ?alumno put-HorarioPref ?h)
+        )
+        (case tarde then
+          (bind ?h (find-instance ((?inst Tarde)) TRUE))
+          (send ?alumno put-HorarioPref ?h)
+        )
+        (case both then
+          (bind ?h (find-instance ((?inst Both)) TRUE))
+          (send ?alumno put-HorarioPref ?h)
+        )
+      )
+    else
+      (bind ?h (find-instance ((?inst Both)) TRUE))
+      (send ?alumno put-HorarioPref ?h)
+  )
+  (assert (phorario))
+)
+
 ; Mira si ya hemos hecho todas las preguntas
 (defrule preguntas-acabadas
   (not (noIdeaQuienEs))
@@ -252,6 +280,7 @@
   ?b <- (pcarga)
   ?c <- (nAsig)
   ?d <- (pespecialidad ?siono)
+  ?e <- (phorario)
   ?alumno <- (object (is-a Alumno))
   =>
   (bind ?nombre (send ?alumno get-Nombre))
@@ -543,8 +572,10 @@
   (assert (q-prerequesitos))
 )
 
-
-
+; Regla que quita las asignaturas de mañanas si el usuario quiere solo de tardes, o viceversa
+(defrule quitar-horario-incompatible
+  ?asigRec <- (object (is-a AsignaturaRecomendada))
+)
 
 
 (defrule saltar-a-calculo
