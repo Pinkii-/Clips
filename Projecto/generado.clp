@@ -1476,9 +1476,9 @@
 
 
 ; ==================HECHO DESDE LA ULTIMA ITERACION===============================
-; Si el alumno le faltan asignaturas obligatorias por aprovar, +1000 a esas asig
+; Si el alumno le faltan asignaturas obligatorias por aprobar, +1000 a esas asig
 ; El sistema pregunta por la especialidad que prefiere el alumno
-;
+; Si al alumno le faltan asignatura obligatorias de especialidad por aprobar, +400
 ;
 ;
 ;=================================================================================
@@ -1699,6 +1699,7 @@
       (assert (pespecialidad si))
     else
       (assert (pespecialidad no))
+      (send ?alumno put-EspecialidadPref nil)
   )
 )
 
@@ -1782,7 +1783,6 @@
   (send ?alumno put-Dificultad alto)
 )
 
-; TODO hacer una regla que calcule el numero de asignaturas que el alumno quiere hacer
 ; Regla encargada de sacar el numero de asignaturas que suele hacer el alumno
 (defrule calcular-numero-asignaturas
   ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (NumeroAsignaturas ?na))
@@ -1801,7 +1801,15 @@
   (printout t "DEBUG: El numero de asignaturas es " ?num-asig crlf) ; DEBUG
 )
 
-(defrule pasar-a-calcular
+; Regla que busca la especialidad mas afin al usuario
+(defrule calcular-especialidad
+  ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (EspecialidadPref ?e))
+  (test (eq ?e nil))
+  =>
+  (printout t "DERP" crlf)
+)
+
+(defrule pasar-a-seleccion
   ?alumno <- (object (is-a Alumno) (VolumenTrabajo alto|medio|bajo) (Dificultad alto|medio|bajo) (NumeroAsignaturas ?na))
   (test (neq ?na np))
   =>
@@ -1956,6 +1964,7 @@
 (defrule asignaturas-especialidad
   ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
   (object (is-a Alumno) (EspecialidadPref ?especialidad))
+  (test (neq ?especialidad nil))
   (test (eq (send (instance-address * (send ?asig get-ModalidadAsig)) get-Descripcion) (send ?especialidad get-Descripcion)))
   (not (asignatura-especialidad ?asig))
   =>
