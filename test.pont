@@ -1,4 +1,4 @@
-; Sun May 17 21:14:35 GMT+01:00 2015
+; Mon May 18 21:07:12 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -58,6 +58,11 @@
 	(multislot PreRequesit
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
+		(create-accessor read-write))
+	(single-slot HorarioPref
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot AsignaturasRecomendadas
 		(type INSTANCE)
@@ -223,6 +228,11 @@
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
 		(default np)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot HorarioPref
+		(type INSTANCE)
+;+		(allowed-classes Horario)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(multislot Convocatorias

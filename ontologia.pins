@@ -1,4 +1,4 @@
-; Mon May 18 21:53:43 CEST 2015
+; Mon May 18 21:06:48 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -25,7 +25,7 @@
 
 ([ontologia_Class10001] of  Both
 
-	(Descripcion "Manana y Tarde"))
+	(Descripcion "Both"))
 
 ([ontologia_Class10002] of  Manana
 
