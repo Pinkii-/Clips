@@ -1,4 +1,4 @@
-; Mon May 18 00:08:02 GMT+01:00 2015
+; Mon May 18 21:24:05 CEST 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -288,6 +288,15 @@
 		[ontologia_Class30010])
 	(VolumenTrabajo np))
 
+([ontologia_Class40000] of  Asignatura
+
+	(Dificultad np)
+	(HorarioAsig [ontologia_Class10002])
+	(ModalidadAsig [ontologia_Class40020])
+	(Nombre "CASO")
+	(PreRequesit [ontologia_Class40037])
+	(VolumenTrabajo np))
+
 ([ontologia_Class40001] of  Convocatoria
 
 	(AsignaturaMatriculada [ontologia_Class10000])
@@ -537,11 +546,9 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
-	(ModalidadAsig [ontologia_Class40020])
+	(ModalidadAsig [ontologia_Class40018])
 	(Nombre "CASO")
-	(PreRequesit
-		[ontologia_Class40037]
-		[ontologia_Class40075])
+	(PreRequesit [ontologia_Class40075])
 	(VolumenTrabajo np))
 
 ([ontologia_Class40041] of  Asignatura
@@ -550,7 +557,9 @@
 	(HorarioAsig [ontologia_Class10002])
 	(ModalidadAsig [ontologia_Class40020])
 	(Nombre "CPD")
-	(PreRequesit [ontologia_Class30015])
+	(PreRequesit
+		[ontologia_Class30015]
+		[ontologia_Class30010])
 	(VolumenTrabajo np))
 
 ([ontologia_Class40042] of  Asignatura
@@ -632,7 +641,7 @@
 
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
-	(ModalidadAsig [ontologia_Class40004])
+	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "ER")
 	(PreRequesit
 		[ontologia_Class30012]
@@ -1030,6 +1039,15 @@
 	(Nombre "APC")
 	(VolumenTrabajo np))
 
+([ontologia_Class50001] of  Asignatura
+
+	(Dificultad np)
+	(HorarioAsig [ontologia_Class10002])
+	(ModalidadAsig [ontologia_Class40019])
+	(Nombre "IO")
+	(PreRequesit [ontologia_Class30009])
+	(VolumenTrabajo np))
+
 ([ontologia_Class50002] of  Convocatoria
 
 	(AsignaturaMatriculada [ontologia_Class0])
@@ -1137,3 +1155,14 @@
 	(Cuatrimestre 3)
 	(HorarioAsig [ontologia_Class10002])
 	(Nota 4.5))
+
+([ontologia_Class70002] of  Asignatura
+
+	(Dificultad np)
+	(HorarioAsig [ontologia_Class10002])
+	(ModalidadAsig [ontologia_Class40004])
+	(Nombre "ER")
+	(PreRequesit
+		[ontologia_Class30012]
+		[ontologia_Class30013])
+	(VolumenTrabajo np))
