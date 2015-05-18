@@ -2,8 +2,9 @@
 ; ==================HECHO DESDE LA ULTIMA ITERACION===============================
 ; Si el alumno le faltan asignaturas obligatorias por aprobar, +1000 a esas asig
 ; El sistema pregunta por la especialidad que prefiere el alumno
+; Si el usuario no especifica la especialidad, el sistema elige como especialidad preferida a la que se ha matriculado mas (aprobados y suspendidos)
 ; Si al alumno le faltan asignatura obligatorias de especialidad por aprobar, +400
-;
+; 
 ;
 ;=================================================================================
 ;str-cat = string concat
@@ -84,6 +85,22 @@
       then 
       (bind ?max ?puntuacion)
       (bind ?ret ?elemento)
+    )
+  )
+  ?ret
+)
+
+; Funcion que retorna el elemento maximo
+(deffunction max-element ($?lista)
+  (bind ?max 0)
+  (bind ?ret 0)
+  (bind ?i 0)
+  (progn$ (?elemento $?lista)
+    (bind ?i (+ ?i 1))
+    (if (> ?elemento ?max)
+      then 
+      (bind ?max ?elemento)
+      (bind ?ret ?i)
     )
   )
   ?ret
@@ -236,9 +253,6 @@
   ?d <- (pespecialidad ?siono)
   ?alumno <- (object (is-a Alumno))
   =>
-  (retract ?a)
-  (retract ?b)
-  (retract ?c)
   (bind ?nombre (send ?alumno get-Nombre))
   (bind ?dni (send ?alumno get-DNI))
   (bind ?volumen (send ?alumno get-VolumenTrabajo))
@@ -266,6 +280,12 @@
 
   (printout t "" crlf)
   (printout t "Empezamos a calcular tus mejores opciones para asignaturas" crlf crlf)
+
+  (retract ?a)
+  (retract ?b)
+  (retract ?c)
+  (retract ?d)
+
   (focus calcular-preferencias)
 )
 
@@ -329,8 +349,61 @@
 (defrule calcular-especialidad ; TODO Buscar a especialidad mas acertada
   ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (EspecialidadPref ?e))
   (test (eq ?e nil))
+  (not (calculado-especialidad))
   =>
-  (printout t "DERP" crlf)
+  (bind ?ac 0)
+  (bind ?comp 0)
+  (bind ?es 0)
+  (bind ?si 0)
+  (bind ?ti 0)
+  (progn$ (?conv $?convs)
+    (bind ?asig (send (instance-address * ?conv) get-AsignaturaMatriculada))
+    (switch (send (instance-address * ?asig) get-ModalidadAsig)
+      (case Esp_AC then 
+        (bind ?ac (+ ?ac 1))
+      )
+      (case Esp_Comp then
+        (bind ?comp (+ ?comp 1))
+      )
+      (case Esp_ES then
+        (bind ?es (+ ?es 1))
+      )
+      (case Esp_SI then
+        (bind ?si (+ ?si 1))
+      )
+      (case Esp_TI then
+        (bind ?ti (+ ?ti 1))
+      )
+    )
+  )
+  (bind $?res (create$))
+  (bind $?res (insert$ $?res 1 ?ac))
+  (bind $?res (insert$ $?res 2 ?comp))
+  (bind $?res (insert$ $?res 3 ?es))
+  (bind $?res (insert$ $?res 4 ?si))
+  (bind $?res (insert$ $?res 5 ?ti))
+  (switch (max-element $?res)
+    (case 1 then
+      (send ?alumno put-EspecialidadPref (find-instance ((?inst Esp_AC)) TRUE))
+    )
+    (case 2 then
+      (send ?alumno put-EspecialidadPref (find-instance ((?inst Esp_Comp)) TRUE))
+    )
+    (case 3 then
+      (send ?alumno put-EspecialidadPref (find-instance ((?inst Esp_ES)) TRUE))
+    )
+    (case 4 then
+      (send ?alumno put-EspecialidadPref (find-instance ((?inst Esp_SI)) TRUE))
+    )
+    (case 5 then
+      (send ?alumno put-EspecialidadPref (find-instance ((?inst Esp_TI)) TRUE))
+    )
+    (case 0 then
+      (printout t "DEBUG: No ha hecho nada de especialidad" crlf))
+  )
+
+;printout t "DERP" crlf)
+  (assert (calculado-especialidad))
 )
 
 (defrule pasar-a-seleccion
