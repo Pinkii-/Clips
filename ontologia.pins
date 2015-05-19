@@ -1,4 +1,4 @@
-; Tue May 19 12:11:55 GMT+01:00 2015
+; Tue May 19 13:51:55 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -1285,6 +1285,14 @@
 	(PreRequesit [ontologia_Class30015])
 	(VolumenTrabajo bajo))
 
+([ontologia_Class60000] of  Tema
+
+	(Nombre "Fisica"))
+
+([ontologia_Class60001] of  Tema
+
+	(Nombre "Matematicas"))
+
 ([ontologia_Class60002] of  Convocatoria
 
 	(AsignaturaMatriculada [ontologia_Class20004])
@@ -1360,3 +1368,11 @@
 		[ontologia_Class30012]
 		[ontologia_Class30013])
 	(VolumenTrabajo bajo))
+
+([ontologia_Class80002] of  Tema
+
+	(Nombre "Programacion"))
+
+([ontologia_Class80003] of  Tema
+
+	(Nombre "Arquitectura Computadors"))

@@ -1,6 +1,6 @@
 ;---------- Aqui empiezan las clases generadas por el protege ----------;
 
-; Tue May 19 12:12:06 GMT+01:00 2015
+; Tue May 19 13:52:06 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -19,14 +19,14 @@
 ;+		(allowed-classes Especialidad)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot AlumnoRecomendado
-		(type INSTANCE)
-;+		(allowed-classes Alumno)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot PrctAprobado
 		(type INTEGER)
 		(range 0 100)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot AlumnoRecomendado
+		(type INSTANCE)
+;+		(allowed-classes Alumno)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Descripcion
@@ -36,6 +36,10 @@
 	(single-slot Nombre
 		(type STRING)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(multislot Temas
+		(type INSTANCE)
+;+		(allowed-classes Tema)
 		(create-accessor read-write))
 	(single-slot DNI
 		(type INTEGER)
@@ -134,16 +138,16 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(single-slot HorarioAsig
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
 		(default np)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot HorarioAsig
-		(type INSTANCE)
-;+		(allowed-classes Horario)
-;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot ModalidadAsig
 		(type INSTANCE)
@@ -232,15 +236,15 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(multislot Convocatorias
-		(type INSTANCE)
-;+		(allowed-classes Convocatoria)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
 	(single-slot HorarioPref
 		(type INSTANCE)
 ;+		(allowed-classes Horario)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot Convocatorias
+		(type INSTANCE)
+;+		(allowed-classes Convocatoria)
+		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
 	(single-slot EspecialidadPref
 		(type INSTANCE)
@@ -250,6 +254,10 @@
 	(single-slot Nombre
 		(type STRING)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(multislot Temas
+		(type INSTANCE)
+;+		(allowed-classes Tema)
 		(create-accessor read-write))
 	(single-slot DNI
 		(type INTEGER)
@@ -349,7 +357,7 @@
 		(create-accessor read-write)))
 ;-------- Aqui empiezan las instancias generadas por el protege --------;
 (definstances instances
-; Tue May 19 12:12:06 GMT+01:00 2015
+; Tue May 19 13:52:06 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -1636,6 +1644,14 @@
 	(PreRequesit [ontologia_Class30015])
 	(VolumenTrabajo bajo))
 
+([ontologia_Class60000] of  Tema
+
+	(Nombre "Fisica"))
+
+([ontologia_Class60001] of  Tema
+
+	(Nombre "Matematicas"))
+
 ([ontologia_Class60002] of  Convocatoria
 
 	(AsignaturaMatriculada [ontologia_Class20004])
@@ -1711,6 +1727,14 @@
 		[ontologia_Class30012]
 		[ontologia_Class30013])
 	(VolumenTrabajo bajo))
+
+([ontologia_Class80002] of  Tema
+
+	(Nombre "Programacion"))
+
+([ontologia_Class80003] of  Tema
+
+	(Nombre "Arquitectura Computadors"))
 )
 
 ;------------------ Aqui empieza el sistema experto --------------------;
@@ -1820,6 +1844,7 @@
   )
   ?ret
 )
+
 
 ;
 
@@ -1993,13 +2018,30 @@
   =>
   (bind $?temas (find-all-instances ((?inst Tema)) TRUE))
   (bind $?respuestas (create$))
-  (progn$ (?t $?temas) (bind $?respuesta (insert$ ?respuestas (+ (length $?respuestas) 1) FALSE)))
-  
+  (progn$ (?t $?temas) (bind $?respuestas (insert$ ?respuestas (+ (length $?respuestas) 1) FALSE)))
+  (bind ?respuesta nil)
   (while (or (eq ?respuesta nil)(neq ?respuesta 0))
-    ;(imprimir-temas $?temas $?respuestas)
+    
+    (printout t "Temas:" crlf)
+    (bind ?i 1)
+    (while (< (- ?i 1) (length $?temas))
+      (if (eq (nth$ ?i $?respuestas) TRUE) then (printout t "*"))
+      (printout t ?i ". " (send (nth$ ?i $?temas) get-Nombre) crlf)
+      (bind ?i (+ ?i 1))
+    )
+
     (bind ?respuesta (pregunta-numerica "Que temas te interesan? (0 para continuar)" 0 (length$ $?temas) ))
-    (replace$ $?respuesta ?respuesta TRUE)
+    (if (neq ?respuesta 0) then (bind $?respuestas (replace$ $?respuestas ?respuesta ?respuesta TRUE)))
   )
+  (bind $?ret (create$))
+  (bind ?i 1)
+  (while (< (- ?i 1) (length $?temas))
+    (if (eq (nth$ ?i $?respuestas) TRUE) 
+      then (bind $?ret (insert$ $?ret (+ (length $?ret) 1) (nth$ ?i $?temas)))        
+    )
+    (bind ?i (+ ?i 1))
+  )
+  (send ?alumno put-Temas $?ret)
   (assert (ptemas))
 )
 

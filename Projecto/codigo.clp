@@ -104,6 +104,7 @@
   ?ret
 )
 
+
 ;
 
 (defrule olakase
@@ -276,13 +277,30 @@
   =>
   (bind $?temas (find-all-instances ((?inst Tema)) TRUE))
   (bind $?respuestas (create$))
-  (progn$ (?t $?temas) (bind $?respuesta (insert$ ?respuestas (+ (length $?respuestas) 1) FALSE)))
-  
+  (progn$ (?t $?temas) (bind $?respuestas (insert$ ?respuestas (+ (length $?respuestas) 1) FALSE)))
+  (bind ?respuesta nil)
   (while (or (eq ?respuesta nil)(neq ?respuesta 0))
-    ;(imprimir-temas $?temas $?respuestas)
+    
+    (printout t "Temas:" crlf)
+    (bind ?i 1)
+    (while (< (- ?i 1) (length $?temas))
+      (if (eq (nth$ ?i $?respuestas) TRUE) then (printout t "*"))
+      (printout t ?i ". " (send (nth$ ?i $?temas) get-Nombre) crlf)
+      (bind ?i (+ ?i 1))
+    )
+
     (bind ?respuesta (pregunta-numerica "Que temas te interesan? (0 para continuar)" 0 (length$ $?temas) ))
-    (replace$ $?respuesta ?respuesta TRUE)
+    (if (neq ?respuesta 0) then (bind $?respuestas (replace$ $?respuestas ?respuesta ?respuesta TRUE)))
   )
+  (bind $?ret (create$))
+  (bind ?i 1)
+  (while (< (- ?i 1) (length $?temas))
+    (if (eq (nth$ ?i $?respuestas) TRUE) 
+      then (bind $?ret (insert$ $?ret (+ (length $?ret) 1) (nth$ ?i $?temas)))        
+    )
+    (bind ?i (+ ?i 1))
+  )
+  (send ?alumno put-Temas $?ret)
   (assert (ptemas))
 )
 
