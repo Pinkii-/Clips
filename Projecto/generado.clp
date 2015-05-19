@@ -1,6 +1,6 @@
 ;---------- Aqui empiezan las clases generadas por el protege ----------;
 
-; Mon May 18 23:02:37 GMT+01:00 2015
+; Tue May 19 12:12:06 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -19,14 +19,14 @@
 ;+		(allowed-classes Especialidad)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot PrctAprobado
-		(type INTEGER)
-		(range 0 100)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot AlumnoRecomendado
 		(type INSTANCE)
 ;+		(allowed-classes Alumno)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot PrctAprobado
+		(type INTEGER)
+		(range 0 100)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Descripcion
@@ -134,16 +134,16 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot HorarioAsig
-		(type INSTANCE)
-;+		(allowed-classes Horario)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
 		(default np)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot HorarioAsig
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot ModalidadAsig
 		(type INSTANCE)
@@ -232,15 +232,15 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot HorarioPref
-		(type INSTANCE)
-;+		(allowed-classes Horario)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(multislot Convocatorias
 		(type INSTANCE)
 ;+		(allowed-classes Convocatoria)
 		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot HorarioPref
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot EspecialidadPref
 		(type INSTANCE)
@@ -339,9 +339,17 @@
 (defclass OptEsp_AC
 	(is-a OptativaEspecial)
 	(role concrete))
+
+(defclass Tema
+	(is-a USER)
+	(role concrete)
+	(single-slot Nombre
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write)))
 ;-------- Aqui empiezan las instancias generadas por el protege --------;
 (definstances instances
-; Mon May 18 23:02:37 GMT+01:00 2015
+; Tue May 19 12:12:06 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -1709,7 +1717,7 @@
 
 
 ; ==================HECHO DESDE LA ULTIMA ITERACION===============================
-; Ahora a dificultad se calcula tambien a partir del procentaje de aprobados que tiene esa asignatura
+; Ahora a dificultad se calcula tambien a partir del procentaje de aprobados que tiene esa asignaturas
 ;=================================================================================
 ;str-cat = string concat
 
@@ -1742,7 +1750,7 @@
     (format t "¿%s? (%s) " ?pregunta (implode$ ?valores-permitidos))
     (bind ?respuesta (read))
   )
-  (lowcase ?respuesta)
+  ?respuesta
 )
 
 ; Obtiene una respuesta 
@@ -1885,7 +1893,7 @@
   (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
   =>
-  (bind ?respuesta (pregunta "Que carga de trabajo quieres asumir" Alto Medio Bajo np))
+  (bind ?respuesta (lowcase(pregunta "Que carga de trabajo quieres asumir" Alto Medio Bajo np)))
   (send ?alumno put-VolumenTrabajo ?respuesta)
   (assert (pcarga))
 )
@@ -1895,7 +1903,7 @@
   (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
   =>
-  (bind ?respuesta (pregunta "Que dificultad quieres asumir" Alto Medio Bajo np))
+  (bind ?respuesta (lowcase (pregunta "Que dificultad quieres asumir" Alto Medio Bajo np)))
   (send ?alumno put-Dificultad ?respuesta)
   (assert (pdificultad))
 )
@@ -1921,7 +1929,7 @@
   =>
   (if (si-o-no-p "Tienes preferencia por alguna especialidad")
     then
-      (bind ?respuesta (pregunta "Cual" AC Comp ES SI TI))
+      (bind ?respuesta (lowcase(pregunta "Cual" AC Comp ES SI TI)))
       (switch ?respuesta
         (case ac then 
           (bind ?especialidad (find-instance ((?inst Esp_AC)) TRUE))
@@ -1957,7 +1965,7 @@
   =>
   (if (si-o-no-p "Tienes alguna preferencia de horario")
     then
-      (bind ?respuesta (pregunta "Cual" Manana Tarde Both))
+      (bind ?respuesta (lowcase(pregunta "Cual" Manana Tarde Both)))
       (switch ?respuesta
         (case manana then
           (bind ?h (find-instance ((?inst Manana)) TRUE))
@@ -1979,6 +1987,22 @@
   (assert (phorario))
 )
 
+(defrule pregunta-temas
+  (not (noIdeaQuienEs))
+  ?alumno <- (object (is-a Alumno))
+  =>
+  (bind $?temas (find-all-instances ((?inst Tema)) TRUE))
+  (bind $?respuestas (create$))
+  (progn$ (?t $?temas) (bind $?respuesta (insert$ ?respuestas (+ (length $?respuestas) 1) FALSE)))
+  
+  (while (or (eq ?respuesta nil)(neq ?respuesta 0))
+    ;(imprimir-temas $?temas $?respuestas)
+    (bind ?respuesta (pregunta-numerica "Que temas te interesan? (0 para continuar)" 0 (length$ $?temas) ))
+    (replace$ $?respuesta ?respuesta TRUE)
+  )
+  (assert (ptemas))
+)
+
 ; Mira si ya hemos hecho todas las preguntas
 (defrule preguntas-acabadas
   (not (noIdeaQuienEs))
@@ -1987,6 +2011,7 @@
   ?c <- (nAsig)
   ?d <- (pespecialidad ?siono)
   ?e <- (phorario)
+  ?f <- (ptemas)
   ?alumno <- (object (is-a Alumno))
   =>
   (bind ?nombre (send ?alumno get-Nombre))
@@ -2024,7 +2049,7 @@
   (retract ?c)
   (retract ?d)
   (retract ?e)
-
+  (retract ?f)
   (focus calcular-preferencias)
 )
 

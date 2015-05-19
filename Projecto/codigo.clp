@@ -1,6 +1,6 @@
 
 ; ==================HECHO DESDE LA ULTIMA ITERACION===============================
-; Ahora a dificultad se calcula tambien a partir del procentaje de aprobados que tiene esa asignatura
+; Ahora a dificultad se calcula tambien a partir del procentaje de aprobados que tiene esa asignaturas
 ;=================================================================================
 ;str-cat = string concat
 
@@ -33,7 +33,7 @@
     (format t "¿%s? (%s) " ?pregunta (implode$ ?valores-permitidos))
     (bind ?respuesta (read))
   )
-  (lowcase ?respuesta)
+  ?respuesta
 )
 
 ; Obtiene una respuesta 
@@ -176,7 +176,7 @@
   (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
   =>
-  (bind ?respuesta (pregunta "Que carga de trabajo quieres asumir" Alto Medio Bajo np))
+  (bind ?respuesta (lowcase(pregunta "Que carga de trabajo quieres asumir" Alto Medio Bajo np)))
   (send ?alumno put-VolumenTrabajo ?respuesta)
   (assert (pcarga))
 )
@@ -186,7 +186,7 @@
   (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
   =>
-  (bind ?respuesta (pregunta "Que dificultad quieres asumir" Alto Medio Bajo np))
+  (bind ?respuesta (lowcase (pregunta "Que dificultad quieres asumir" Alto Medio Bajo np)))
   (send ?alumno put-Dificultad ?respuesta)
   (assert (pdificultad))
 )
@@ -212,7 +212,7 @@
   =>
   (if (si-o-no-p "Tienes preferencia por alguna especialidad")
     then
-      (bind ?respuesta (pregunta "Cual" AC Comp ES SI TI))
+      (bind ?respuesta (lowcase(pregunta "Cual" AC Comp ES SI TI)))
       (switch ?respuesta
         (case ac then 
           (bind ?especialidad (find-instance ((?inst Esp_AC)) TRUE))
@@ -248,7 +248,7 @@
   =>
   (if (si-o-no-p "Tienes alguna preferencia de horario")
     then
-      (bind ?respuesta (pregunta "Cual" Manana Tarde Both))
+      (bind ?respuesta (lowcase(pregunta "Cual" Manana Tarde Both)))
       (switch ?respuesta
         (case manana then
           (bind ?h (find-instance ((?inst Manana)) TRUE))
@@ -270,6 +270,22 @@
   (assert (phorario))
 )
 
+(defrule pregunta-temas
+  (not (noIdeaQuienEs))
+  ?alumno <- (object (is-a Alumno))
+  =>
+  (bind $?temas (find-all-instances ((?inst Tema)) TRUE))
+  (bind $?respuestas (create$))
+  (progn$ (?t $?temas) (bind $?respuesta (insert$ ?respuestas (+ (length $?respuestas) 1) FALSE)))
+  
+  (while (or (eq ?respuesta nil)(neq ?respuesta 0))
+    ;(imprimir-temas $?temas $?respuestas)
+    (bind ?respuesta (pregunta-numerica "Que temas te interesan? (0 para continuar)" 0 (length$ $?temas) ))
+    (replace$ $?respuesta ?respuesta TRUE)
+  )
+  (assert (ptemas))
+)
+
 ; Mira si ya hemos hecho todas las preguntas
 (defrule preguntas-acabadas
   (not (noIdeaQuienEs))
@@ -278,6 +294,7 @@
   ?c <- (nAsig)
   ?d <- (pespecialidad ?siono)
   ?e <- (phorario)
+  ?f <- (ptemas)
   ?alumno <- (object (is-a Alumno))
   =>
   (bind ?nombre (send ?alumno get-Nombre))
@@ -315,7 +332,7 @@
   (retract ?c)
   (retract ?d)
   (retract ?e)
-
+  (retract ?f)
   (focus calcular-preferencias)
 )
 
