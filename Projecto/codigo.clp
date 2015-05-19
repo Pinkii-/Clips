@@ -1,6 +1,8 @@
 
 ; ==================HECHO DESDE LA ULTIMA ITERACION===============================
 ; Ahora a dificultad se calcula tambien a partir del procentaje de aprobados que tiene esa asignaturas
+; Existen los temas
+; El sistema le pregunta al usuario que temas prefiere y los guarda
 ;=================================================================================
 ;str-cat = string concat
 
