@@ -1,13 +1,6 @@
 
 ; ==================HECHO DESDE LA ULTIMA ITERACION===============================
-; Si el alumno le faltan asignaturas obligatorias por aprobar, +1000 a esas asig
-; El sistema pregunta por la especialidad que prefiere el alumno
-; Si el usuario no especifica la especialidad, el sistema elige como especialidad preferida a la que se ha matriculado mas (aprobados y suspendidos)
-; Si al alumno le faltan asignatura obligatorias de especialidad por aprobar, +400
-; Si el usuario no especifica dificultad asumible, el sistema elige la maxima dificultad asumida el ultimo cuatrimestre
-; Si el usuario no especifica volumen de trabjo asumible, el sistema elige el maximo volumen asumido el ultimo cuatrimestre
-; El sistema pregunta por el horario preferido del usuario. Si no lo da, se elige cualquier horario como preferido
-; El sistema elimina de recomendaciones las asignaturas imcompatibles con el horario deseado
+;
 ;=================================================================================
 ;str-cat = string concat
 
@@ -20,6 +13,9 @@
 ;si no importa, calcularlo del historial
 
 ;dar recomendación
+
+; TODO GENERAL
+; Calcular la dificultad de las asignaturas segun su porcentaje de aprobados
 
 (defmodule MAIN (export ?ALL))
 
@@ -534,7 +530,7 @@
 (defrule quitar-dificultad-alta
   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
   (object (is-a Alumno) (Dificultad medio))
-  (test (eq alto (send ?asig get-Dificultad)))
+  (test (or (eq alto (send ?asig get-Dificultad)) (> 51 (send ?asig get-PrctAprobado))))
   =>
   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta " crlf)
   (send ?a delete)
@@ -543,7 +539,7 @@
 (defrule quitar-dificultad-media
   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
   (object (is-a Alumno) (Dificultad bajo))
-  (test (or (eq alto (send ?asig get-Dificultad)) (eq medio (send ?asig get-Dificultad))))
+  (test (or (eq alto (send ?asig get-Dificultad)) (eq medio (send ?asig get-Dificultad)) (> 85 (send ?asig get-PrctAprobado))))
   =>
   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta o media " crlf)
   (send ?a delete)
@@ -654,6 +650,7 @@
   (assert (asignatura-especialidad ?asig))
   (printout t "DEBUG: +400 La asignaura " (send ?asig get-Nombre) " es de la especialidad preferida del usuario" crlf)  
 )
+
 
 
 (defrule saltar-a-presentacion
