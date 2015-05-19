@@ -17,7 +17,8 @@
 ;dar recomendación
 
 ; TODO GENERAL
-; Calcular la dificultad de las asignaturas segun su porcentaje de aprobados
+; Regla que mire que hayas aprobado todas las obligatorias para que te deje pillar optativas
+; Modificar volumen y dificultad para que en lugar de quitarlas, les reste puntuacion 
 
 (defmodule MAIN (export ?ALL))
 
