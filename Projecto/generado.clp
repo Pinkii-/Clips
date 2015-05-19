@@ -1709,7 +1709,7 @@
 
 
 ; ==================HECHO DESDE LA ULTIMA ITERACION===============================
-;
+; Ahora a dificultad se calcula tambien a partir del procentaje de aprobados que tiene esa asignatura
 ;=================================================================================
 ;str-cat = string concat
 
@@ -2074,7 +2074,7 @@
     else (if (eq ?medio TRUE) then (send ?alumno put-VolumenTrabajo medio)
       else (if (eq ?bajo TRUE) then (send ?alumno put-VolumenTrabajo bajo)
         else (send ?alumno put-VolumenTrabajo alto))))
-  ;(send ?alumno put-VolumenTrabajo alto)
+  (printout t "DEBUG: El sistema ha elegido un volumen de trabajo " (send ?alumno get-VolumenTrabajo) crlf)
 )
 
 ;Funcion encargada de calcular la dificultad asumible a partir de las ultimas convocatorias
@@ -2091,17 +2091,21 @@
     (if (eq ?cuatri ?c)
       then
         (bind ?asig (send (instance-address * ?conv) get-AsignaturaMatriculada))
-        (bind ?volumen (send (instance-address * ?asig) get-Dificultad))
-        (if (eq ?volumen alto) then (bind ?alto TRUE) else
-        (if (eq ?volumen medio) then (bind ?medio TRUE) else
-        (if (eq ?volumen bajo) then (bind ?bajo TRUE)) ))
+        (bind ?dificultad (send (instance-address * ?asig) get-Dificultad))
+        (if (eq ?dificultad alto) then (bind ?alto TRUE) else
+        (if (eq ?dificultad medio) then (bind ?medio TRUE) else
+        (if (eq ?dificultad bajo) then (bind ?bajo TRUE)) ))
+        (bind ?dificultad (send (instance-address * ?asig) get-PrctAprobado))
+        (if (< ?dificultad 51) then (bind ?alto TRUE) else
+        (if (< ?dificultad 80) then (bind ?medio TRUE) 
+        else (bind ?bajo TRUE)) )
     )
   )
   (if (eq ?alto TRUE) then (send ?alumno put-Dificultad alto)
     else (if (eq ?medio TRUE) then (send ?alumno put-Dificultad medio)
       else (if (eq ?bajo TRUE) then (send ?alumno put-Dificultad bajo)
         else (send ?alumno put-Dificultad alto))))
-  
+  (printout t "DEBUG: El sistema ha elegido una dificultad " (send ?alumno get-Dificultad) crlf)
 )
 
 ; Regla encargada de sacar el numero de asignaturas que suele hacer el alumno
