@@ -3,6 +3,8 @@
 ; Ahora a dificultad se calcula tambien a partir del procentaje de aprobados que tiene esa asignaturas
 ; Existen los temas
 ; El sistema le pregunta al usuario que temas prefiere y los guarda
+; Regla que mire que hayas aprobado todas las obligatorias para que te deje pillar optativas
+; Suma puntos a los temas seleccionados
 ;=================================================================================
 ;str-cat = string concat
 
@@ -17,7 +19,6 @@
 ;dar recomendación
 
 ; TODO GENERAL
-; Regla que mire que hayas aprobado todas las obligatorias para que te deje pillar optativas
 ; Modificar volumen y dificultad para que en lugar de quitarlas, les reste puntuacion 
 
 (defmodule MAIN (export ?ALL))
@@ -549,43 +550,43 @@
     (send ?r delete)
 )
 
-; Regla que quita las asignaturas que tengan un volumen de trabajo mayor al asumible
-(defrule quitar-volumen-alto
-  ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
-  (object (is-a Alumno) (VolumenTrabajo medio))
-  (test (eq alto (send ?asig get-VolumenTrabajo)))
-  =>
-  (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto " crlf)
-  (send ?a delete)
-)
+; ; Regla que quita las asignaturas que tengan un volumen de trabajo mayor al asumible
+; (defrule quitar-volumen-alto
+;   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+;   (object (is-a Alumno) (VolumenTrabajo medio))
+;   (test (eq alto (send ?asig get-VolumenTrabajo)))
+;   =>
+;   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto " crlf)
+;   (send ?a delete)
+; )
 
-(defrule quitar-volumen-medio
-  ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
-  (object (is-a Alumno) (VolumenTrabajo bajo))
-  (test (or (eq alto (send ?asig get-VolumenTrabajo)) (eq medio (send ?asig get-VolumenTrabajo))))
-  =>
-  (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto o medio " crlf)
-  (send ?a delete)
-)
+; (defrule quitar-volumen-medio
+;   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+;   (object (is-a Alumno) (VolumenTrabajo bajo))
+;   (test (or (eq alto (send ?asig get-VolumenTrabajo)) (eq medio (send ?asig get-VolumenTrabajo))))
+;   =>
+;   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto o medio " crlf)
+;   (send ?a delete)
+; )
 
-; Regla que quita las asignaturas que tengan una dificultad mayor a la asumible
-(defrule quitar-dificultad-alta
-  ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
-  (object (is-a Alumno) (Dificultad medio))
-  (test (or (eq alto (send ?asig get-Dificultad)) (> 51 (send ?asig get-PrctAprobado))))
-  =>
-  (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta " crlf)
-  (send ?a delete)
-)
+; ; Regla que quita las asignaturas que tengan una dificultad mayor a la asumible
+; (defrule quitar-dificultad-alta
+;   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+;   (object (is-a Alumno) (Dificultad medio))
+;   (test (or (eq alto (send ?asig get-Dificultad)) (> 51 (send ?asig get-PrctAprobado))))
+;   =>
+;   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta " crlf)
+;   (send ?a delete)
+; )
 
-(defrule quitar-dificultad-media
-  ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
-  (object (is-a Alumno) (Dificultad bajo))
-  (test (or (eq alto (send ?asig get-Dificultad)) (eq medio (send ?asig get-Dificultad)) (> 85 (send ?asig get-PrctAprobado))))
-  =>
-  (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta o media " crlf)
-  (send ?a delete)
-)
+; (defrule quitar-dificultad-media
+;   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+;   (object (is-a Alumno) (Dificultad bajo))
+;   (test (or (eq alto (send ?asig get-Dificultad)) (eq medio (send ?asig get-Dificultad)) (> 85 (send ?asig get-PrctAprobado))))
+;   =>
+;   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta o media " crlf)
+;   (send ?a delete)
+; )
 
 ; Regla que quita las asignaturas con prerequisitos que no cumple 
 (defrule quitar-prerequesitos
@@ -640,8 +641,84 @@
   (import MAIN ?ALL)
   (export ?ALL)
 )
-; TODO Hacer este modulo entero huehue
-; TODO HAcer regla que mire en que periodo estas, y le de mas puntos a las asignaturas te ese periodo (acabar las obligatorias antes que las obligatorias de especialidad)
+
+; Regla que resta puntos a las asignaturas que tengan un volumen de trabajo mayor al asumible
+(defrule quitar-volumen-alto
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
+  (object (is-a Alumno) (VolumenTrabajo medio))
+  (test (eq alto (send ?asig get-VolumenTrabajo)))
+  (not (volumen-alto ?asig))
+  =>
+  (bind ?p (- ?p 200))
+  (bind ?motivo "La asignatura tiene un volumen de trabajo alto cuando tu puedes asumir un volumen medio -200")
+  (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+  (send ?asigRec put-Puntuacion ?p)
+  (send ?asigRec put-Motivos ?m)
+  (assert (volumen-alto ?asig))
+  (printout t "DEUBG: -200 a " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto (user acepta medio)" crlf)
+ 
+)
+
+(defrule quitar-volumen-medio
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
+  (object (is-a Alumno) (VolumenTrabajo bajo))
+  (test (or (eq alto (send ?asig get-VolumenTrabajo)) (eq medio (send ?asig get-VolumenTrabajo))))
+  (not (volumen-medio ?asig))
+  =>
+  (if (eq medio (send ?asig get-VolumenTrabajo))
+    then
+      (bind ?p (- ?p 200))
+      (bind ?motivo "La asignatura tiene un volumen de trabajo medio cuando tu puedes asumir un volumen bajo -200")
+      (printout t "DEUBG: -200 a " (send ?asig get-Nombre) " ya que su volumen de trabajo es medio (user acepta bajo)" crlf) 
+    else
+      (bind ?p (- ?p 400))
+      (bind ?motivo "La asignatura tiene un volumen de trabajo alto cuando tu puedes asumir un volumen bajo -400")
+      (printout t "DEUBG: -400 a " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto (user acepta bajo)" crlf) 
+  )
+  (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+  (send ?asigRec put-Puntuacion ?p)
+  (send ?asigRec put-Motivos ?m)
+  (assert (volumen-medio ?asig))
+)
+
+; Regla que resta puntos a las asignaturas que tengan una dificultad mayor a la asumible
+(defrule quitar-dificultad-alta
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
+  (object (is-a Alumno) (Dificultad medio))
+  (test (or (eq alto (send ?asig get-Dificultad)) (> 51 (send ?asig get-PrctAprobado))))
+  (not (dificultad-alto ?asig))
+  =>
+  (bind ?p (- ?p 200))
+  (bind ?motivo "La asignatura tiene una dificultad alta cuando tu puedes asumir una dificultad media -200")
+  (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+  (send ?asigRec put-Puntuacion ?p)
+  (send ?asigRec put-Motivos ?m)
+  (assert (dificultad-alto ?asig))
+  (printout t "DEUBG: -200 a " (send ?asig get-Nombre) " ya que su dificultad es alta (user acepta media)" crlf)
+)
+
+(defrule quitar-dificultad-media
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
+  (object (is-a Alumno) (Dificultad bajo))
+  (test (or (eq alto (send ?asig get-Dificultad)) (eq medio (send ?asig get-Dificultad)) (> 85 (send ?asig get-PrctAprobado))))
+  (not (dificultad-medio ?asig))
+  =>
+  (if (eq medio (send ?asig get-Dificultad))
+    then
+      (bind ?p (- ?p 200))
+      (bind ?motivo "La asignatura tiene un dificultad media cuando tu puedes asumir un volumen bajo -200")
+      (printout t "DEUBG: -200 a " (send ?asig get-Nombre) " ya que su dificultad es media (user acepta baja)" crlf) 
+    else
+      (bind ?p (- ?p 400))
+      (bind ?motivo "La asignatura tiene una dificultad alta cuando tu puedes asumir una dificultad baja -400")
+      (printout t "DEUBG: -400 a " (send ?asig get-Nombre) " ya que su dificultad es alta (user acepta baja)" crlf) 
+  )
+  (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+  (send ?asigRec put-Puntuacion ?p)
+  (send ?asigRec put-Motivos ?m)
+  (assert (dificultad-medio ?asig))
+)
+
 
 ; Regla que le da puntos a las asignaturas (suspendidas el ultimo cuatrimestre | no aprovadas)
 (defrule asignaturas-suspendidas
@@ -676,6 +753,17 @@
   (printout t "DEBUG: +1000 La asignaura " (send ?asig get-Nombre) " es obligatoria y no esta aprovada" crlf)
 )
 
+; Regla que quita las asignaturas optativas si queda alguna obligatoria por aprobar
+(defrule asignaturas-optativas-si-obligatoria
+  (asignatura-obligatoria ?a)
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
+  (object (is-a Optativa) (Descripcion ?d))
+  (test (eq (send (instance-address * (send ?asig get-ModalidadAsig)) get-Descripcion) ?d))
+  =>
+  (send ?asigRec delete)
+  (printout t "DEBUG: Borrando la asignatura " (send ?asig get-Nombre) " ya que es optativa y no estan aprobadas todas las obligatorias" crlf)
+)
+
 ; Regla que le da puntos a las asignaturas obligatorias de la especialidad preferida
 (defrule asignaturas-especialidad
   ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
@@ -693,6 +781,28 @@
   (printout t "DEBUG: +400 La asignaura " (send ?asig get-Nombre) " es de la especialidad preferida del usuario" crlf)  
 )
 
+; Regla que le da puntos a los temas elegidos por el usuario
+(defrule temas-seleccionados
+  (object (is-a Alumno) (Temas $?temas))
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
+  (not (temas ?asig))
+  =>
+  (bind $?atemas (send ?asig get-TemasRelacionados))
+  (progn$ (?at $?atemas)
+    (progn$ (?t $?temas)
+       (if (eq (send (instance-address * ?at) get-Nombre) (send ?t get-Nombre))
+        then
+          (bind ?p (+ ?p 150))
+          (bind ?motivo (str-cat "Es del tema " (send ?t get-Nombre )", seleccionado por el usuario +150"))
+          (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+          (send ?asigRec put-Puntuacion ?p)
+          (send ?asigRec put-Motivos ?m)
+          (printout t "DEBUG: +150 La asignaura " (send ?asig get-Nombre) " tiene el tema " (send (instance-address * ?at) get-Nombre) crlf)  
+      )
+    )
+  )
+  (assert (temas ?asig))
+)
 
 
 (defrule saltar-a-presentacion

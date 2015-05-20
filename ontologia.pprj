@@ -1,4 +1,4 @@
-; Tue May 19 13:51:55 GMT+01:00 2015
+; Wed May 20 02:55:13 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -21,15 +21,15 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[ontologia_ProjectKB_Class20110]
-		[ontologia_ProjectKB_Class20111]
-		[ontologia_ProjectKB_Class20112]
-		[ontologia_ProjectKB_Class20113]
-		[ontologia_ProjectKB_Class20114]
-		[ontologia_ProjectKB_Class20115]
-		[ontologia_ProjectKB_Class20116]
-		[ontologia_ProjectKB_Class30117]
-		[ontologia_ProjectKB_Class30118]))
+		[ontologia_ProjectKB_Class40172]
+		[ontologia_ProjectKB_Class40173]
+		[ontologia_ProjectKB_Class40174]
+		[ontologia_ProjectKB_Class40175]
+		[ontologia_ProjectKB_Class40176]
+		[ontologia_ProjectKB_Class40177]
+		[ontologia_ProjectKB_Class40178]
+		[ontologia_ProjectKB_Class40179]
+		[ontologia_ProjectKB_Class40180]))
 
 ([CLSES_TAB] of  Widget
 
@@ -81,8 +81,8 @@
 
 ([KB_893930_Class1] of  Map
 
-	(entries [ontologia_ProjectKB_Class30120])
-	(referenced_maps [ontologia_ProjectKB_Class30119]))
+	(entries [ontologia_ProjectKB_Class40182])
+	(referenced_maps [ontologia_ProjectKB_Class40181]))
 
 ([KB_893930_Class100] of  Property_List
 )
@@ -268,41 +268,6 @@
 ([ontologia_ProjectKB_Class20084] of  Property_List
 )
 
-([ontologia_ProjectKB_Class20110] of  String
-
-	(name "Convocatoria")
-	(string_value "AsignaturaMatriculada{+Qt+}Cuatrimestre{+Nota+}Nota"))
-
-([ontologia_ProjectKB_Class20111] of  String
-
-	(name "Horario")
-	(string_value "Descripcion"))
-
-([ontologia_ProjectKB_Class20112] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([ontologia_ProjectKB_Class20113] of  String
-
-	(name "Modalidad")
-	(string_value "Descripcion"))
-
-([ontologia_ProjectKB_Class20114] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([ontologia_ProjectKB_Class20115] of  String
-
-	(name "Tema")
-	(string_value "Nombre"))
-
-([ontologia_ProjectKB_Class20116] of  String
-
-	(name "Alumno")
-	(string_value "Nombre{+}DNI"))
-
 ([ontologia_ProjectKB_Class20117] of  Widget
 
 	(height 60)
@@ -408,25 +373,51 @@
 ([ontologia_ProjectKB_Class30] of  Property_List
 )
 
-([ontologia_ProjectKB_Class30117] of  String
+([ontologia_ProjectKB_Class30150] of  Boolean
 
-	(name "Asignatura")
-	(string_value "Nombre"))
+	(boolean_value FALSE)
+	(name "use_roundtrip"))
 
-([ontologia_ProjectKB_Class30118] of  String
+([ontologia_ProjectKB_Class30151] of  Widget
 
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
+	(height 60)
+	(is_hidden FALSE)
+	(name "TemasRelacionados")
+	(property_list [ontologia_ProjectKB_Class30152])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 200)
+	(x 0)
+	(y 240))
 
-([ontologia_ProjectKB_Class30119] of  Map
+([ontologia_ProjectKB_Class30152] of  Property_List
 )
 
-([ontologia_ProjectKB_Class30120] of  Map_Entry
+([ontologia_ProjectKB_Class30153] of  Widget
 
-	(key "InstanceDisplay.yellow_stickies")
-	(key_class "java.lang.String")
-	(value "ontologia_ProjectKB_Class30119")
-	(value_class "java.util.Map"))
+	(height 60)
+	(is_hidden FALSE)
+	(name "TemasRelacionados")
+	(property_list [ontologia_ProjectKB_Class30154])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 200)
+	(x 0)
+	(y 240))
+
+([ontologia_ProjectKB_Class30154] of  Property_List
+
+	(properties
+		[ontologia_ProjectKB_Class30155]
+		[ontologia_ProjectKB_Class30156]))
+
+([ontologia_ProjectKB_Class30155] of  Boolean
+
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-View References to Value"))
+
+([ontologia_ProjectKB_Class30156] of  Boolean
+
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
 
 ([ontologia_ProjectKB_Class30167] of  Widget
 
@@ -503,6 +494,61 @@
 
 ([ontologia_ProjectKB_Class40] of  Property_List
 )
+
+([ontologia_ProjectKB_Class40172] of  String
+
+	(name "Convocatoria")
+	(string_value "AsignaturaMatriculada{+Qt+}Cuatrimestre{+Nota+}Nota"))
+
+([ontologia_ProjectKB_Class40173] of  String
+
+	(name "Horario")
+	(string_value "Descripcion"))
+
+([ontologia_ProjectKB_Class40174] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([ontologia_ProjectKB_Class40175] of  String
+
+	(name "Modalidad")
+	(string_value "Descripcion"))
+
+([ontologia_ProjectKB_Class40176] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([ontologia_ProjectKB_Class40177] of  String
+
+	(name "Tema")
+	(string_value "Nombre"))
+
+([ontologia_ProjectKB_Class40178] of  String
+
+	(name "Alumno")
+	(string_value "Nombre{+}DNI"))
+
+([ontologia_ProjectKB_Class40179] of  String
+
+	(name "Asignatura")
+	(string_value "Nombre"))
+
+([ontologia_ProjectKB_Class40180] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([ontologia_ProjectKB_Class40181] of  Map
+)
+
+([ontologia_ProjectKB_Class40182] of  Map_Entry
+
+	(key "InstanceDisplay.yellow_stickies")
+	(key_class "java.lang.String")
+	(value "ontologia_ProjectKB_Class40181")
+	(value_class "java.util.Map"))
 
 ([ontologia_ProjectKB_Class41] of  Widget
 
@@ -894,7 +940,8 @@
 	(properties
 		[KB_893930_Class0]
 		[KB_893930_Class105]
-		[KB_893930_Class106]))
+		[KB_893930_Class106]
+		[ontologia_ProjectKB_Class30150]))
 
 ([STANDARD_CLASS_CONSTRAINTS_WIDGET] of  Widget
 

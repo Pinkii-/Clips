@@ -1,4 +1,4 @@
-; Tue May 19 13:51:55 GMT+01:00 2015
+; Wed May 20 02:55:13 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -91,6 +91,10 @@
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
 		(create-accessor read-write))
+	(multislot TemasRelacionados
+		(type INSTANCE)
+;+		(allowed-classes Tema)
+		(create-accessor read-write))
 	(single-slot Matriculados
 ;+		(comment "Numero de alumnos matriculados.")
 		(type INTEGER)
@@ -160,6 +164,10 @@
 	(multislot CoRequesit
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
+		(create-accessor read-write))
+	(multislot TemasRelacionados
+		(type INSTANCE)
+;+		(allowed-classes Tema)
 		(create-accessor read-write))
 	(single-slot Matriculados
 ;+		(comment "Numero de alumnos matriculados.")
