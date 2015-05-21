@@ -1,6 +1,6 @@
 ;---------- Aqui empiezan las clases generadas por el protege ----------;
 
-; Wed May 20 02:55:24 GMT+01:00 2015
+; Thu May 21 02:27:51 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -19,14 +19,14 @@
 ;+		(allowed-classes Especialidad)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot PrctAprobado
-		(type INTEGER)
-		(range 0 100)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot AlumnoRecomendado
 		(type INSTANCE)
 ;+		(allowed-classes Alumno)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot PrctAprobado
+		(type INTEGER)
+		(range 0 100)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Descripcion
@@ -47,7 +47,7 @@
 		(create-accessor read-write))
 	(multislot Motivos
 		(type STRING)
-		(default "Io k ze tio equisde")
+		(default "Ha pasado todos los filtros y es una asignatura de la que te puedes matricular")
 		(create-accessor read-write))
 	(single-slot VolumenTrabajo
 		(type SYMBOL)
@@ -93,15 +93,15 @@
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
 		(create-accessor read-write))
-	(multislot TemasRelacionados
-		(type INSTANCE)
-;+		(allowed-classes Tema)
-		(create-accessor read-write))
 	(single-slot Matriculados
 ;+		(comment "Numero de alumnos matriculados.")
 		(type INTEGER)
 		(range 0 1000)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot TemasRelacionados
+		(type INSTANCE)
+;+		(allowed-classes Tema)
 		(create-accessor read-write))
 	(single-slot NumeroAsignaturas
 		(type INTEGER)
@@ -142,16 +142,16 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot HorarioAsig
-		(type INSTANCE)
-;+		(allowed-classes Horario)
-;+		(cardinality 1 1)
-		(create-accessor read-write))
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
 		(default np)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot HorarioAsig
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot ModalidadAsig
 		(type INSTANCE)
@@ -167,15 +167,15 @@
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
 		(create-accessor read-write))
-	(multislot TemasRelacionados
-		(type INSTANCE)
-;+		(allowed-classes Tema)
-		(create-accessor read-write))
 	(single-slot Matriculados
 ;+		(comment "Numero de alumnos matriculados.")
 		(type INTEGER)
 		(range 0 1000)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot TemasRelacionados
+		(type INSTANCE)
+;+		(allowed-classes Tema)
 		(create-accessor read-write))
 	(single-slot Nombre
 		(type STRING)
@@ -187,7 +187,7 @@
 	(role concrete)
 	(multislot Motivos
 		(type STRING)
-		(default "Io k ze tio equisde")
+		(default "Ha pasado todos los filtros y es una asignatura de la que te puedes matricular")
 		(create-accessor read-write))
 	(single-slot AsigName
 		(type INSTANCE)
@@ -244,15 +244,15 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot HorarioPref
-		(type INSTANCE)
-;+		(allowed-classes Horario)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(multislot Convocatorias
 		(type INSTANCE)
 ;+		(allowed-classes Convocatoria)
 		(cardinality 1 ?VARIABLE)
+		(create-accessor read-write))
+	(single-slot HorarioPref
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot EspecialidadPref
 		(type INSTANCE)
@@ -365,7 +365,7 @@
 		(create-accessor read-write)))
 ;-------- Aqui empiezan las instancias generadas por el protege --------;
 (definstances instances
-; Wed May 20 02:55:24 GMT+01:00 2015
+; Thu May 21 02:27:51 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -1542,8 +1542,7 @@
 	(PrctAprobado 100)
 	(TemasRelacionados
 		[ontologia_Class80048]
-		[ontologia_Class80049]
-		[ontologia_Class80050])
+		[ontologia_Class80049])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40087] of  Asignatura
@@ -2016,10 +2015,6 @@
 
 	(Nombre "SSL"))
 
-([ontologia_Class80050] of  Tema
-
-	(Nombre "Cifrado"))
-
 ([ontologia_Class80051] of  Tema
 
 	(Nombre "Internet"))
@@ -2065,6 +2060,7 @@
 ; Existen los temas
 ; El sistema le pregunta al usuario que temas prefiere y los guarda
 ; Regla que mire que hayas aprobado todas las obligatorias para que te deje pillar optativas
+; Suma puntos a los temas seleccionados
 ;=================================================================================
 ;str-cat = string concat
 
@@ -2079,7 +2075,7 @@
 ;dar recomendación
 
 ; TODO GENERAL
-; Modificar volumen y dificultad para que en lugar de quitarlas, les reste puntuacion 
+; Mirar los correquesitos. Si no tiene todos los corequesitos aprobados, le meta el disclaimer.
 
 (defmodule MAIN (export ?ALL))
 
@@ -2673,6 +2669,41 @@
     
   )
   (assert (q-prerequesitos))
+)
+
+(defrule disclaimer-corequesitos
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Motivos $?m))
+  (not (disclaimer ?asigRec))
+  =>
+  (bind ?borrar FALSE)
+  (bind $?cores (send ?asig get-CoRequesit))
+  (bind $?nombreAsig (create$))
+  (progn$ (?core ?cores)
+    (bind ?encontrado FALSE)
+    (bind ?nombre (send (instance-address * ?core) get-Nombre))
+    (bind $?convs (find-all-instances ((?inst Convocatoria)) (eq (send (instance-address * ?inst:AsignaturaMatriculada) get-Nombre) ?nombre)))
+    (progn$ (?conv $?convs)
+      (bind ?alguno TRUE)
+      (if (> (send ?conv get-Nota) 4.99)
+        then (bind ?encontrado TRUE)
+      )
+    )
+    (if (eq ?encontrado FALSE) then 
+      (bind ?borrar TRUE)
+      (bind $?nombreAsig (insert$ $?nombreAsig (+ (length $?nombreAsig) 1) ?nombre))
+    )
+  )
+  (if (> (length $?nombreAsig) 0) 
+    then 
+      (bind ?motivo "Atencion! Para matricularte de esta asignatura tienes que matricularte tambien de: ")
+      (progn$ (?a $?nombreAsig) (bind ?motivo (str-cat ?motivo ?a " ")))
+      (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+      (send ?asigRec put-Motivos ?m)
+      
+    
+  )
+  (assert (disclaimer ?asigRec))
+)
 )
 
 ; Regla que quita las asignaturas de mañanas si el usuario quiere solo de tardes, o viceversa

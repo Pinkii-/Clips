@@ -1,4 +1,4 @@
-; Wed May 20 02:55:13 GMT+01:00 2015
+; Thu May 21 04:07:37 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -1175,8 +1175,7 @@
 	(PrctAprobado 100)
 	(TemasRelacionados
 		[ontologia_Class80048]
-		[ontologia_Class80049]
-		[ontologia_Class80050])
+		[ontologia_Class80049])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40087] of  Asignatura
@@ -1648,10 +1647,6 @@
 ([ontologia_Class80049] of  Tema
 
 	(Nombre "SSL"))
-
-([ontologia_Class80050] of  Tema
-
-	(Nombre "Cifrado"))
 
 ([ontologia_Class80051] of  Tema
 

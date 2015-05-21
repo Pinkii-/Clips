@@ -19,7 +19,7 @@
 ;dar recomendación
 
 ; TODO GENERAL
-; Modificar volumen y dificultad para que en lugar de quitarlas, les reste puntuacion 
+; Mirar los correquesitos. Si no tiene todos los corequesitos aprobados, le meta el disclaimer.
 
 (defmodule MAIN (export ?ALL))
 
@@ -613,6 +613,41 @@
     
   )
   (assert (q-prerequesitos))
+)
+
+(defrule disclaimer-corequesitos
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Motivos $?m))
+  (not (disclaimer ?asigRec))
+  =>
+  (bind ?borrar FALSE)
+  (bind $?cores (send ?asig get-CoRequesit))
+  (bind $?nombreAsig (create$))
+  (progn$ (?core ?cores)
+    (bind ?encontrado FALSE)
+    (bind ?nombre (send (instance-address * ?core) get-Nombre))
+    (bind $?convs (find-all-instances ((?inst Convocatoria)) (eq (send (instance-address * ?inst:AsignaturaMatriculada) get-Nombre) ?nombre)))
+    (progn$ (?conv $?convs)
+      (bind ?alguno TRUE)
+      (if (> (send ?conv get-Nota) 4.99)
+        then (bind ?encontrado TRUE)
+      )
+    )
+    (if (eq ?encontrado FALSE) then 
+      (bind ?borrar TRUE)
+      (bind $?nombreAsig (insert$ $?nombreAsig (+ (length $?nombreAsig) 1) ?nombre))
+    )
+  )
+  (if (> (length $?nombreAsig) 0) 
+    then 
+      (bind ?motivo "Atencion! Para matricularte de esta asignatura tienes que matricularte tambien de: ")
+      (progn$ (?a $?nombreAsig) (bind ?motivo (str-cat ?motivo ?a " ")))
+      (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+      (send ?asigRec put-Motivos ?m)
+      
+    
+  )
+  (assert (disclaimer ?asigRec))
+)
 )
 
 ; Regla que quita las asignaturas de mañanas si el usuario quiere solo de tardes, o viceversa
