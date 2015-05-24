@@ -1,4 +1,4 @@
-; Thu May 21 02:27:51 GMT+01:00 2015
+; Sun May 24 20:26:36 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -17,14 +17,14 @@
 ;+		(allowed-classes Especialidad)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot AlumnoRecomendado
-		(type INSTANCE)
-;+		(allowed-classes Alumno)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot PrctAprobado
 		(type INTEGER)
 		(range 0 100)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot AlumnoRecomendado
+		(type INSTANCE)
+;+		(allowed-classes Alumno)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Descripcion
@@ -91,15 +91,15 @@
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
 		(create-accessor read-write))
+	(multislot TemasRelacionados
+		(type INSTANCE)
+;+		(allowed-classes Tema)
+		(create-accessor read-write))
 	(single-slot Matriculados
 ;+		(comment "Numero de alumnos matriculados.")
 		(type INTEGER)
 		(range 0 1000)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot TemasRelacionados
-		(type INSTANCE)
-;+		(allowed-classes Tema)
 		(create-accessor read-write))
 	(single-slot NumeroAsignaturas
 		(type INTEGER)
@@ -140,16 +140,16 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(single-slot HorarioAsig
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
 		(default np)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot HorarioAsig
-		(type INSTANCE)
-;+		(allowed-classes Horario)
-;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot ModalidadAsig
 		(type INSTANCE)
@@ -242,15 +242,15 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(multislot Convocatorias
-		(type INSTANCE)
-;+		(allowed-classes Convocatoria)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
 	(single-slot HorarioPref
 		(type INSTANCE)
 ;+		(allowed-classes Horario)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot Convocatorias
+		(type INSTANCE)
+;+		(allowed-classes Convocatoria)
+		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
 	(single-slot EspecialidadPref
 		(type INSTANCE)

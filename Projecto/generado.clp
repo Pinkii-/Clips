@@ -1,6 +1,6 @@
 ;---------- Aqui empiezan las clases generadas por el protege ----------;
 
-; Thu May 21 02:27:51 GMT+01:00 2015
+; Sun May 24 20:26:36 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -19,14 +19,14 @@
 ;+		(allowed-classes Especialidad)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(single-slot AlumnoRecomendado
-		(type INSTANCE)
-;+		(allowed-classes Alumno)
-;+		(cardinality 0 1)
-		(create-accessor read-write))
 	(single-slot PrctAprobado
 		(type INTEGER)
 		(range 0 100)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot AlumnoRecomendado
+		(type INSTANCE)
+;+		(allowed-classes Alumno)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot Descripcion
@@ -93,15 +93,15 @@
 		(type INSTANCE)
 ;+		(allowed-classes Asignatura)
 		(create-accessor read-write))
+	(multislot TemasRelacionados
+		(type INSTANCE)
+;+		(allowed-classes Tema)
+		(create-accessor read-write))
 	(single-slot Matriculados
 ;+		(comment "Numero de alumnos matriculados.")
 		(type INTEGER)
 		(range 0 1000)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(multislot TemasRelacionados
-		(type INSTANCE)
-;+		(allowed-classes Tema)
 		(create-accessor read-write))
 	(single-slot NumeroAsignaturas
 		(type INTEGER)
@@ -142,16 +142,16 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(single-slot HorarioAsig
+		(type INSTANCE)
+;+		(allowed-classes Horario)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot Dificultad
 		(type SYMBOL)
 		(allowed-values alto medio bajo np)
 		(default np)
 ;+		(cardinality 0 1)
-		(create-accessor read-write))
-	(single-slot HorarioAsig
-		(type INSTANCE)
-;+		(allowed-classes Horario)
-;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot ModalidadAsig
 		(type INSTANCE)
@@ -244,15 +244,15 @@
 		(default np)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
-	(multislot Convocatorias
-		(type INSTANCE)
-;+		(allowed-classes Convocatoria)
-		(cardinality 1 ?VARIABLE)
-		(create-accessor read-write))
 	(single-slot HorarioPref
 		(type INSTANCE)
 ;+		(allowed-classes Horario)
 ;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot Convocatorias
+		(type INSTANCE)
+;+		(allowed-classes Convocatoria)
+		(cardinality 1 ?VARIABLE)
 		(create-accessor read-write))
 	(single-slot EspecialidadPref
 		(type INSTANCE)
@@ -365,7 +365,7 @@
 		(create-accessor read-write)))
 ;-------- Aqui empiezan las instancias generadas por el protege --------;
 (definstances instances
-; Thu May 21 02:27:51 GMT+01:00 2015
+; Sun May 24 20:26:36 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -378,6 +378,9 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "FM")
 	(PrctAprobado 36)
+	(TemasRelacionados
+		[ontologia_Class60001]
+		[ontologia_Class70000])
 	(VolumenTrabajo alto))
 
 ([ontologia_Class10000] of  Asignatura
@@ -388,6 +391,9 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "F")
 	(PrctAprobado 60)
+	(TemasRelacionados
+		[ontologia_Class60000]
+		[ontologia_Class60001])
 	(VolumenTrabajo alto))
 
 ([ontologia_Class10001] of  Both
@@ -455,6 +461,9 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "PRO1")
 	(PrctAprobado 33)
+	(TemasRelacionados
+		[ontologia_Class80002]
+		[ontologia_Class80033])
 	(VolumenTrabajo alto))
 
 ([ontologia_Class20002] of  Asignatura
@@ -465,6 +474,7 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "IC")
 	(PrctAprobado 52)
+	(TemasRelacionados [ontologia_Class80003])
 	(VolumenTrabajo alto))
 
 ([ontologia_Class20003] of  Convocatoria
@@ -513,6 +523,9 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "EC")
 	(PrctAprobado 34)
+	(TemasRelacionados
+		[ontologia_Class80003]
+		[ontologia_Class80026])
 	(VolumenTrabajo alto))
 
 ([ontologia_Class30004] of  Asignatura
@@ -523,6 +536,7 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "M1")
 	(PrctAprobado 43)
+	(TemasRelacionados [ontologia_Class60001])
 	(VolumenTrabajo medio))
 
 ([ontologia_Class30005] of  Asignatura
@@ -533,6 +547,7 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "M2")
 	(PrctAprobado 48)
+	(TemasRelacionados [ontologia_Class60001])
 	(VolumenTrabajo alto))
 
 ([ontologia_Class30006] of  Asignatura
@@ -546,10 +561,7 @@
 	(PreRequesit
 		[ontologia_Class20001]
 		[ontologia_Class20004])
-	(TemasRelacionados
-		[ontologia_Class80011]
-		[ontologia_Class80046]
-		[ontologia_Class80047])
+	(TemasRelacionados [ontologia_Class80011])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class30007] of  Asignatura
@@ -563,6 +575,11 @@
 	(PreRequesit
 		[ontologia_Class30003]
 		[ontologia_Class20002])
+	(TemasRelacionados
+		[ontologia_Class80003]
+		[ontologia_Class80013]
+		[ontologia_Class80055]
+		[ontologia_Class80026])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class30008] of  Asignatura
@@ -576,6 +593,11 @@
 	(PreRequesit
 		[ontologia_Class20001]
 		[ontologia_Class20004])
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class80035]
+		[ontologia_Class80033]
+		[ontologia_Class80002])
 	(VolumenTrabajo medio))
 
 ([ontologia_Class30009] of  Asignatura
@@ -589,6 +611,7 @@
 	(PreRequesit
 		[ontologia_Class30004]
 		[ontologia_Class30005])
+	(TemasRelacionados [ontologia_Class80024])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class30010] of  Asignatura
@@ -602,6 +625,7 @@
 	(PreRequesit
 		[ontologia_Class30007]
 		[ontologia_Class30003])
+	(TemasRelacionados [ontologia_Class80039])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class30011] of  Asignatura
@@ -618,8 +642,7 @@
 		[ontologia_Class30010])
 	(TemasRelacionados
 		[ontologia_Class80003]
-		[ontologia_Class80016]
-		[ontologia_Class80017])
+		[ontologia_Class80016])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class30012] of  Asignatura
@@ -630,6 +653,10 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "EEE")
 	(PrctAprobado 89)
+	(TemasRelacionados
+		[ontologia_Class80022]
+		[ontologia_Class80024]
+		[ontologia_Class80037])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class30013] of  Asignatura
@@ -642,6 +669,10 @@
 	(Nombre "IES")
 	(PrctAprobado 61)
 	(PreRequesit [ontologia_Class30006])
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80032]
+		[ontologia_Class80033])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class30014] of  Asignatura
@@ -656,6 +687,11 @@
 	(Nombre "PROP")
 	(PrctAprobado 84)
 	(PreRequesit [ontologia_Class30008])
+	(TemasRelacionados
+		[ontologia_Class80032]
+		[ontologia_Class80055]
+		[ontologia_Class80033]
+		[ontologia_Class80002])
 	(VolumenTrabajo alto))
 
 ([ontologia_Class30015] of  Asignatura
@@ -667,6 +703,7 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "XC")
 	(PrctAprobado 64)
+	(TemasRelacionados [ontologia_Class80052])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class30016] of  Asignatura
@@ -680,6 +717,10 @@
 	(PreRequesit
 		[ontologia_Class30008]
 		[ontologia_Class30004])
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80055]
+		[ontologia_Class80002])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class30017] of  Asignatura
@@ -694,6 +735,10 @@
 		[ontologia_Class30011]
 		[ontologia_Class30008]
 		[ontologia_Class30010])
+	(TemasRelacionados
+		[ontologia_Class80003]
+		[ontologia_Class80026]
+		[ontologia_Class80002])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40000] of  Asignatura
@@ -705,11 +750,7 @@
 	(Nombre "CASO")
 	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class40037])
-	(TemasRelacionados
-		[ontologia_Class80039]
-		[ontologia_Class80056]
-		[ontologia_Class80057]
-		[ontologia_Class80020])
+	(TemasRelacionados [ontologia_Class80039])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40001] of  Convocatoria
@@ -730,6 +771,10 @@
 	(PreRequesit
 		[ontologia_Class30016]
 		[ontologia_Class30014])
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class60001]
+		[ontologia_Class80002])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40003] of  Esp_Comp
@@ -786,7 +831,6 @@
 	(PreRequesit [ontologia_Class30008])
 	(TemasRelacionados
 		[ontologia_Class80006]
-		[ontologia_Class80007]
 		[ontologia_Class80008])
 	(VolumenTrabajo bajo))
 
@@ -800,6 +844,12 @@
 	(Nombre "IA")
 	(PrctAprobado 92)
 	(PreRequesit [ontologia_Class30008])
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class80035]
+		[ontologia_Class80032]
+		[ontologia_Class80002]
+		[ontologia_Class80037])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40023] of  Asignatura
@@ -812,6 +862,10 @@
 	(Nombre "LI")
 	(PrctAprobado 63)
 	(PreRequesit [ontologia_Class30008])
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class70000]
+		[ontologia_Class80002])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40024] of  Asignatura
@@ -823,6 +877,9 @@
 	(Nombre "LP")
 	(PrctAprobado 67)
 	(PreRequesit [ontologia_Class30014])
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80002])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40025] of  Asignatura
@@ -835,6 +892,9 @@
 	(Nombre "TC")
 	(PrctAprobado 71)
 	(PreRequesit [ontologia_Class30008])
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class70000])
 	(VolumenTrabajo alto))
 
 ([ontologia_Class40026] of  Asignatura
@@ -846,10 +906,7 @@
 	(Nombre "AA")
 	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class40021])
-	(TemasRelacionados
-		[ontologia_Class80006]
-		[ontologia_Class80009]
-		[ontologia_Class80010])
+	(TemasRelacionados [ontologia_Class80006])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40027] of  Asignatura
@@ -862,9 +919,7 @@
 	(Nombre "APA")
 	(PrctAprobado 95)
 	(PreRequesit [ontologia_Class30009])
-	(TemasRelacionados
-		[ontologia_Class80025]
-		[ontologia_Class80024])
+	(TemasRelacionados [ontologia_Class80024])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40028] of  Asignatura
@@ -881,8 +936,7 @@
 		[ontologia_Class30009])
 	(TemasRelacionados
 		[ontologia_Class80051]
-		[ontologia_Class80052]
-		[ontologia_Class80053])
+		[ontologia_Class80052])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40029] of  Asignatura
@@ -894,6 +948,10 @@
 	(Nombre "CL")
 	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class40025])
+	(TemasRelacionados
+		[ontologia_Class80035]
+		[ontologia_Class80012]
+		[ontologia_Class80002])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40030] of  Asignatura
@@ -907,6 +965,9 @@
 	(PreRequesit
 		[ontologia_Class30004]
 		[ontologia_Class30005])
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class60001])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40031] of  Asignatura
@@ -918,6 +979,10 @@
 	(Nombre "IO")
 	(PrctAprobado 63)
 	(PreRequesit [ontologia_Class30009])
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80012]
+		[ontologia_Class80024])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40032] of  Asignatura
@@ -929,6 +994,11 @@
 	(Nombre "SID")
 	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class40022])
+	(TemasRelacionados
+		[ontologia_Class80012]
+		[ontologia_Class80041]
+		[ontologia_Class80026]
+		[ontologia_Class80037])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40033] of  Asignatura
@@ -952,6 +1022,10 @@
 	(Nombre "DSBM")
 	(PrctAprobado 91)
 	(PreRequesit [ontologia_Class30007])
+	(TemasRelacionados
+		[ontologia_Class80003]
+		[ontologia_Class80013]
+		[ontologia_Class80026])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40035] of  Asignatura
@@ -965,6 +1039,9 @@
 	(PreRequesit
 		[ontologia_Class40033]
 		[ontologia_Class30017])
+	(TemasRelacionados
+		[ontologia_Class80026]
+		[ontologia_Class80003])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40036] of  Asignatura
@@ -979,6 +1056,9 @@
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "PEC")
 	(PrctAprobado 100)
+	(TemasRelacionados
+		[ontologia_Class80003]
+		[ontologia_Class80035])
 	(VolumenTrabajo medio))
 
 ([ontologia_Class40037] of  Asignatura
@@ -990,6 +1070,9 @@
 	(Nombre "SO2")
 	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class30010])
+	(TemasRelacionados
+		[ontologia_Class80035]
+		[ontologia_Class80039])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40038] of  Asignatura
@@ -1001,6 +1084,9 @@
 	(Nombre "MI")
 	(PrctAprobado 96)
 	(PreRequesit [ontologia_Class30012])
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80022])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40039] of  Asignatura
@@ -1011,6 +1097,9 @@
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "XC2")
 	(PrctAprobado 96)
+	(TemasRelacionados
+		[ontologia_Class80052]
+		[ontologia_Class80014])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40040] of  Asignatura
@@ -1022,11 +1111,7 @@
 	(Nombre "CASO")
 	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class40075])
-	(TemasRelacionados
-		[ontologia_Class80039]
-		[ontologia_Class80056]
-		[ontologia_Class80057]
-		[ontologia_Class80020])
+	(TemasRelacionados [ontologia_Class80039])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40041] of  Asignatura
@@ -1040,6 +1125,10 @@
 	(PreRequesit
 		[ontologia_Class30015]
 		[ontologia_Class30010])
+	(TemasRelacionados
+		[ontologia_Class80012]
+		[ontologia_Class80041]
+		[ontologia_Class80037])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40042] of  Asignatura
@@ -1051,6 +1140,10 @@
 	(Nombre "PAP")
 	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30017])
+	(TemasRelacionados
+		[ontologia_Class80003]
+		[ontologia_Class80026]
+		[ontologia_Class80002])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40043] of  Asignatura
@@ -1062,6 +1155,9 @@
 	(Nombre "PCA")
 	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30011])
+	(TemasRelacionados
+		[ontologia_Class80003]
+		[ontologia_Class80002])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40044] of  Asignatura
@@ -1073,6 +1169,10 @@
 	(Nombre "PDS")
 	(PrctAprobado 95)
 	(PreRequesit [ontologia_Class30007])
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class80012]
+		[ontologia_Class60001])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40045] of  Asignatura
@@ -1086,6 +1186,11 @@
 	(PreRequesit
 		[ontologia_Class40034]
 		[ontologia_Class30010])
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class80041]
+		[ontologia_Class80052]
+		[ontologia_Class80037])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40046] of  Asignatura
@@ -1097,6 +1202,9 @@
 	(Nombre "VLSI")
 	(PrctAprobado 80)
 	(PreRequesit [ontologia_Class40033])
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80013])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40047] of  Asignatura
@@ -1110,8 +1218,7 @@
 	(PreRequesit [ontologia_Class30013])
 	(TemasRelacionados
 		[ontologia_Class80032]
-		[ontologia_Class80033]
-		[ontologia_Class80034])
+		[ontologia_Class80033])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40048] of  Asignatura
@@ -1124,10 +1231,8 @@
 	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class40047])
 	(TemasRelacionados
-		[ontologia_Class80018]
 		[ontologia_Class80044]
-		[ontologia_Class80014]
-		[ontologia_Class80045])
+		[ontologia_Class80014])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40049] of  Asignatura
@@ -1140,6 +1245,7 @@
 	(Nombre "DBD")
 	(PrctAprobado 87)
 	(PreRequesit [ontologia_Class30006])
+	(TemasRelacionados [ontologia_Class80011])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40050] of  Asignatura
@@ -1153,6 +1259,7 @@
 	(PreRequesit
 		[ontologia_Class30012]
 		[ontologia_Class30013])
+	(TemasRelacionados [ontologia_Class80032])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40051] of  Asignatura
@@ -1166,6 +1273,9 @@
 	(PreRequesit
 		[ontologia_Class30012]
 		[ontologia_Class30013])
+	(TemasRelacionados
+		[ontologia_Class80035]
+		[ontologia_Class80032])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40053] of  Asignatura
@@ -1180,6 +1290,9 @@
 		[ontologia_Class40050]
 		[ontologia_Class40051]
 		[ontologia_Class40047])
+	(TemasRelacionados
+		[ontologia_Class80035]
+		[ontologia_Class80032])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40054] of  Asignatura
@@ -1194,9 +1307,9 @@
 		[ontologia_Class40070]
 		[ontologia_Class40049])
 	(TemasRelacionados
-		[ontologia_Class80058]
-		[ontologia_Class80047]
-		[ontologia_Class80023])
+		[ontologia_Class80008]
+		[ontologia_Class80014]
+		[ontologia_Class80011])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40055] of  Asignatura
@@ -1210,6 +1323,11 @@
 	(PreRequesit
 		[ontologia_Class30006]
 		[ontologia_Class30012])
+	(TemasRelacionados
+		[ontologia_Class80012]
+		[ontologia_Class80024]
+		[ontologia_Class80039]
+		[ontologia_Class80044])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40056] of  Asignatura
@@ -1221,6 +1339,10 @@
 	(Nombre "ECSDI")
 	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class40047])
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class80032]
+		[ontologia_Class80033])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40057] of  Asignatura
@@ -1232,6 +1354,10 @@
 	(Nombre "SIM")
 	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30009])
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class80012]
+		[ontologia_Class60000])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40058] of  Asignatura
@@ -1243,6 +1369,10 @@
 	(Nombre "SOAD")
 	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class30010])
+	(TemasRelacionados
+		[ontologia_Class80035]
+		[ontologia_Class80041]
+		[ontologia_Class80039])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40059] of  Asignatura
@@ -1259,7 +1389,6 @@
 	(TemasRelacionados
 		[ontologia_Class80033]
 		[ontologia_Class80002]
-		[ontologia_Class80054]
 		[ontologia_Class80055])
 	(VolumenTrabajo bajo))
 
@@ -1276,7 +1405,6 @@
 		[ontologia_Class30009])
 	(TemasRelacionados
 		[ontologia_Class80022]
-		[ontologia_Class80023]
 		[ontologia_Class80024])
 	(VolumenTrabajo bajo))
 
@@ -1289,6 +1417,10 @@
 	(Nombre "DSI")
 	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class30013])
+	(TemasRelacionados
+		[ontologia_Class80012]
+		[ontologia_Class80022]
+		[ontologia_Class80037])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40063] of  Asignatura
@@ -1299,6 +1431,10 @@
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "NE")
 	(PrctAprobado 100)
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80022]
+		[ontologia_Class80044])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40064] of  Asignatura
@@ -1313,6 +1449,10 @@
 	(Nombre "PSI")
 	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class40061])
+	(TemasRelacionados
+		[ontologia_Class80035]
+		[ontologia_Class80022]
+		[ontologia_Class80037])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40065] of  Asignatura
@@ -1326,6 +1466,13 @@
 	(PreRequesit
 		[ontologia_Class30012]
 		[ontologia_Class30006])
+	(TemasRelacionados
+		[ontologia_Class80011]
+		[ontologia_Class80031]
+		[ontologia_Class80012]
+		[ontologia_Class80022]
+		[ontologia_Class80052]
+		[ontologia_Class80014])
 	(VolumenTrabajo medio))
 
 ([ontologia_Class40069] of  Asignatura
@@ -1337,6 +1484,10 @@
 	(Nombre "VPE")
 	(PrctAprobado 96)
 	(PreRequesit [ontologia_Class30012])
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class80035]
+		[ontologia_Class80022])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40070] of  Asignatura
@@ -1368,10 +1519,7 @@
 	(PreRequesit [ontologia_Class30010])
 	(TemasRelacionados
 		[ontologia_Class80039]
-		[ontologia_Class80040]
 		[ontologia_Class80041]
-		[ontologia_Class80042]
-		[ontologia_Class80043]
 		[ontologia_Class80014])
 	(VolumenTrabajo bajo))
 
@@ -1386,6 +1534,11 @@
 	(PreRequesit
 		[ontologia_Class30015]
 		[ontologia_Class40021])
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80014]
+		[ontologia_Class80039]
+		[ontologia_Class80044])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40073] of  Asignatura
@@ -1399,6 +1552,12 @@
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "PTI")
 	(PrctAprobado 100)
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80035]
+		[ontologia_Class80012]
+		[ontologia_Class80052]
+		[ontologia_Class80039])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40074] of  Asignatura
@@ -1412,6 +1571,13 @@
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "SI")
 	(PrctAprobado 86)
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80052]
+		[ontologia_Class80014]
+		[ontologia_Class80039]
+		[ontologia_Class80037]
+		[ontologia_Class80044])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40075] of  Asignatura
@@ -1423,6 +1589,9 @@
 	(Nombre "SOA")
 	(PrctAprobado 95)
 	(PreRequesit [ontologia_Class30010])
+	(TemasRelacionados
+		[ontologia_Class80035]
+		[ontologia_Class80039])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40076] of  Asignatura
@@ -1434,6 +1603,10 @@
 	(Nombre "TXC")
 	(PrctAprobado 82)
 	(PreRequesit [ontologia_Class30015])
+	(TemasRelacionados
+		[ontologia_Class80013]
+		[ontologia_Class80035]
+		[ontologia_Class80052])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40077] of  Asignatura
@@ -1445,11 +1618,7 @@
 	(Nombre "AD")
 	(PrctAprobado 100)
 	(PreRequesit [ontologia_Class30015])
-	(TemasRelacionados
-		[ontologia_Class80018]
-		[ontologia_Class80019]
-		[ontologia_Class80020]
-		[ontologia_Class80021])
+	(TemasRelacionados [ontologia_Class80003])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40080] of  Asignatura
@@ -1461,6 +1630,10 @@
 	(Nombre "IM")
 	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30015])
+	(TemasRelacionados
+		[ontologia_Class80013]
+		[ontologia_Class80041]
+		[ontologia_Class80051])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40081] of  Asignatura
@@ -1475,6 +1648,9 @@
 	(Nombre "SDX")
 	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30015])
+	(TemasRelacionados
+		[ontologia_Class80035]
+		[ontologia_Class80052])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40082] of  Asignatura
@@ -1489,6 +1665,12 @@
 		[ontologia_Class0]
 		[ontologia_Class30004]
 		[ontologia_Class30005])
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80052]
+		[ontologia_Class80014]
+		[ontologia_Class80037]
+		[ontologia_Class80044])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40083] of  Asignatura
@@ -1526,10 +1708,7 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "ASMI")
 	(PrctAprobado 79)
-	(TemasRelacionados
-		[ontologia_Class80036]
-		[ontologia_Class80037]
-		[ontologia_Class80038])
+	(TemasRelacionados [ontologia_Class80037])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40086] of  Asignatura
@@ -1540,9 +1719,7 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "C")
 	(PrctAprobado 100)
-	(TemasRelacionados
-		[ontologia_Class80048]
-		[ontologia_Class80049])
+	(TemasRelacionados [ontologia_Class80048])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40087] of  Asignatura
@@ -1553,9 +1730,7 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "CCQ")
 	(PrctAprobado 95)
-	(TemasRelacionados
-		[ontologia_Class80059]
-		[ontologia_Class80048])
+	(TemasRelacionados [ontologia_Class80048])
 	(VolumenTrabajo medio))
 
 ([ontologia_Class40088] of  Asignatura
@@ -1566,6 +1741,10 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "CDI")
 	(PrctAprobado 79)
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class80008]
+		[ontologia_Class80002])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40089] of  Asignatura
@@ -1576,6 +1755,10 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "DCS")
 	(PrctAprobado 79)
+	(TemasRelacionados
+		[ontologia_Class60000]
+		[ontologia_Class60001]
+		[ontologia_Class80002])
 	(VolumenTrabajo alto))
 
 ([ontologia_Class40090] of  Asignatura
@@ -1586,6 +1769,10 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "FOMAR")
 	(PrctAprobado 83)
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class60000]
+		[ontologia_Class80033])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40091] of  Asignatura
@@ -1596,6 +1783,10 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "GEOC")
 	(PrctAprobado 42)
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class80002]
+		[ontologia_Class60001])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40092] of  Asignatura
@@ -1606,6 +1797,9 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "MD")
 	(PrctAprobado 79)
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class80011])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40093] of  Asignatura
@@ -1616,6 +1810,9 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "ROB")
 	(PrctAprobado 73)
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class60001])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40094] of  Asignatura
@@ -1626,6 +1823,10 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "SLDS")
 	(PrctAprobado 94)
+	(TemasRelacionados
+		[ontologia_Class80032]
+		[ontologia_Class80002]
+		[ontologia_Class80037])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40095] of  Asignatura
@@ -1636,6 +1837,11 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "TGA")
 	(PrctAprobado 79)
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class60001]
+		[ontologia_Class80033]
+		[ontologia_Class80002])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40096] of  Asignatura
@@ -1646,6 +1852,10 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "VC")
 	(PrctAprobado 85)
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class80033]
+		[ontologia_Class80002])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40097] of  Asignatura
@@ -1656,6 +1866,14 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "VJ")
 	(PrctAprobado 87)
+	(TemasRelacionados
+		[ontologia_Class80006]
+		[ontologia_Class80031]
+		[ontologia_Class80035]
+		[ontologia_Class80012]
+		[ontologia_Class80032]
+		[ontologia_Class80002]
+		[ontologia_Class80037])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40098] of  Asignatura
@@ -1666,6 +1884,10 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "WSE")
 	(PrctAprobado 96)
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80030]
+		[ontologia_Class80037])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class40099] of  Asignatura
@@ -1676,11 +1898,7 @@
 	(ModalidadAsig [ontologia_Class10006])
 	(Nombre "APC")
 	(PrctAprobado 94)
-	(TemasRelacionados
-		[ontologia_Class80026]
-		[ontologia_Class80027]
-		[ontologia_Class80028]
-		[ontologia_Class80029])
+	(TemasRelacionados [ontologia_Class80026])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class50000] of  Asignatura
@@ -1691,6 +1909,7 @@
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "EDO")
 	(PrctAprobado 79)
+	(TemasRelacionados [ontologia_Class80022])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class50001] of  Asignatura
@@ -1702,6 +1921,10 @@
 	(Nombre "IO")
 	(PrctAprobado 63)
 	(PreRequesit [ontologia_Class30009])
+	(TemasRelacionados
+		[ontologia_Class80031]
+		[ontologia_Class80012]
+		[ontologia_Class80024])
 	(VolumenTrabajo np))
 
 ([ontologia_Class50002] of  Convocatoria
@@ -1749,6 +1972,10 @@
 	(Nombre "CPD")
 	(PrctAprobado 79)
 	(PreRequesit [ontologia_Class30015])
+	(TemasRelacionados
+		[ontologia_Class80012]
+		[ontologia_Class80041]
+		[ontologia_Class80014])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class60000] of  Tema
@@ -1822,6 +2049,10 @@
 	(HorarioAsig [ontologia_Class10002])
 	(Nota 4.5))
 
+([ontologia_Class70000] of  Tema
+
+	(Nombre "Logica"))
+
 ([ontologia_Class70002] of  Asignatura
 
 	(Dificultad np)
@@ -1833,6 +2064,7 @@
 	(PreRequesit
 		[ontologia_Class30012]
 		[ontologia_Class30013])
+	(TemasRelacionados [ontologia_Class80032])
 	(VolumenTrabajo bajo))
 
 ([ontologia_Class80002] of  Tema
@@ -1847,21 +2079,9 @@
 
 	(Nombre "Algoritmos"))
 
-([ontologia_Class80007] of  Tema
-
-	(Nombre "Programacion Dinamica"))
-
 ([ontologia_Class80008] of  Tema
 
 	(Nombre "Estructuras De Datos"))
-
-([ontologia_Class80009] of  Tema
-
-	(Nombre "Teoria De Juegos"))
-
-([ontologia_Class80010] of  Tema
-
-	(Nombre "Problemas Intractables"))
 
 ([ontologia_Class80011] of  Tema
 
@@ -1883,57 +2103,17 @@
 
 	(Nombre "Lenguaje Ensamblador"))
 
-([ontologia_Class80017] of  Tema
-
-	(Nombre "Jerarquia De Memoria"))
-
-([ontologia_Class80018] of  Tema
-
-	(Nombre "HTTP"))
-
-([ontologia_Class80019] of  Tema
-
-	(Nombre "Contenidos Digitales"))
-
-([ontologia_Class80020] of  Tema
-
-	(Nombre "Dispositivos Mobiles"))
-
-([ontologia_Class80021] of  Tema
-
-	(Nombre "Interfaz De Usuario"))
-
 ([ontologia_Class80022] of  Tema
 
 	(Nombre "Empresa"))
-
-([ontologia_Class80023] of  Tema
-
-	(Nombre "Tratamiento de Datos"))
 
 ([ontologia_Class80024] of  Tema
 
 	(Nombre "Estadistica"))
 
-([ontologia_Class80025] of  Tema
-
-	(Nombre "Aprendizaje Automatico"))
-
 ([ontologia_Class80026] of  Tema
 
 	(Nombre "Microprocesadores"))
-
-([ontologia_Class80027] of  Tema
-
-	(Nombre "Memoria"))
-
-([ontologia_Class80028] of  Tema
-
-	(Nombre "Targetas Graficas"))
-
-([ontologia_Class80029] of  Tema
-
-	(Nombre "Dispositivos De Almacenamiento"))
 
 ([ontologia_Class80030] of  Tema
 
@@ -1941,7 +2121,7 @@
 
 ([ontologia_Class80031] of  Tema
 
-	(Nombre "Comunicacion oral"))
+	(Nombre "Comunicacion"))
 
 ([ontologia_Class80032] of  Tema
 
@@ -1951,69 +2131,29 @@
 
 	(Nombre "Orientacion a Objetos"))
 
-([ontologia_Class80034] of  Tema
-
-	(Nombre "Arquitectura De Capas"))
-
 ([ontologia_Class80035] of  Tema
 
 	(Nombre "Creacion De Proyecto"))
-
-([ontologia_Class80036] of  Tema
-
-	(Nombre "Medioambiente"))
 
 ([ontologia_Class80037] of  Tema
 
 	(Nombre "Sociedad"))
 
-([ontologia_Class80038] of  Tema
-
-	(Nombre "Etica"))
-
 ([ontologia_Class80039] of  Tema
 
 	(Nombre "Sistemas Operativos"))
-
-([ontologia_Class80040] of  Tema
-
-	(Nombre "Gestion De Usuarios"))
 
 ([ontologia_Class80041] of  Tema
 
 	(Nombre "Gestion De Aplicaciones"))
 
-([ontologia_Class80042] of  Tema
-
-	(Nombre "Monitorizacion"))
-
-([ontologia_Class80043] of  Tema
-
-	(Nombre "Servicios"))
-
 ([ontologia_Class80044] of  Tema
 
 	(Nombre "Web"))
 
-([ontologia_Class80045] of  Tema
-
-	(Nombre "Usabilidad"))
-
-([ontologia_Class80046] of  Tema
-
-	(Nombre "SQL"))
-
-([ontologia_Class80047] of  Tema
-
-	(Nombre "NOSQL"))
-
 ([ontologia_Class80048] of  Tema
 
 	(Nombre "Criptografia"))
-
-([ontologia_Class80049] of  Tema
-
-	(Nombre "SSL"))
 
 ([ontologia_Class80051] of  Tema
 
@@ -2023,44 +2163,19 @@
 
 	(Nombre "Redes"))
 
-([ontologia_Class80053] of  Tema
-
-	(Nombre "Busqueda"))
-
-([ontologia_Class80054] of  Tema
-
-	(Nombre "Smalltalk"))
-
 ([ontologia_Class80055] of  Tema
 
 	(Nombre "Java"))
-
-([ontologia_Class80056] of  Tema
-
-	(Nombre "Rendimiento SO"))
-
-([ontologia_Class80057] of  Tema
-
-	(Nombre "Sistema De Ficheros"))
-
-([ontologia_Class80058] of  Tema
-
-	(Nombre "Bases De Datos Distribuidos"))
-
-([ontologia_Class80059] of  Tema
-
-	(Nombre "Fisica Cuantica"))
 )
 
 ;------------------ Aqui empieza el sistema experto --------------------;
 
 
 ; ==================HECHO DESDE LA ULTIMA ITERACION===============================
-; Ahora a dificultad se calcula tambien a partir del procentaje de aprobados que tiene esa asignaturas
-; Existen los temas
-; El sistema le pregunta al usuario que temas prefiere y los guarda
-; Regla que mire que hayas aprobado todas las obligatorias para que te deje pillar optativas
-; Suma puntos a los temas seleccionados
+; Funciones auxiliares que calculan la nota media y maxima de un alumno
+; Regla que bonifica a las asignaturas parecidas a las asignaturas donde el alumno ha sacado mejores notas
+; Funcion que ordena los temas alfabeticamente
+; Regla que elige temas por el alumno según si ha sacado buenas notas en ellas
 ;=================================================================================
 ;str-cat = string concat
 
@@ -2075,7 +2190,8 @@
 ;dar recomendación
 
 ; TODO GENERAL
-; Mirar los correquesitos. Si no tiene todos los corequesitos aprobados, le meta el disclaimer.
+; Cambiar la representación de los temas a temas mas generales.
+; Cambiar la decision inicial de las cosas para que tenga en cuenta la nota
 
 (defmodule MAIN (export ?ALL))
 
@@ -2164,8 +2280,73 @@
   ?ret
 )
 
+; Funcion que mira si son de la misma especialidad
+(deffunction misma-especialidad (?a ?b)
+  (bind ?ret FALSE)
+  (bind ?posible FALSE)
+  (if (or 
+      (eq ?a "Esp_AC") (eq ?a "OptEsp_AC")
+      (eq ?a "Esp_Comp") (eq ?a "OptEsp_Comp")
+      (eq ?a "Esp_ES") (eq ?a "OptEsp_ES")
+      (eq ?a "Esp_SI") (eq ?a "OptEsp_SI")
+      (eq ?a "Esp_TI") (eq ?a "OptEsp_TI"))
+  then (bind ?posible TRUE))
+  (if (and (eq ?posible TRUE)(eq ?a ?b)) then (bind ?ret TRUE))
+  (if (and (eq ?posible TRUE) (neq ?ret TRUE)
+    (or 
+      (and (eq ?a "Esp_AC") (eq ?b "OptEsp_AC")) 
+      (and (eq ?a "Esp_Comp") (eq ?b "OptEsp_Comp")) 
+      (and (eq ?a "Esp_ES") (eq ?b "OptEsp_ES")) 
+      (and (eq ?a "Esp_SI") (eq ?b "OptEsp_SI")) 
+      (and (eq ?a "Esp_TI") (eq ?b "OptEsp_TI"))
 
-;
+      (and (eq ?b "Esp_AC") (eq ?a "OptEsp_AC")) 
+      (and (eq ?b "Esp_Comp") (eq ?a "OptEsp_Comp")) 
+      (and (eq ?b "Esp_ES") (eq ?a "OptEsp_ES")) 
+      (and (eq ?b "Esp_SI") (eq ?a "OptEsp_SI")) 
+      (and (eq ?b "Esp_TI") (eq ?a "OptEsp_TI"))
+    )) then (bind ?ret TRUE))
+  ?ret
+)
+
+; Funcion que ordena una lista de temas muy ineficientemente
+(deffunction ordenar-temas ($?temas)
+  (bind $?ret (create$))
+  (while (> (length $?temas) 0)
+    (bind ?primero (nth$ 1 $?temas))
+    (progn$ (?t $?temas)
+      (if (> (str-compare (send ?primero get-Nombre) (send ?t get-Nombre)) 0) then (bind ?primero ?t))
+    )
+    (bind $?ret (insert$ $?ret (+ (length$ $?ret) 1) ?primero))
+    (bind $?temas (delete-member$ $?temas ?primero))
+  )
+  $?ret
+)
+
+; Funcion que devuelve la maxima nota de entre todas las convocatorias
+(deffunction nota-maxima ()
+  (bind $?convs (find-all-instances ((?inst Convocatoria)) (>= ?inst:Nota 5)))
+  (bind ?max 0)
+  (progn$ (?conv $?convs)
+    (bind ?nota (send ?conv get-Nota))
+    (if (> ?nota ?max) then (bind ?max ?nota))
+  )
+  ?max
+)
+
+; Funcion que devuelve la media de notas de entre todas las convocatorias
+(deffunction nota-media ()
+  (bind $?convs (find-all-instances ((?inst Convocatoria)) (>= ?inst:Nota 5)))
+  (bind $?media (create$))
+  (progn$ (?conv $?convs)
+    (bind ?nota (send ?conv get-Nota))
+    (bind $?media (insert$ $?media (+ (length$ $?media) 1) ?nota))
+  )
+  (bind ?aux 0)
+  (progn$ (?a $?media) (bind ?aux (+ ?aux ?a)))
+  (bind ?med (/ ?aux (length$ $?media)))
+  ?med
+)
 
 (defrule olakase
   (declare (salience 10))
@@ -2185,11 +2366,11 @@
 
 (defrule pregunta-dni
   (declare (salience 10))
-  (not (tengoputodni))
+  (not (tengodni))
   =>
   (bind ?dni (pregunta-general "Cual es su dni (unicamente los numeros)"))
   (assert (estudianteRand ?dni))
-  (assert (tengoputodni))
+  (assert (tengodni))
   (assert (noIdeaQuienEs))
   (assert (miraQuienEs))
 )
@@ -2221,7 +2402,7 @@
 ; Si no existe, a iorar
 (defrule estudiate-random
   (declare (salience -1))
-  ?z <- (tengoputodni)
+  ?z <- (tengodni)
   ?y <- (noIdeaQuienEs)
   ?x <- (estudianteRand ?dni)
   =>
@@ -2267,6 +2448,7 @@
   (assert (nAsig))
 )
 
+; Pregunta por la especialidad preferible por el usuario
 (defrule pregunta-especialidad
   (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
@@ -2303,6 +2485,7 @@
   )
 )
 
+; Pregunta por el horario en el cual el usuario puede asistir a clase
 (defrule pregunta-horario
   (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
@@ -2331,11 +2514,12 @@
   (assert (phorario))
 )
 
+; Pregunta por los temas que le interesan al usuario
 (defrule pregunta-temas
   (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
   =>
-  (bind $?temas (find-all-instances ((?inst Tema)) TRUE))
+  (bind $?temas (ordenar-temas (find-all-instances ((?inst Tema)) TRUE)))
   (bind $?respuestas (create$))
   (progn$ (?t $?temas) (bind $?respuestas (insert$ ?respuestas (+ (length $?respuestas) 1) FALSE)))
   (bind ?respuesta nil)
@@ -2356,7 +2540,7 @@
   (bind ?i 1)
   (while (< (- ?i 1) (length $?temas))
     (if (eq (nth$ ?i $?respuestas) TRUE) 
-      then (bind $?ret (insert$ $?ret (+ (length $?ret) 1) (nth$ ?i $?temas)))        
+      then (bind $?ret (insert$ $?ret (+ (length $?ret) 1) (instance-name (nth$ ?i $?temas))))      
     )
     (bind ?i (+ ?i 1))
   )
@@ -2571,6 +2755,27 @@
   (assert (calculado-especialidad))
 )
 
+; Regla que elige como temas preferidos aquellos que estan relacionados con asignaturas en las que el alumno ha sacado buena nota
+(defrule calcular-temas
+  (not (calculado-temas))
+  ?alumno <- (object (is-a Alumno) (Temas $?ret))
+  =>
+  (bind ?max (nota-maxima))
+  (bind ?med (nota-media))
+  (bind $?convs (find-all-instances ((?inst Convocatoria)) (and (>= ?inst:Nota (+ (- ?max ?med) ?med)) (>= ?inst:Nota 8))))
+  (progn$ (?c $?convs)
+    (bind $?temas (send (instance-address * (send ?c get-AsignaturaMatriculada)) get-TemasRelacionados))
+    (progn$ (?t $?temas)
+      (if (not (member$ ?t $?ret))
+        then (bind $?ret (insert$ $?ret (+ (length$ $?ret) 1) ?t))
+        (printout t "DEBUG: La asignatura " (send (instance-address * ?t) get-Nombre) " tiene temas que lo mas seguro es que le gusten al user" crlf)
+      )
+    )
+  )
+  (send ?alumno put-Temas $?ret)
+  (assert (calculado-temas))
+)
+
 (defrule pasar-a-seleccion
   (declare (salience -10))
   ?alumno <- (object (is-a Alumno) (VolumenTrabajo alto|medio|bajo) (Dificultad alto|medio|bajo) (NumeroAsignaturas ?na))
@@ -2595,8 +2800,8 @@
   )
 )
 
-; Quita las asignaturas que ya están aprovadas
-(defrule quitar-asignaturas-aprovadas
+; Quita las asignaturas que ya están aprobadas
+(defrule quitar-asignaturas-aprobadas
   (declare (salience 9))
   ?r <- (object (is-a AsignaturaRecomendada) (AsigName ?asig1))
   ?c <- (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2) (Nota ?nota&:(> ?nota 4.99)))
@@ -2665,7 +2870,7 @@
   (if (eq ?borrar TRUE) 
     then 
       (send ?asigRec delete)
-      (printout t "DEBUG: La asignaura " (send ?asig get-Nombre) " ha sido borrada ya que no cumple los prerequesitos" crlf)
+      (printout t "DEBUG: La asignaura " (send ?asig get-Nombre) " ha sido borrada ya que no cumple los prerrequisitos" crlf)
     
   )
   (assert (q-prerequesitos))
@@ -2811,7 +3016,7 @@
 )
 
 
-; Regla que le da puntos a las asignaturas (suspendidas el ultimo cuatrimestre | no aprovadas)
+; Regla que le da puntos a las asignaturas (suspendidas el ultimo cuatrimestre | no aprobadas)
 (defrule asignaturas-suspendidas
   ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig1) (Puntuacion ?p) (Motivos $?m))
   (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2) (Nota ?nota&:(< ?nota 5)))
@@ -2819,12 +3024,12 @@
   (not (asignatura-suspendida ?asig1))
   =>
   (bind ?p (+ ?p 150))
-  (bind ?motivo "La asignatura no está aprovada +150")
+  (bind ?motivo "La asignatura no está aprobada +150")
   (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
   (send ?asigRec put-Puntuacion ?p)
   (send ?asigRec put-Motivos ?m)
   (assert (asignatura-suspendida ?asig1))
-  (printout t "DEBUG: +150 La asignaura " (send ?asig1 get-Nombre) " ha sido cursada y no esta aprovada" crlf)
+  (printout t "DEBUG: +150 La asignaura " (send ?asig1 get-Nombre) " ha sido cursada y no esta aprobada" crlf)
 
 )
 
@@ -2841,7 +3046,7 @@
   (send ?asigRec put-Puntuacion ?p)
   (send ?asigRec put-Motivos ?m)
   (assert (asignatura-obligatoria ?asig))
-  (printout t "DEBUG: +1000 La asignaura " (send ?asig get-Nombre) " es obligatoria y no esta aprovada" crlf)
+  (printout t "DEBUG: +1000 La asignaura " (send ?asig get-Nombre) " es obligatoria y no esta aprobada" crlf)
 )
 
 ; Regla que quita las asignaturas optativas si queda alguna obligatoria por aprobar
@@ -2951,10 +3156,10 @@
   (bind $?atemas (send ?asig get-TemasRelacionados))
   (progn$ (?at $?atemas)
     (progn$ (?t $?temas)
-       (if (eq (send (instance-address * ?at) get-Nombre) (send ?t get-Nombre))
+       (if (eq (send (instance-address * ?at) get-Nombre) (send (instance-address * ?t) get-Nombre))
         then
           (bind ?p (+ ?p 150))
-          (bind ?motivo (str-cat "Es del tema " (send ?t get-Nombre )", seleccionado por el usuario +150"))
+          (bind ?motivo (str-cat "Es del tema " (send (instance-address * ?t) get-Nombre )", seleccionado por el usuario +150"))
           (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
           (send ?asigRec put-Puntuacion ?p)
           (send ?asigRec put-Motivos ?m)
@@ -2963,6 +3168,50 @@
     )
   )
   (assert (temas ?asig))
+)
+
+; Regla auxiliar que calcula la nota media y la nota máxima del alumno
+(defrule nota-media-maxima
+  (not (notas ? ?))
+  (object (is-a Convocatoria))
+  =>
+  (assert (notas (nota-maxima) (nota-media)))
+)
+
+; Regla que le da puntos a asignaturas parecidas a otras con buena nota
+(defrule asignaturas-parecidas
+  (notas ?max ?med)
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
+  (not (asignatura-parecida ?asig))
+  =>
+  (bind $?convs (find-all-instances ((?inst Convocatoria)) (and 
+    (neq ?inst:AsignaturaMatriculada ?asig ) 
+    (>= ?inst:Nota (+ (- ?max ?med) ?med)) 
+    (>= ?inst:Nota 5)))
+  )
+  (progn$ (?conv $?convs)
+    (bind ?r 0)
+    (bind ?asigc (send ?conv get-AsignaturaMatriculada))
+
+    (if (eq (send ?asig get-Dificultad) (send (instance-address * ?asigc) get-Dificultad)) then (bind ?r (+ ?r 2)))
+    (if (eq (send ?asig get-VolumenTrabajo) (send (instance-address * ?asigc) get-VolumenTrabajo)) then (bind ?r (+ ?r 2)))
+    (if (eq (misma-especialidad (send ?asig get-ModalidadAsig) (send (instance-address * ?asigc) get-ModalidadAsig)) TRUE) then (bind ?r (+ ?r 2)))
+    (bind $?t1 (send ?asig get-TemasRelacionados))
+    (bind $?t2 (send (instance-address * ?asigc) get-TemasRelacionados))
+    (progn$ (?tema1 $?t1)
+      (if (member$ ?tema1 $?t2) then (bind ?r (+ ?r 2)))
+    )
+
+    (if (>= ?r 6) then 
+      (bind ?sum (* (* (send ?conv get-Nota) ?r) 10))
+      (bind ?p (+ ?p ?sum))
+      (bind ?motivo (str-cat "Se parece a la asignatura " (send (instance-address * ?asigc) get-Nombre) " y esa asignatura le gustó al alumno +" ?sum))
+      (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+      (send ?asigRec put-Puntuacion ?p)
+      (send ?asigRec put-Motivos ?m)
+      (printout t "DEBUG: La asignatura " (send ?asig get-Nombre) " se parece a la asignatura " (send (instance-address * ?asigc) get-Nombre) " y esa asignatura le gustó al alumno +" ?sum crlf))
+  )
+  (assert (asignatura-parecida ?asig))
 )
 
 
@@ -3022,8 +3271,7 @@
   (printout t "Hola " ?nombre ". Aqui tienes tu recomendacion" crlf)
   (progn$ (?asigRec $?l)
     (bind ?asig (send ?asigRec get-AsigName))
-    (printout t "=======================================" crlf)
-    (printout t "Nombre: " (send ?asig get-Nombre) crlf)
+    (printout t "================= " (send ?asig get-Nombre) " =================" crlf)
     (printout t "Puntuacion: " (send ?asigRec get-Puntuacion) crlf)
     (printout t "Razones: "crlf)
     (progn$ (?motivo (send ?asigRec get-Motivos))

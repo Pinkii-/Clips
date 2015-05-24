@@ -1,27 +1,16 @@
+; ======================= CODIGO DEL SISTEMA BASADO EN CONOCIMIENTO =================
+;;; Autores: Gonzalo Diez, Genis Bayona, Alejandro Polo
+;;; Practica de Sistemas Basados en el Conocimiento
+;;; Recomendacion de asignaturas para un alumno de la FIB
+;;; Mayo 2015
+
 
 ; ==================HECHO DESDE LA ULTIMA ITERACION===============================
-; Ahora a dificultad se calcula tambien a partir del procentaje de aprobados que tiene esa asignaturas
-; Existen los temas
-; El sistema le pregunta al usuario que temas prefiere y los guarda
-; Regla que mire que hayas aprobado todas las obligatorias para que te deje pillar optativas
-; Suma puntos a los temas seleccionados
-; Avisa de la obligación de cumplir los correquisitos
-; Regla que suma puntos a las asignaturas optativas de la especialidad preferida por el usuario
+  ; Funciones auxiliares que calculan la nota media y maxima de un alumno
+  ; Regla que bonifica a las asignaturas parecidas a las asignaturas donde el alumno ha sacado mejores notas
+  ; Funcion que ordena los temas alfabeticamente
+  ; Regla que elige temas por el alumno según si ha sacado buenas notas en ellas
 ;=================================================================================
-;str-cat = string concat
-
-;progn$ (?elemento ?lista) (cosa a aplicar)
-
-;send ?instancia get-slot = devuelve el contenido del slot de esa instancia
-
-;Preguntar todo lo que quiere con opciona a no importar
-
-;si no importa, calcularlo del historial
-
-;dar recomendación
-
-; TODO GENERAL
-; Mirar los correquesitos. Si no tiene todos los corequesitos aprobados, le meta el disclaimer.
 
 (defmodule MAIN (export ?ALL))
 
@@ -110,8 +99,73 @@
   ?ret
 )
 
+; Funcion que mira si son de la misma especialidad
+(deffunction misma-especialidad (?a ?b)
+  (bind ?ret FALSE)
+  (bind ?posible FALSE)
+  (if (or 
+      (eq ?a "Esp_AC") (eq ?a "OptEsp_AC")
+      (eq ?a "Esp_Comp") (eq ?a "OptEsp_Comp")
+      (eq ?a "Esp_ES") (eq ?a "OptEsp_ES")
+      (eq ?a "Esp_SI") (eq ?a "OptEsp_SI")
+      (eq ?a "Esp_TI") (eq ?a "OptEsp_TI"))
+  then (bind ?posible TRUE))
+  (if (and (eq ?posible TRUE)(eq ?a ?b)) then (bind ?ret TRUE))
+  (if (and (eq ?posible TRUE) (neq ?ret TRUE)
+    (or 
+      (and (eq ?a "Esp_AC") (eq ?b "OptEsp_AC")) 
+      (and (eq ?a "Esp_Comp") (eq ?b "OptEsp_Comp")) 
+      (and (eq ?a "Esp_ES") (eq ?b "OptEsp_ES")) 
+      (and (eq ?a "Esp_SI") (eq ?b "OptEsp_SI")) 
+      (and (eq ?a "Esp_TI") (eq ?b "OptEsp_TI"))
 
-;
+      (and (eq ?b "Esp_AC") (eq ?a "OptEsp_AC")) 
+      (and (eq ?b "Esp_Comp") (eq ?a "OptEsp_Comp")) 
+      (and (eq ?b "Esp_ES") (eq ?a "OptEsp_ES")) 
+      (and (eq ?b "Esp_SI") (eq ?a "OptEsp_SI")) 
+      (and (eq ?b "Esp_TI") (eq ?a "OptEsp_TI"))
+    )) then (bind ?ret TRUE))
+  ?ret
+)
+
+; Funcion que ordena una lista de temas muy ineficientemente
+(deffunction ordenar-temas ($?temas)
+  (bind $?ret (create$))
+  (while (> (length $?temas) 0)
+    (bind ?primero (nth$ 1 $?temas))
+    (progn$ (?t $?temas)
+      (if (> (str-compare (send ?primero get-Nombre) (send ?t get-Nombre)) 0) then (bind ?primero ?t))
+    )
+    (bind $?ret (insert$ $?ret (+ (length$ $?ret) 1) ?primero))
+    (bind $?temas (delete-member$ $?temas ?primero))
+  )
+  $?ret
+)
+
+; Funcion que devuelve la maxima nota de entre todas las convocatorias
+(deffunction nota-maxima ()
+  (bind $?convs (find-all-instances ((?inst Convocatoria)) (>= ?inst:Nota 5)))
+  (bind ?max 0)
+  (progn$ (?conv $?convs)
+    (bind ?nota (send ?conv get-Nota))
+    (if (> ?nota ?max) then (bind ?max ?nota))
+  )
+  ?max
+)
+
+; Funcion que devuelve la media de notas de entre todas las convocatorias
+(deffunction nota-media ()
+  (bind $?convs (find-all-instances ((?inst Convocatoria)) (>= ?inst:Nota 5)))
+  (bind $?media (create$))
+  (progn$ (?conv $?convs)
+    (bind ?nota (send ?conv get-Nota))
+    (bind $?media (insert$ $?media (+ (length$ $?media) 1) ?nota))
+  )
+  (bind ?aux 0)
+  (progn$ (?a $?media) (bind ?aux (+ ?aux ?a)))
+  (bind ?med (/ ?aux (length$ $?media)))
+  ?med
+)
 
 (defrule olakase
   (declare (salience 10))
@@ -131,11 +185,11 @@
 
 (defrule pregunta-dni
   (declare (salience 10))
-  (not (tengoputodni))
+  (not (tengodni))
   =>
   (bind ?dni (pregunta-general "Cual es su dni (unicamente los numeros)"))
   (assert (estudianteRand ?dni))
-  (assert (tengoputodni))
+  (assert (tengodni))
   (assert (noIdeaQuienEs))
   (assert (miraQuienEs))
 )
@@ -167,7 +221,7 @@
 ; Si no existe, a iorar
 (defrule estudiate-random
   (declare (salience -1))
-  ?z <- (tengoputodni)
+  ?z <- (tengodni)
   ?y <- (noIdeaQuienEs)
   ?x <- (estudianteRand ?dni)
   =>
@@ -213,6 +267,7 @@
   (assert (nAsig))
 )
 
+; Pregunta por la especialidad preferible por el usuario
 (defrule pregunta-especialidad
   (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
@@ -249,6 +304,7 @@
   )
 )
 
+; Pregunta por el horario en el cual el usuario puede asistir a clase
 (defrule pregunta-horario
   (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
@@ -277,11 +333,12 @@
   (assert (phorario))
 )
 
+; Pregunta por los temas que le interesan al usuario
 (defrule pregunta-temas
   (not (noIdeaQuienEs))
   ?alumno <- (object (is-a Alumno))
   =>
-  (bind $?temas (find-all-instances ((?inst Tema)) TRUE))
+  (bind $?temas (ordenar-temas (find-all-instances ((?inst Tema)) TRUE)))
   (bind $?respuestas (create$))
   (progn$ (?t $?temas) (bind $?respuestas (insert$ ?respuestas (+ (length $?respuestas) 1) FALSE)))
   (bind ?respuesta nil)
@@ -302,7 +359,7 @@
   (bind ?i 1)
   (while (< (- ?i 1) (length $?temas))
     (if (eq (nth$ ?i $?respuestas) TRUE) 
-      then (bind $?ret (insert$ $?ret (+ (length $?ret) 1) (nth$ ?i $?temas)))        
+      then (bind $?ret (insert$ $?ret (+ (length $?ret) 1) (instance-name (nth$ ?i $?temas))))      
     )
     (bind ?i (+ ?i 1))
   )
@@ -517,6 +574,27 @@
   (assert (calculado-especialidad))
 )
 
+; Regla que elige como temas preferidos aquellos que estan relacionados con asignaturas en las que el alumno ha sacado buena nota
+(defrule calcular-temas
+  (not (calculado-temas))
+  ?alumno <- (object (is-a Alumno) (Temas $?ret))
+  =>
+  (bind ?max (nota-maxima))
+  (bind ?med (nota-media))
+  (bind $?convs (find-all-instances ((?inst Convocatoria)) (and (>= ?inst:Nota (+ (- ?max ?med) ?med)) (>= ?inst:Nota 8))))
+  (progn$ (?c $?convs)
+    (bind $?temas (send (instance-address * (send ?c get-AsignaturaMatriculada)) get-TemasRelacionados))
+    (progn$ (?t $?temas)
+      (if (not (member$ ?t $?ret))
+        then (bind $?ret (insert$ $?ret (+ (length$ $?ret) 1) ?t))
+        (printout t "DEBUG: La asignatura " (send (instance-address * ?t) get-Nombre) " tiene temas que lo mas seguro es que le gusten al user" crlf)
+      )
+    )
+  )
+  (send ?alumno put-Temas $?ret)
+  (assert (calculado-temas))
+)
+
 (defrule pasar-a-seleccion
   (declare (salience -10))
   ?alumno <- (object (is-a Alumno) (VolumenTrabajo alto|medio|bajo) (Dificultad alto|medio|bajo) (NumeroAsignaturas ?na))
@@ -541,8 +619,8 @@
   )
 )
 
-; Quita las asignaturas que ya están aprovadas
-(defrule quitar-asignaturas-aprovadas
+; Quita las asignaturas que ya están aprobadas
+(defrule quitar-asignaturas-aprobadas
   (declare (salience 9))
   ?r <- (object (is-a AsignaturaRecomendada) (AsigName ?asig1))
   ?c <- (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2) (Nota ?nota&:(> ?nota 4.99)))
@@ -611,7 +689,7 @@
   (if (eq ?borrar TRUE) 
     then 
       (send ?asigRec delete)
-      (printout t "DEBUG: La asignaura " (send ?asig get-Nombre) " ha sido borrada ya que no cumple los prerequesitos" crlf)
+      (printout t "DEBUG: La asignaura " (send ?asig get-Nombre) " ha sido borrada ya que no cumple los prerrequisitos" crlf)
     
   )
   (assert (q-prerequesitos))
@@ -757,7 +835,7 @@
 )
 
 
-; Regla que le da puntos a las asignaturas (suspendidas el ultimo cuatrimestre | no aprovadas)
+; Regla que le da puntos a las asignaturas (suspendidas el ultimo cuatrimestre | no aprobadas)
 (defrule asignaturas-suspendidas
   ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig1) (Puntuacion ?p) (Motivos $?m))
   (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2) (Nota ?nota&:(< ?nota 5)))
@@ -765,12 +843,12 @@
   (not (asignatura-suspendida ?asig1))
   =>
   (bind ?p (+ ?p 150))
-  (bind ?motivo "La asignatura no está aprovada +150")
+  (bind ?motivo "La asignatura no está aprobada +150")
   (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
   (send ?asigRec put-Puntuacion ?p)
   (send ?asigRec put-Motivos ?m)
   (assert (asignatura-suspendida ?asig1))
-  (printout t "DEBUG: +150 La asignaura " (send ?asig1 get-Nombre) " ha sido cursada y no esta aprovada" crlf)
+  (printout t "DEBUG: +150 La asignaura " (send ?asig1 get-Nombre) " ha sido cursada y no esta aprobada" crlf)
 
 )
 
@@ -787,7 +865,7 @@
   (send ?asigRec put-Puntuacion ?p)
   (send ?asigRec put-Motivos ?m)
   (assert (asignatura-obligatoria ?asig))
-  (printout t "DEBUG: +1000 La asignaura " (send ?asig get-Nombre) " es obligatoria y no esta aprovada" crlf)
+  (printout t "DEBUG: +1000 La asignaura " (send ?asig get-Nombre) " es obligatoria y no esta aprobada" crlf)
 )
 
 ; Regla que quita las asignaturas optativas si queda alguna obligatoria por aprobar
@@ -897,10 +975,10 @@
   (bind $?atemas (send ?asig get-TemasRelacionados))
   (progn$ (?at $?atemas)
     (progn$ (?t $?temas)
-       (if (eq (send (instance-address * ?at) get-Nombre) (send ?t get-Nombre))
+       (if (eq (send (instance-address * ?at) get-Nombre) (send (instance-address * ?t) get-Nombre))
         then
           (bind ?p (+ ?p 150))
-          (bind ?motivo (str-cat "Es del tema " (send ?t get-Nombre )", seleccionado por el usuario +150"))
+          (bind ?motivo (str-cat "Es del tema " (send (instance-address * ?t) get-Nombre )", seleccionado por el usuario +150"))
           (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
           (send ?asigRec put-Puntuacion ?p)
           (send ?asigRec put-Motivos ?m)
@@ -909,6 +987,50 @@
     )
   )
   (assert (temas ?asig))
+)
+
+; Regla auxiliar que calcula la nota media y la nota máxima del alumno
+(defrule nota-media-maxima
+  (not (notas ? ?))
+  (object (is-a Convocatoria))
+  =>
+  (assert (notas (nota-maxima) (nota-media)))
+)
+
+; Regla que le da puntos a asignaturas parecidas a otras con buena nota
+(defrule asignaturas-parecidas
+  (notas ?max ?med)
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
+  (not (asignatura-parecida ?asig))
+  =>
+  (bind $?convs (find-all-instances ((?inst Convocatoria)) (and 
+    (neq ?inst:AsignaturaMatriculada ?asig ) 
+    (>= ?inst:Nota (+ (- ?max ?med) ?med)) 
+    (>= ?inst:Nota 5)))
+  )
+  (progn$ (?conv $?convs)
+    (bind ?r 0)
+    (bind ?asigc (send ?conv get-AsignaturaMatriculada))
+
+    (if (eq (send ?asig get-Dificultad) (send (instance-address * ?asigc) get-Dificultad)) then (bind ?r (+ ?r 2)))
+    (if (eq (send ?asig get-VolumenTrabajo) (send (instance-address * ?asigc) get-VolumenTrabajo)) then (bind ?r (+ ?r 2)))
+    (if (eq (misma-especialidad (send ?asig get-ModalidadAsig) (send (instance-address * ?asigc) get-ModalidadAsig)) TRUE) then (bind ?r (+ ?r 2)))
+    (bind $?t1 (send ?asig get-TemasRelacionados))
+    (bind $?t2 (send (instance-address * ?asigc) get-TemasRelacionados))
+    (progn$ (?tema1 $?t1)
+      (if (member$ ?tema1 $?t2) then (bind ?r (+ ?r 2)))
+    )
+
+    (if (>= ?r 6) then 
+      (bind ?sum (* (* (send ?conv get-Nota) ?r) 10))
+      (bind ?p (+ ?p ?sum))
+      (bind ?motivo (str-cat "Se parece a la asignatura " (send (instance-address * ?asigc) get-Nombre) " y esa asignatura le gustó al alumno +" ?sum))
+      (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+      (send ?asigRec put-Puntuacion ?p)
+      (send ?asigRec put-Motivos ?m)
+      (printout t "DEBUG: La asignatura " (send ?asig get-Nombre) " se parece a la asignatura " (send (instance-address * ?asigc) get-Nombre) " y esa asignatura le gustó al alumno +" ?sum crlf))
+  )
+  (assert (asignatura-parecida ?asig))
 )
 
 
@@ -968,8 +1090,7 @@
   (printout t "Hola " ?nombre ". Aqui tienes tu recomendacion" crlf)
   (progn$ (?asigRec $?l)
     (bind ?asig (send ?asigRec get-AsigName))
-    (printout t "=======================================" crlf)
-    (printout t "Nombre: " (send ?asig get-Nombre) crlf)
+    (printout t "================= " (send ?asig get-Nombre) " =================" crlf)
     (printout t "Puntuacion: " (send ?asigRec get-Puntuacion) crlf)
     (printout t "Razones: "crlf)
     (progn$ (?motivo (send ?asigRec get-Motivos))
