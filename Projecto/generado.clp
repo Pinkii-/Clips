@@ -2857,9 +2857,9 @@
 
 ; Regla que le da puntos a las asignaturas obligatorias de la especialidad preferida
 (defrule asignaturas-especialidad
-  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
   (object (is-a Alumno) (EspecialidadPref ?especialidad))
   (test (neq ?especialidad nil))
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
   (test (eq (send (instance-address * (send ?asig get-ModalidadAsig)) get-Descripcion) (send ?especialidad get-Descripcion)))
   (not (asignatura-especialidad ?asig))
   =>
@@ -2870,6 +2870,76 @@
   (send ?asigRec put-Motivos ?m)
   (assert (asignatura-especialidad ?asig))
   (printout t "DEBUG: +400 La asignaura " (send ?asig get-Nombre) " es de la especialidad preferida del usuario" crlf)  
+)
+
+; Regla que le da puntos a las asignaturas optativas de la especilidad preferida
+(defrule asignatura-op-especialidad
+  (object (is-a Alumno) (EspecialidadPref ?especialidad))
+  (test (neq ?especialidad nil))
+  ?asigRec <- (object (is-a AsignaturaRecomendada) (AsigName ?asig) (Puntuacion ?p) (Motivos $?m))
+  (not (asignatura-op-especialidad ?asig))
+  (test 
+    (or 
+      (and 
+        (eq
+          (send ?especialidad get-Descripcion)
+          "Esp_AC"
+        )
+        (eq 
+          (send (instance-address * (send ?asig get-ModalidadAsig)) get-Descripcion)
+          "OptEsp_AC"
+        )
+      ) 
+      (and 
+        (eq
+          (send ?especialidad get-Descripcion)
+          "Esp_Comp"
+        )
+        (eq 
+          (send (instance-address * (send ?asig get-ModalidadAsig)) get-Descripcion)
+          "OptEsp_Comp"
+        )
+      ) 
+      (and 
+        (eq
+          (send ?especialidad get-Descripcion)
+          "Esp_ES"
+        )
+        (eq 
+          (send (instance-address * (send ?asig get-ModalidadAsig)) get-Descripcion)
+          "OptEsp_ES"
+        )
+      ) 
+      (and 
+        (eq
+          (send ?especialidad get-Descripcion)
+          "Esp_SI"
+        )
+        (eq 
+          (send (instance-address * (send ?asig get-ModalidadAsig)) get-Descripcion)
+          "OptEsp_SI"
+        )
+      ) 
+      (and 
+        (eq
+          (send ?especialidad get-Descripcion)
+          "Esp_TI"
+        )
+        (eq 
+          (send (instance-address * (send ?asig get-ModalidadAsig)) get-Descripcion)
+          "OptEsp_TI"
+        )
+      )
+    )
+  )
+  =>
+  (bind ?p (+ ?p 250))
+  (bind ?motivo (str-cat "La asignatura es de la especilidad " (send ?especialidad get-Descripcion )" y optativa +250"))
+  (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
+  (send ?asigRec put-Puntuacion ?p)
+  (send ?asigRec put-Motivos ?m)
+  (printout t "DEBUG: +250 La asignaura " (send ?asig get-Nombre) " es de la especialidad preferida del usuario y es optativa" crlf) 
+  (assert (asignatura-op-especialidad ?asig))
 )
 
 ; Regla que le da puntos a los temas elegidos por el usuario
