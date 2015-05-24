@@ -5,13 +5,6 @@
 ;;; Mayo 2015
 
 
-; ==================HECHO DESDE LA ULTIMA ITERACION===============================
-  ; Funciones auxiliares que calculan la nota media y maxima de un alumno
-  ; Regla que bonifica a las asignaturas parecidas a las asignaturas donde el alumno ha sacado mejores notas
-  ; Funcion que ordena los temas alfabeticamente
-  ; Regla que elige temas por el alumno según si ha sacado buenas notas en ellas
-;=================================================================================
-
 (defmodule MAIN (export ?ALL))
 
 ; Aquí van los mensage handlers, las funciones de pregunta, los templates
@@ -218,15 +211,15 @@
   (retract ?z)
 )
 
-; Si no existe, a iorar
+; No existe estudiante relacionado a ese dni
 (defrule estudiate-random
   (declare (salience -1))
   ?z <- (tengodni)
   ?y <- (noIdeaQuienEs)
   ?x <- (estudianteRand ?dni)
   =>
-  (format t "No hay ni ha habido ningun estudiandte con el dni %d." ?dni)
-  (printout t "Llama a secretaria o Ha ver hestudiao" crlf)
+  (format t "No hay ni ha habido ningun estudiandte con el dni %d. " ?dni)
+  (printout t "Llama a secretaria o haber estudiado" crlf)
   (retract ?z)
   (retract ?y)
   (retract ?x)
@@ -435,12 +428,12 @@
     )
   )
   (assert (ultimoCuatri ?ultimo-cuatri))
-  (printout t "DEBUG: El ultimo cuatri es el " ?ultimo-cuatri crlf) ; DEBUG
+  (printout t "DEBUG: El ultimo cuatri es el " ?ultimo-cuatri crlf) 
   
 )
 
 ;Funcion encargada de calcular el volumen de trabajo a partir de las ultimas convocatorias
-(defrule calcular-volumen ; TODO hacer que haga algo inteligente
+(defrule calcular-volumen
   ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (VolumenTrabajo np))
   (ultimoCuatri ?cuatri)
   =>
@@ -467,7 +460,7 @@
 )
 
 ;Funcion encargada de calcular la dificultad asumible a partir de las ultimas convocatorias
-(defrule calcular-dificultad ; TODO hacer que haga algo inteligente
+(defrule calcular-dificultad
   ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (Dificultad np))
   (ultimoCuatri ?cuatri)
   =>
@@ -503,7 +496,7 @@
   (ultimoCuatri ?cuatri)
   (test (eq ?na np))
   =>
-  (printout t "DEBUG: Como el alumno ha elegido np en el numero de asignaturas, lo calculamos nosotros" crlf) ; DEBUG
+  (printout t "DEBUG: Como el alumno ha elegido np en el numero de asignaturas, lo calculamos nosotros" crlf)
   (bind ?num-asig 0)
   (progn$ (?conv ?convs)
     (bind ?c (send (instance-address * ?conv) get-Cuatrimestre))
@@ -512,7 +505,7 @@
     )
   )
   (send ?alumno put-NumeroAsignaturas ?num-asig)
-  (printout t "DEBUG: El numero de asignaturas es " ?num-asig crlf) ; DEBUG
+  (printout t "DEBUG: El numero de asignaturas es " ?num-asig crlf) 
 )
 
 ; Regla que busca la especialidad mas afin al usuario
@@ -629,44 +622,6 @@
     (printout t "DEBUG: La asignatura " (send ?asig1 get-Nombre) " se descarta con nota " ?nota crlf)
     (send ?r delete)
 )
-
-; ; Regla que quita las asignaturas que tengan un volumen de trabajo mayor al asumible
-; (defrule quitar-volumen-alto
-;   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
-;   (object (is-a Alumno) (VolumenTrabajo medio))
-;   (test (eq alto (send ?asig get-VolumenTrabajo)))
-;   =>
-;   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto " crlf)
-;   (send ?a delete)
-; )
-
-; (defrule quitar-volumen-medio
-;   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
-;   (object (is-a Alumno) (VolumenTrabajo bajo))
-;   (test (or (eq alto (send ?asig get-VolumenTrabajo)) (eq medio (send ?asig get-VolumenTrabajo))))
-;   =>
-;   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto o medio " crlf)
-;   (send ?a delete)
-; )
-
-; ; Regla que quita las asignaturas que tengan una dificultad mayor a la asumible
-; (defrule quitar-dificultad-alta
-;   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
-;   (object (is-a Alumno) (Dificultad medio))
-;   (test (or (eq alto (send ?asig get-Dificultad)) (> 51 (send ?asig get-PrctAprobado))))
-;   =>
-;   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta " crlf)
-;   (send ?a delete)
-; )
-
-; (defrule quitar-dificultad-media
-;   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
-;   (object (is-a Alumno) (Dificultad bajo))
-;   (test (or (eq alto (send ?asig get-Dificultad)) (eq medio (send ?asig get-Dificultad)) (> 85 (send ?asig get-PrctAprobado))))
-;   =>
-;   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta o media " crlf)
-;   (send ?a delete)
-; )
 
 ; Regla que quita las asignaturas con prerequisitos que no cumple 
 (defrule quitar-prerequesitos
@@ -1083,7 +1038,7 @@
 
 
 ; regla encargada de imprimir la solucion
-(defrule imprimir ; TODO Hacer que se imprima de una manera bonita :D
+(defrule imprimir
   (object (is-a Alumno) (Nombre ?nombre))
   (lista-asig-ordenada (recomendaciones $?l))
   =>
