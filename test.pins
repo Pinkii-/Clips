@@ -1,11 +1,10 @@
-; Sun May 24 20:26:36 GMT+01:00 2015
+; Mon May 25 21:50:04 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
 
 ([ontologia_Class0] of  Asignatura
 
-	(Dificultad alto)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 417)
 	(ModalidadAsig [ontologia_Class10005])
@@ -18,7 +17,6 @@
 
 ([ontologia_Class10000] of  Asignatura
 
-	(Dificultad medio)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 398)
 	(ModalidadAsig [ontologia_Class10005])
@@ -88,7 +86,6 @@
 
 ([ontologia_Class20001] of  Asignatura
 
-	(Dificultad bajo)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 436)
 	(ModalidadAsig [ontologia_Class10005])
@@ -101,7 +98,6 @@
 
 ([ontologia_Class20002] of  Asignatura
 
-	(Dificultad medio)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 422)
 	(ModalidadAsig [ontologia_Class10005])
@@ -119,7 +115,6 @@
 
 ([ontologia_Class20004] of  Asignatura
 
-	(Dificultad alto)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 210)
 	(ModalidadAsig [ontologia_Class10005])
@@ -286,6 +281,10 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "EEE")
 	(PrctAprobado 89)
+	(PreRequesit
+		[ontologia_Class30004]
+		[ontologia_Class30005]
+		[ontologia_Class0])
 	(TemasRelacionados
 		[ontologia_Class80022]
 		[ontologia_Class80024]
@@ -336,6 +335,7 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "XC")
 	(PrctAprobado 64)
+	(PreRequesit [ontologia_Class30003])
 	(TemasRelacionados [ontologia_Class80052])
 	(VolumenTrabajo bajo))
 
@@ -354,7 +354,7 @@
 		[ontologia_Class80031]
 		[ontologia_Class80055]
 		[ontologia_Class80002])
-	(VolumenTrabajo bajo))
+	(VolumenTrabajo alto))
 
 ([ontologia_Class30017] of  Asignatura
 
@@ -680,7 +680,6 @@
 ([ontologia_Class40036] of  Asignatura
 
 	(CoRequesit
-		[ontologia_Class40033]
 		[ontologia_Class40034]
 		[ontologia_Class40037])
 	(Dificultad np)
@@ -689,6 +688,7 @@
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "PEC")
 	(PrctAprobado 100)
+	(PreRequesit [ontologia_Class40033])
 	(TemasRelacionados
 		[ontologia_Class80003]
 		[ontologia_Class80035])
@@ -730,6 +730,7 @@
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "XC2")
 	(PrctAprobado 96)
+	(PreRequesit [ontologia_Class30015])
 	(TemasRelacionados
 		[ontologia_Class80052]
 		[ontologia_Class80014])
@@ -1064,6 +1065,7 @@
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "NE")
 	(PrctAprobado 100)
+	(PreRequesit [ontologia_Class40065])
 	(TemasRelacionados
 		[ontologia_Class80031]
 		[ontologia_Class80022]
@@ -1176,15 +1178,14 @@
 
 ([ontologia_Class40073] of  Asignatura
 
-	(CoRequesit
-		[ontologia_Class40071]
-		[ontologia_Class40072])
+	(CoRequesit [ontologia_Class40071])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(Matriculados 8)
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "PTI")
 	(PrctAprobado 100)
+	(PreRequesit [ontologia_Class40072])
 	(TemasRelacionados
 		[ontologia_Class80031]
 		[ontologia_Class80035]
@@ -1195,15 +1196,14 @@
 
 ([ontologia_Class40074] of  Asignatura
 
-	(CoRequesit
-		[ontologia_Class30010]
-		[ontologia_Class30015])
+	(CoRequesit [ontologia_Class30015])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(Matriculados 46)
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "SI")
 	(PrctAprobado 86)
+	(PreRequesit [ontologia_Class30010])
 	(TemasRelacionados
 		[ontologia_Class80031]
 		[ontologia_Class80052]
@@ -1542,6 +1542,7 @@
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "EDO")
 	(PrctAprobado 79)
+	(PreRequesit [ontologia_Class30012])
 	(TemasRelacionados [ontologia_Class80022])
 	(VolumenTrabajo bajo))
 
@@ -1700,6 +1701,25 @@
 	(TemasRelacionados [ontologia_Class80032])
 	(VolumenTrabajo bajo))
 
+([ontologia_Class80000] of  Alumno
+
+	(Convocatorias
+		[ontologia_Class80001]
+		[ontologia_Class90002]
+		[ontologia_Class90003]
+		[ontologia_Class90004])
+	(Dificultad np)
+	(DNI 2)
+	(Nombre "Segundo cuatri")
+	(VolumenTrabajo np))
+
+([ontologia_Class80001] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20002])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.0))
+
 ([ontologia_Class80002] of  Tema
 
 	(Nombre "Programacion"))
@@ -1799,3 +1819,192 @@
 ([ontologia_Class80055] of  Tema
 
 	(Nombre "Java"))
+
+([ontologia_Class90002] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class0])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 4.0))
+
+([ontologia_Class90003] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20001])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 8.0))
+
+([ontologia_Class90004] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class10000])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.5))
+
+([ontologia_Class90005] of  Alumno
+
+	(Convocatorias
+		[ontologia_Class90006]
+		[ontologia_Class90007]
+		[ontologia_Class90008]
+		[ontologia_Class90009]
+		[ontologia_Class90010]
+		[ontologia_Class90011]
+		[ontologia_Class90012]
+		[ontologia_Class90013]
+		[ontologia_Class90014]
+		[ontologia_Class90015]
+		[ontologia_Class90016]
+		[ontologia_Class90017]
+		[ontologia_Class90018]
+		[ontologia_Class90019]
+		[ontologia_Class90020]
+		[ontologia_Class90021]
+		[ontologia_Class90022]
+		[ontologia_Class90023]
+		[ontologia_Class90024]
+		[ontologia_Class90025])
+	(Dificultad np)
+	(DNI 3)
+	(Nombre "Solete")
+	(VolumenTrabajo np))
+
+([ontologia_Class90006] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class10000])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 4.4))
+
+([ontologia_Class90007] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class0])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.4))
+
+([ontologia_Class90008] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20001])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 4.7))
+
+([ontologia_Class90009] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20002])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.6))
+
+([ontologia_Class90010] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30004])
+	(Cuatrimestre 2)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.0))
+
+([ontologia_Class90011] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class10000])
+	(Cuatrimestre 2)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.0))
+
+([ontologia_Class90012] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20001])
+	(Cuatrimestre 2)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.5))
+
+([ontologia_Class90013] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30003])
+	(Cuatrimestre 2)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.3))
+
+([ontologia_Class90014] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30005])
+	(Cuatrimestre 3)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.0))
+
+([ontologia_Class90015] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20004])
+	(Cuatrimestre 3)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.1))
+
+([ontologia_Class90016] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30008])
+	(Cuatrimestre 4)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 7.1))
+
+([ontologia_Class90017] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30009])
+	(Cuatrimestre 4)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.0))
+
+([ontologia_Class90018] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30007])
+	(Cuatrimestre 4)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.1))
+
+([ontologia_Class90019] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30006])
+	(Cuatrimestre 4)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.2))
+
+([ontologia_Class90020] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30010])
+	(Cuatrimestre 4)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 7.5))
+
+([ontologia_Class90021] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30012])
+	(Cuatrimestre 5)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.0))
+
+([ontologia_Class90022] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30011])
+	(Cuatrimestre 5)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.0))
+
+([ontologia_Class90023] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30013])
+	(Cuatrimestre 5)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.8))
+
+([ontologia_Class90024] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30014])
+	(Cuatrimestre 5)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.1))
+
+([ontologia_Class90025] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30015])
+	(Cuatrimestre 5)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 9.0))

@@ -200,9 +200,9 @@
   (bind ?estudiantes (find-all-instances ((?inst Alumno)) (neq ?inst:DNI ?dni)))
   (progn$ (?muerto $?estudiantes)
     (bind ?convocatorias (send ?muerto get-Convocatorias))
-    (printout t "DEBUG: Borrando el alumno " (send ?muerto get-DNI) crlf)
+    ;;(printout t "DEBUG: Borrando el alumno " (send ?muerto get-DNI) crlf)
     (progn$ (?c $?convocatorias)
-      (printout t "DEBUG: Borrando Convocatoria" crlf)
+      ;;(printout t "DEBUG: Borrando Convocatoria" crlf)
       (send (instance-address * ?c) delete)
     )
     (send ?muerto delete)
@@ -428,7 +428,7 @@
     )
   )
   (assert (ultimoCuatri ?ultimo-cuatri))
-  (printout t "DEBUG: El ultimo cuatri es el " ?ultimo-cuatri crlf) 
+  ;;(printout t "DEBUG: El ultimo cuatri es el " ?ultimo-cuatri crlf) 
   
 )
 
@@ -437,7 +437,7 @@
   ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (VolumenTrabajo np))
   (ultimoCuatri ?cuatri)
   =>
-  (printout t "DEBUG: Como el alumno ha elegido np en  el volumen de trabajo, lo calculamos nosotros" crlf) ; DEBUG
+  ;;(printout t "DEBUG: Como el alumno ha elegido np en  el volumen de trabajo, lo calculamos nosotros" crlf) ; DEBUG
   (bind ?alto FALSE)
   (bind ?medio FALSE)
   (bind ?bajo FALSE)
@@ -456,7 +456,7 @@
     else (if (eq ?medio TRUE) then (send ?alumno put-VolumenTrabajo medio)
       else (if (eq ?bajo TRUE) then (send ?alumno put-VolumenTrabajo bajo)
         else (send ?alumno put-VolumenTrabajo alto))))
-  (printout t "DEBUG: El sistema ha elegido un volumen de trabajo " (send ?alumno get-VolumenTrabajo) crlf)
+  ;(printout t "DEBUG: El sistema ha elegido un volumen de trabajo " (send ?alumno get-VolumenTrabajo) crlf)
 )
 
 ;Funcion encargada de calcular la dificultad asumible a partir de las ultimas convocatorias
@@ -464,7 +464,7 @@
   ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (Dificultad np))
   (ultimoCuatri ?cuatri)
   =>
-  (printout t "DEBUG: Como el alumno ha elegido np en la eleccion de dificultad, lo calculamos nosotros" crlf) ; DEBUG
+  ;(printout t "DEBUG: Como el alumno ha elegido np en la eleccion de dificultad, lo calculamos nosotros" crlf) ; DEBUG
   (bind ?alto FALSE)
   (bind ?medio FALSE)
   (bind ?bajo FALSE)
@@ -487,7 +487,7 @@
     else (if (eq ?medio TRUE) then (send ?alumno put-Dificultad medio)
       else (if (eq ?bajo TRUE) then (send ?alumno put-Dificultad bajo)
         else (send ?alumno put-Dificultad alto))))
-  (printout t "DEBUG: El sistema ha elegido una dificultad " (send ?alumno get-Dificultad) crlf)
+  ;(printout t "DEBUG: El sistema ha elegido una dificultad " (send ?alumno get-Dificultad) crlf)
 )
 
 ; Regla encargada de sacar el numero de asignaturas que suele hacer el alumno
@@ -496,7 +496,7 @@
   (ultimoCuatri ?cuatri)
   (test (eq ?na np))
   =>
-  (printout t "DEBUG: Como el alumno ha elegido np en el numero de asignaturas, lo calculamos nosotros" crlf)
+  ;(printout t "DEBUG: Como el alumno ha elegido np en el numero de asignaturas, lo calculamos nosotros" crlf)
   (bind ?num-asig 0)
   (progn$ (?conv ?convs)
     (bind ?c (send (instance-address * ?conv) get-Cuatrimestre))
@@ -505,7 +505,7 @@
     )
   )
   (send ?alumno put-NumeroAsignaturas ?num-asig)
-  (printout t "DEBUG: El numero de asignaturas es " ?num-asig crlf) 
+  ;(printout t "DEBUG: El numero de asignaturas es " ?num-asig crlf) 
 )
 
 ; Regla que busca la especialidad mas afin al usuario
@@ -562,7 +562,8 @@
       (send ?alumno put-EspecialidadPref (find-instance ((?inst Esp_TI)) TRUE))
     )
     (case 0 then
-      (printout t "DEBUG: No ha hecho nada de especialidad" crlf))
+      ;(printout t "DEBUG: No ha hecho nada de especialidad" crlf)
+    )
   )
   (assert (calculado-especialidad))
 )
@@ -580,7 +581,7 @@
     (progn$ (?t $?temas)
       (if (not (member$ ?t $?ret))
         then (bind $?ret (insert$ $?ret (+ (length$ $?ret) 1) ?t))
-        (printout t "DEBUG: La asignatura " (send (instance-address * ?t) get-Nombre) " tiene temas que lo mas seguro es que le gusten al user" crlf)
+        ;(printout t "DEBUG: La asignatura " (send (instance-address * ?t) get-Nombre) " tiene temas que lo mas seguro es que le gusten al user" crlf)
       )
     )
   )
@@ -619,7 +620,7 @@
   ?c <- (object (is-a Convocatoria) (AsignaturaMatriculada ?asig2) (Nota ?nota&:(> ?nota 4.99)))
   (test (eq (send ?asig1 get-Nombre) (send (instance-address * ?asig2) get-Nombre)))
   =>
-    (printout t "DEBUG: La asignatura " (send ?asig1 get-Nombre) " se descarta con nota " ?nota crlf)
+    ;(printout t "DEBUG: La asignatura " (send ?asig1 get-Nombre) " se descarta con nota " ?nota crlf)
     (send ?r delete)
 )
 
@@ -644,7 +645,7 @@
   (if (eq ?borrar TRUE) 
     then 
       (send ?asigRec delete)
-      (printout t "DEBUG: La asignaura " (send ?asig get-Nombre) " ha sido borrada ya que no cumple los prerrequisitos" crlf)
+      ;(printout t "DEBUG: La asignaura " (send ?asig get-Nombre) " ha sido borrada ya que no cumple los prerrequisitos" crlf)
     
   )
   (assert (q-prerequesitos))
@@ -694,7 +695,7 @@
   (test (neq (send (instance-address * (send ?asig get-HorarioAsig)) get-Descripcion) (send ?pref get-Descripcion)))
   =>
   (bind ?desc (send (instance-address * (send ?asig get-HorarioAsig)) get-Descripcion))
-  (printout t "DEBUG: Preferencia horaria " (send ?pref get-Descripcion) " y asig " (send ?asig get-Nombre) " " ?desc  crlf)
+  ;(printout t "DEBUG: Preferencia horaria " (send ?pref get-Descripcion) " y asig " (send ?asig get-Nombre) " " ?desc  crlf)
   (send ?asigRec delete)
 )
 
@@ -725,7 +726,7 @@
   (send ?asigRec put-Puntuacion ?p)
   (send ?asigRec put-Motivos ?m)
   (assert (volumen-alto ?asig))
-  (printout t "DEUBG: -200 a " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto (user acepta medio)" crlf)
+  ; (printout t "DEUBG: -200 a " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto (user acepta medio)" crlf)
  
 )
 
@@ -739,11 +740,11 @@
     then
       (bind ?p (- ?p 200))
       (bind ?motivo "La asignatura tiene un volumen de trabajo medio cuando tu puedes asumir un volumen bajo -200")
-      (printout t "DEUBG: -200 a " (send ?asig get-Nombre) " ya que su volumen de trabajo es medio (user acepta bajo)" crlf) 
+      ; (printout t "DEUBG: -200 a " (send ?asig get-Nombre) " ya que su volumen de trabajo es medio (user acepta bajo)" crlf) 
     else
       (bind ?p (- ?p 400))
       (bind ?motivo "La asignatura tiene un volumen de trabajo alto cuando tu puedes asumir un volumen bajo -400")
-      (printout t "DEUBG: -400 a " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto (user acepta bajo)" crlf) 
+      ; (printout t "DEUBG: -400 a " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto (user acepta bajo)" crlf) 
   )
   (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
   (send ?asigRec put-Puntuacion ?p)
@@ -764,7 +765,7 @@
   (send ?asigRec put-Puntuacion ?p)
   (send ?asigRec put-Motivos ?m)
   (assert (dificultad-alto ?asig))
-  (printout t "DEUBG: -200 a " (send ?asig get-Nombre) " ya que su dificultad es alta (user acepta media)" crlf)
+ ;(printout t "DEUBG: -200 a " (send ?asig get-Nombre) " ya que su dificultad es alta (user acepta media)" crlf)
 )
 
 (defrule quitar-dificultad-media
@@ -777,11 +778,11 @@
     then
       (bind ?p (- ?p 200))
       (bind ?motivo "La asignatura tiene un dificultad media cuando tu puedes asumir un volumen bajo -200")
-      (printout t "DEUBG: -200 a " (send ?asig get-Nombre) " ya que su dificultad es media (user acepta baja)" crlf) 
+      ; (printout t "DEUBG: -200 a " (send ?asig get-Nombre) " ya que su dificultad es media (user acepta baja)" crlf) 
     else
       (bind ?p (- ?p 400))
       (bind ?motivo "La asignatura tiene una dificultad alta cuando tu puedes asumir una dificultad baja -400")
-      (printout t "DEUBG: -400 a " (send ?asig get-Nombre) " ya que su dificultad es alta (user acepta baja)" crlf) 
+;     (printout t "DEUBG: -400 a " (send ?asig get-Nombre) " ya que su dificultad es alta (user acepta baja)" crlf) 
   )
   (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
   (send ?asigRec put-Puntuacion ?p)
@@ -803,7 +804,7 @@
   (send ?asigRec put-Puntuacion ?p)
   (send ?asigRec put-Motivos ?m)
   (assert (asignatura-suspendida ?asig1))
-  (printout t "DEBUG: +150 La asignaura " (send ?asig1 get-Nombre) " ha sido cursada y no esta aprobada" crlf)
+  ;(printout t "DEBUG: +150 La asignaura " (send ?asig1 get-Nombre) " ha sido cursada y no esta aprobada" crlf)
 
 )
 
@@ -820,7 +821,7 @@
   (send ?asigRec put-Puntuacion ?p)
   (send ?asigRec put-Motivos ?m)
   (assert (asignatura-obligatoria ?asig))
-  (printout t "DEBUG: +1000 La asignaura " (send ?asig get-Nombre) " es obligatoria y no esta aprobada" crlf)
+  ;(printout t "DEBUG: +1000 La asignaura " (send ?asig get-Nombre) " es obligatoria y no esta aprobada" crlf)
 )
 
 ; Regla que quita las asignaturas optativas si queda alguna obligatoria por aprobar
@@ -831,7 +832,7 @@
   (test (eq (send (instance-address * (send ?asig get-ModalidadAsig)) get-Descripcion) ?d))
   =>
   (send ?asigRec delete)
-  (printout t "DEBUG: Borrando la asignatura " (send ?asig get-Nombre) " ya que es optativa y no estan aprobadas todas las obligatorias" crlf)
+  ;(printout t "DEBUG: Borrando la asignatura " (send ?asig get-Nombre) " ya que es optativa y no estan aprobadas todas las obligatorias" crlf)
 )
 
 ; Regla que le da puntos a las asignaturas obligatorias de la especialidad preferida
@@ -848,7 +849,7 @@
   (send ?asigRec put-Puntuacion ?p)
   (send ?asigRec put-Motivos ?m)
   (assert (asignatura-especialidad ?asig))
-  (printout t "DEBUG: +400 La asignaura " (send ?asig get-Nombre) " es de la especialidad preferida del usuario" crlf)  
+  ;(printout t "DEBUG: +400 La asignaura " (send ?asig get-Nombre) " es de la especialidad preferida del usuario" crlf)  
 )
 
 ; Regla que le da puntos a las asignaturas optativas de la especilidad preferida
@@ -917,7 +918,7 @@
   (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
   (send ?asigRec put-Puntuacion ?p)
   (send ?asigRec put-Motivos ?m)
-  (printout t "DEBUG: +250 La asignaura " (send ?asig get-Nombre) " es de la especialidad preferida del usuario y es optativa" crlf) 
+  ;(printout t "DEBUG: +250 La asignaura " (send ?asig get-Nombre) " es de la especialidad preferida del usuario y es optativa" crlf) 
   (assert (asignatura-op-especialidad ?asig))
 )
 
@@ -937,7 +938,7 @@
           (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
           (send ?asigRec put-Puntuacion ?p)
           (send ?asigRec put-Motivos ?m)
-          (printout t "DEBUG: +150 La asignaura " (send ?asig get-Nombre) " tiene el tema " (send (instance-address * ?at) get-Nombre) crlf)  
+          ;(printout t "DEBUG: +150 La asignaura " (send ?asig get-Nombre) " tiene el tema " (send (instance-address * ?at) get-Nombre) crlf)  
       )
     )
   )
@@ -969,11 +970,14 @@
     (bind $?razones (create$))
 
     (if (eq (send ?asig get-Dificultad) (send (instance-address * ?asigc) get-Dificultad)) then (bind ?r (+ ?r 2))
-      (bind $?razones (insert$ $?razones (+ (length$ $?razones) 1) " misma dificultad")) ) ;DEBUG
+      ;(bind $?razones (insert$ $?razones (+ (length$ $?razones) 1) " misma dificultad")) ;DEBUG
+    )
     (if (eq (send ?asig get-VolumenTrabajo) (send (instance-address * ?asigc) get-VolumenTrabajo)) then (bind ?r (+ ?r 2))
-      (bind $?razones (insert$ $?razones (+ (length$ $?razones) 1) " mismo volumen"))) ; DEBUG
+      ;(bind $?razones (insert$ $?razones (+ (length$ $?razones) 1) " mismo volumen")) ; DEBUG
+    )
     (if (eq (misma-especialidad (send ?asig get-ModalidadAsig) (send (instance-address * ?asigc) get-ModalidadAsig)) TRUE) then (bind ?r (+ ?r 2))
-      (bind $?razones (insert$ $?razones (+ (length$ $?razones) 1) " misma especialidad"))) ;DEBUG
+      ;(bind $?razones (insert$ $?razones (+ (length$ $?razones) 1) " misma especialidad")) ;DEBUG
+    )
     (bind $?t1 (send ?asig get-TemasRelacionados))
     (bind $?t2 (send (instance-address * ?asigc) get-TemasRelacionados))
     (progn$ (?tema1 $?t1)
@@ -987,9 +991,9 @@
       (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
       (send ?asigRec put-Puntuacion ?p)
       (send ?asigRec put-Motivos ?m)
-      (printout t "DEBUG: La asignatura " (send ?asig get-Nombre) " se parece a la asignatura " (send (instance-address * ?asigc) get-Nombre) " y esa asignatura le gustó al alumno +" ?sum crlf)
+      ;(printout t "DEBUG: La asignatura " (send ?asig get-Nombre) " se parece a la asignatura " (send (instance-address * ?asigc) get-Nombre) " y esa asignatura le gustó al alumno +" ?sum crlf)
       (progn$ (?ra $?razones)
-      (printout t " ----> Eran parecidas en " ?ra crlf)
+      ;(printout t " ----> Eran parecidas en " ?ra crlf)
       )
     )
   )
@@ -1014,7 +1018,7 @@
   (not (lista-asig-desordenada))
   =>
   (assert (lista-asig-desordenada))
-  (printout t "DEBUG: creando lista desordenada." crlf)
+  ;(printout t "DEBUG: creando lista desordenada." crlf)
 )
 
 (defrule insertar-asignaturas
@@ -1024,7 +1028,7 @@
   =>
   (bind $?l (insert$ $?l (+ (length$ $?l) 1) ?asigrec))
   (modify ?desor (recomendaciones $?l))
-  (printout t "DEBUG: insertando asignaturas en lista desordenada." crlf)
+  ;(printout t "DEBUG: insertando asignaturas en lista desordenada." crlf)
 )
 
 ; Regla que ordena la lista desordenada
@@ -1041,7 +1045,7 @@
     (bind $?r (insert$ $?r (+ (length $?r) 1) ?elemento))
   )
   (assert (lista-asig-ordenada (recomendaciones $?r)))
-  (printout t "DEBUG: ordenado." crlf)
+  ;(printout t "DEBUG: ordenado." crlf)
 )
 
 
@@ -1050,7 +1054,7 @@
   (object (is-a Alumno) (Nombre ?nombre))
   (lista-asig-ordenada (recomendaciones $?l))
   =>
-  (printout t "Hola " ?nombre ". Aqui tienes tu recomendacion" crlf)
+  (printout t crlf "Hola " ?nombre ". Aqui tienes tu recomendacion" crlf)
   (progn$ (?asigRec $?l)
     (bind ?asig (send ?asigRec get-AsigName))
     (printout t "================= " (send ?asig get-Nombre) " =================" crlf)

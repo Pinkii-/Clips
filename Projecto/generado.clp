@@ -1,6 +1,6 @@
 ;---------- Aqui empiezan las clases generadas por el protege ----------;
 
-; Sun May 24 20:26:36 GMT+01:00 2015
+; Mon May 25 21:50:04 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
@@ -365,14 +365,13 @@
 		(create-accessor read-write)))
 ;-------- Aqui empiezan las instancias generadas por el protege --------;
 (definstances instances
-; Sun May 24 20:26:36 GMT+01:00 2015
+; Mon May 25 21:50:04 GMT+01:00 2015
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
 
 ([ontologia_Class0] of  Asignatura
 
-	(Dificultad alto)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 417)
 	(ModalidadAsig [ontologia_Class10005])
@@ -385,7 +384,6 @@
 
 ([ontologia_Class10000] of  Asignatura
 
-	(Dificultad medio)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 398)
 	(ModalidadAsig [ontologia_Class10005])
@@ -455,7 +453,6 @@
 
 ([ontologia_Class20001] of  Asignatura
 
-	(Dificultad bajo)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 436)
 	(ModalidadAsig [ontologia_Class10005])
@@ -468,7 +465,6 @@
 
 ([ontologia_Class20002] of  Asignatura
 
-	(Dificultad medio)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 422)
 	(ModalidadAsig [ontologia_Class10005])
@@ -486,7 +482,6 @@
 
 ([ontologia_Class20004] of  Asignatura
 
-	(Dificultad alto)
 	(HorarioAsig [ontologia_Class10001])
 	(Matriculados 210)
 	(ModalidadAsig [ontologia_Class10005])
@@ -653,6 +648,10 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "EEE")
 	(PrctAprobado 89)
+	(PreRequesit
+		[ontologia_Class30004]
+		[ontologia_Class30005]
+		[ontologia_Class0])
 	(TemasRelacionados
 		[ontologia_Class80022]
 		[ontologia_Class80024]
@@ -703,6 +702,7 @@
 	(ModalidadAsig [ontologia_Class10005])
 	(Nombre "XC")
 	(PrctAprobado 64)
+	(PreRequesit [ontologia_Class30003])
 	(TemasRelacionados [ontologia_Class80052])
 	(VolumenTrabajo bajo))
 
@@ -721,7 +721,7 @@
 		[ontologia_Class80031]
 		[ontologia_Class80055]
 		[ontologia_Class80002])
-	(VolumenTrabajo bajo))
+	(VolumenTrabajo alto))
 
 ([ontologia_Class30017] of  Asignatura
 
@@ -1047,7 +1047,6 @@
 ([ontologia_Class40036] of  Asignatura
 
 	(CoRequesit
-		[ontologia_Class40033]
 		[ontologia_Class40034]
 		[ontologia_Class40037])
 	(Dificultad np)
@@ -1056,6 +1055,7 @@
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "PEC")
 	(PrctAprobado 100)
+	(PreRequesit [ontologia_Class40033])
 	(TemasRelacionados
 		[ontologia_Class80003]
 		[ontologia_Class80035])
@@ -1097,6 +1097,7 @@
 	(ModalidadAsig [ontologia_Class40014])
 	(Nombre "XC2")
 	(PrctAprobado 96)
+	(PreRequesit [ontologia_Class30015])
 	(TemasRelacionados
 		[ontologia_Class80052]
 		[ontologia_Class80014])
@@ -1431,6 +1432,7 @@
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "NE")
 	(PrctAprobado 100)
+	(PreRequesit [ontologia_Class40065])
 	(TemasRelacionados
 		[ontologia_Class80031]
 		[ontologia_Class80022]
@@ -1543,15 +1545,14 @@
 
 ([ontologia_Class40073] of  Asignatura
 
-	(CoRequesit
-		[ontologia_Class40071]
-		[ontologia_Class40072])
+	(CoRequesit [ontologia_Class40071])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(Matriculados 8)
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "PTI")
 	(PrctAprobado 100)
+	(PreRequesit [ontologia_Class40072])
 	(TemasRelacionados
 		[ontologia_Class80031]
 		[ontologia_Class80035]
@@ -1562,15 +1563,14 @@
 
 ([ontologia_Class40074] of  Asignatura
 
-	(CoRequesit
-		[ontologia_Class30010]
-		[ontologia_Class30015])
+	(CoRequesit [ontologia_Class30015])
 	(Dificultad np)
 	(HorarioAsig [ontologia_Class10002])
 	(Matriculados 46)
 	(ModalidadAsig [ontologia_Class40013])
 	(Nombre "SI")
 	(PrctAprobado 86)
+	(PreRequesit [ontologia_Class30010])
 	(TemasRelacionados
 		[ontologia_Class80031]
 		[ontologia_Class80052]
@@ -1909,6 +1909,7 @@
 	(ModalidadAsig [ontologia_Class40015])
 	(Nombre "EDO")
 	(PrctAprobado 79)
+	(PreRequesit [ontologia_Class30012])
 	(TemasRelacionados [ontologia_Class80022])
 	(VolumenTrabajo bajo))
 
@@ -2067,6 +2068,25 @@
 	(TemasRelacionados [ontologia_Class80032])
 	(VolumenTrabajo bajo))
 
+([ontologia_Class80000] of  Alumno
+
+	(Convocatorias
+		[ontologia_Class80001]
+		[ontologia_Class90002]
+		[ontologia_Class90003]
+		[ontologia_Class90004])
+	(Dificultad np)
+	(DNI 2)
+	(Nombre "Segundo cuatri")
+	(VolumenTrabajo np))
+
+([ontologia_Class80001] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20002])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.0))
+
 ([ontologia_Class80002] of  Tema
 
 	(Nombre "Programacion"))
@@ -2166,32 +2186,205 @@
 ([ontologia_Class80055] of  Tema
 
 	(Nombre "Java"))
+
+([ontologia_Class90002] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class0])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 4.0))
+
+([ontologia_Class90003] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20001])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 8.0))
+
+([ontologia_Class90004] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class10000])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.5))
+
+([ontologia_Class90005] of  Alumno
+
+	(Convocatorias
+		[ontologia_Class90006]
+		[ontologia_Class90007]
+		[ontologia_Class90008]
+		[ontologia_Class90009]
+		[ontologia_Class90010]
+		[ontologia_Class90011]
+		[ontologia_Class90012]
+		[ontologia_Class90013]
+		[ontologia_Class90014]
+		[ontologia_Class90015]
+		[ontologia_Class90016]
+		[ontologia_Class90017]
+		[ontologia_Class90018]
+		[ontologia_Class90019]
+		[ontologia_Class90020]
+		[ontologia_Class90021]
+		[ontologia_Class90022]
+		[ontologia_Class90023]
+		[ontologia_Class90024]
+		[ontologia_Class90025])
+	(Dificultad np)
+	(DNI 3)
+	(Nombre "Solete")
+	(VolumenTrabajo np))
+
+([ontologia_Class90006] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class10000])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 4.4))
+
+([ontologia_Class90007] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class0])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.4))
+
+([ontologia_Class90008] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20001])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 4.7))
+
+([ontologia_Class90009] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20002])
+	(Cuatrimestre 1)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.6))
+
+([ontologia_Class90010] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30004])
+	(Cuatrimestre 2)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.0))
+
+([ontologia_Class90011] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class10000])
+	(Cuatrimestre 2)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.0))
+
+([ontologia_Class90012] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20001])
+	(Cuatrimestre 2)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.5))
+
+([ontologia_Class90013] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30003])
+	(Cuatrimestre 2)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.3))
+
+([ontologia_Class90014] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30005])
+	(Cuatrimestre 3)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.0))
+
+([ontologia_Class90015] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class20004])
+	(Cuatrimestre 3)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.1))
+
+([ontologia_Class90016] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30008])
+	(Cuatrimestre 4)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 7.1))
+
+([ontologia_Class90017] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30009])
+	(Cuatrimestre 4)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.0))
+
+([ontologia_Class90018] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30007])
+	(Cuatrimestre 4)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.1))
+
+([ontologia_Class90019] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30006])
+	(Cuatrimestre 4)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.2))
+
+([ontologia_Class90020] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30010])
+	(Cuatrimestre 4)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 7.5))
+
+([ontologia_Class90021] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30012])
+	(Cuatrimestre 5)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.0))
+
+([ontologia_Class90022] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30011])
+	(Cuatrimestre 5)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.0))
+
+([ontologia_Class90023] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30013])
+	(Cuatrimestre 5)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 5.8))
+
+([ontologia_Class90024] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30014])
+	(Cuatrimestre 5)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 6.1))
+
+([ontologia_Class90025] of  Convocatoria
+
+	(AsignaturaMatriculada [ontologia_Class30015])
+	(Cuatrimestre 5)
+	(HorarioAsig [ontologia_Class10002])
+	(Nota 9.0))
 )
 
 ;------------------ Aqui empieza el sistema experto --------------------;
 
+; ======================= CODIGO DEL SISTEMA BASADO EN CONOCIMIENTO =================
+;;; Autores: Gonzalo Diez, Genis Bayona, Alejandro Polo
+;;; Practica de Sistemas Basados en el Conocimiento
+;;; Recomendacion de asignaturas para un alumno de la FIB
+;;; Mayo 2015
 
-; ==================HECHO DESDE LA ULTIMA ITERACION===============================
-; Funciones auxiliares que calculan la nota media y maxima de un alumno
-; Regla que bonifica a las asignaturas parecidas a las asignaturas donde el alumno ha sacado mejores notas
-; Funcion que ordena los temas alfabeticamente
-; Regla que elige temas por el alumno según si ha sacado buenas notas en ellas
-;=================================================================================
-;str-cat = string concat
-
-;progn$ (?elemento ?lista) (cosa a aplicar)
-
-;send ?instancia get-slot = devuelve el contenido del slot de esa instancia
-
-;Preguntar todo lo que quiere con opciona a no importar
-
-;si no importa, calcularlo del historial
-
-;dar recomendación
-
-; TODO GENERAL
-; Cambiar la representación de los temas a temas mas generales.
-; Cambiar la decision inicial de las cosas para que tenga en cuenta la nota
 
 (defmodule MAIN (export ?ALL))
 
@@ -2399,15 +2592,15 @@
   (retract ?z)
 )
 
-; Si no existe, a iorar
+; No existe estudiante relacionado a ese dni
 (defrule estudiate-random
   (declare (salience -1))
   ?z <- (tengodni)
   ?y <- (noIdeaQuienEs)
   ?x <- (estudianteRand ?dni)
   =>
-  (format t "No hay ni ha habido ningun estudiandte con el dni %d." ?dni)
-  (printout t "Llama a secretaria o Ha ver hestudiao" crlf)
+  (format t "No hay ni ha habido ningun estudiandte con el dni %d. " ?dni)
+  (printout t "Llama a secretaria o haber estudiado" crlf)
   (retract ?z)
   (retract ?y)
   (retract ?x)
@@ -2616,12 +2809,12 @@
     )
   )
   (assert (ultimoCuatri ?ultimo-cuatri))
-  (printout t "DEBUG: El ultimo cuatri es el " ?ultimo-cuatri crlf) ; DEBUG
+  (printout t "DEBUG: El ultimo cuatri es el " ?ultimo-cuatri crlf) 
   
 )
 
 ;Funcion encargada de calcular el volumen de trabajo a partir de las ultimas convocatorias
-(defrule calcular-volumen ; TODO hacer que haga algo inteligente
+(defrule calcular-volumen
   ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (VolumenTrabajo np))
   (ultimoCuatri ?cuatri)
   =>
@@ -2648,7 +2841,7 @@
 )
 
 ;Funcion encargada de calcular la dificultad asumible a partir de las ultimas convocatorias
-(defrule calcular-dificultad ; TODO hacer que haga algo inteligente
+(defrule calcular-dificultad
   ?alumno <- (object (is-a Alumno) (Convocatorias $?convs) (Dificultad np))
   (ultimoCuatri ?cuatri)
   =>
@@ -2684,7 +2877,7 @@
   (ultimoCuatri ?cuatri)
   (test (eq ?na np))
   =>
-  (printout t "DEBUG: Como el alumno ha elegido np en el numero de asignaturas, lo calculamos nosotros" crlf) ; DEBUG
+  (printout t "DEBUG: Como el alumno ha elegido np en el numero de asignaturas, lo calculamos nosotros" crlf)
   (bind ?num-asig 0)
   (progn$ (?conv ?convs)
     (bind ?c (send (instance-address * ?conv) get-Cuatrimestre))
@@ -2693,7 +2886,7 @@
     )
   )
   (send ?alumno put-NumeroAsignaturas ?num-asig)
-  (printout t "DEBUG: El numero de asignaturas es " ?num-asig crlf) ; DEBUG
+  (printout t "DEBUG: El numero de asignaturas es " ?num-asig crlf) 
 )
 
 ; Regla que busca la especialidad mas afin al usuario
@@ -2810,44 +3003,6 @@
     (printout t "DEBUG: La asignatura " (send ?asig1 get-Nombre) " se descarta con nota " ?nota crlf)
     (send ?r delete)
 )
-
-; ; Regla que quita las asignaturas que tengan un volumen de trabajo mayor al asumible
-; (defrule quitar-volumen-alto
-;   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
-;   (object (is-a Alumno) (VolumenTrabajo medio))
-;   (test (eq alto (send ?asig get-VolumenTrabajo)))
-;   =>
-;   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto " crlf)
-;   (send ?a delete)
-; )
-
-; (defrule quitar-volumen-medio
-;   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
-;   (object (is-a Alumno) (VolumenTrabajo bajo))
-;   (test (or (eq alto (send ?asig get-VolumenTrabajo)) (eq medio (send ?asig get-VolumenTrabajo))))
-;   =>
-;   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su volumen de trabajo es alto o medio " crlf)
-;   (send ?a delete)
-; )
-
-; ; Regla que quita las asignaturas que tengan una dificultad mayor a la asumible
-; (defrule quitar-dificultad-alta
-;   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
-;   (object (is-a Alumno) (Dificultad medio))
-;   (test (or (eq alto (send ?asig get-Dificultad)) (> 51 (send ?asig get-PrctAprobado))))
-;   =>
-;   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta " crlf)
-;   (send ?a delete)
-; )
-
-; (defrule quitar-dificultad-media
-;   ?a <- (object (is-a AsignaturaRecomendada) (AsigName ?asig))
-;   (object (is-a Alumno) (Dificultad bajo))
-;   (test (or (eq alto (send ?asig get-Dificultad)) (eq medio (send ?asig get-Dificultad)) (> 85 (send ?asig get-PrctAprobado))))
-;   =>
-;   (printout t "DEUBG: Quitando " (send ?asig get-Nombre) " ya que su dificultad es alta o media " crlf)
-;   (send ?a delete)
-; )
 
 ; Regla que quita las asignaturas con prerequisitos que no cumple 
 (defrule quitar-prerequesitos
@@ -3192,14 +3347,18 @@
   (progn$ (?conv $?convs)
     (bind ?r 0)
     (bind ?asigc (send ?conv get-AsignaturaMatriculada))
+    (bind $?razones (create$))
 
-    (if (eq (send ?asig get-Dificultad) (send (instance-address * ?asigc) get-Dificultad)) then (bind ?r (+ ?r 2)))
-    (if (eq (send ?asig get-VolumenTrabajo) (send (instance-address * ?asigc) get-VolumenTrabajo)) then (bind ?r (+ ?r 2)))
-    (if (eq (misma-especialidad (send ?asig get-ModalidadAsig) (send (instance-address * ?asigc) get-ModalidadAsig)) TRUE) then (bind ?r (+ ?r 2)))
+    (if (eq (send ?asig get-Dificultad) (send (instance-address * ?asigc) get-Dificultad)) then (bind ?r (+ ?r 2))
+      (bind $?razones (insert$ $?razones (+ (length$ $?razones) 1) " misma dificultad")) ) ;DEBUG
+    (if (eq (send ?asig get-VolumenTrabajo) (send (instance-address * ?asigc) get-VolumenTrabajo)) then (bind ?r (+ ?r 2))
+      (bind $?razones (insert$ $?razones (+ (length$ $?razones) 1) " mismo volumen"))) ; DEBUG
+    (if (eq (misma-especialidad (send ?asig get-ModalidadAsig) (send (instance-address * ?asigc) get-ModalidadAsig)) TRUE) then (bind ?r (+ ?r 2))
+      (bind $?razones (insert$ $?razones (+ (length$ $?razones) 1) " misma especialidad"))) ;DEBUG
     (bind $?t1 (send ?asig get-TemasRelacionados))
     (bind $?t2 (send (instance-address * ?asigc) get-TemasRelacionados))
     (progn$ (?tema1 $?t1)
-      (if (member$ ?tema1 $?t2) then (bind ?r (+ ?r 2)))
+      (if (member$ ?tema1 $?t2) then (bind ?r (+ ?r 2)) (bind $?razones (insert$ $?razones (+ (length$ $?razones) 1) (str-cat " mismo tema " (send (instance-address * ?tema1) get-Nombre)))))
     )
 
     (if (>= ?r 6) then 
@@ -3209,7 +3368,11 @@
       (bind $?m (insert$ $?m (+ (length$ $?m) 1) ?motivo))
       (send ?asigRec put-Puntuacion ?p)
       (send ?asigRec put-Motivos ?m)
-      (printout t "DEBUG: La asignatura " (send ?asig get-Nombre) " se parece a la asignatura " (send (instance-address * ?asigc) get-Nombre) " y esa asignatura le gustó al alumno +" ?sum crlf))
+      (printout t "DEBUG: La asignatura " (send ?asig get-Nombre) " se parece a la asignatura " (send (instance-address * ?asigc) get-Nombre) " y esa asignatura le gustó al alumno +" ?sum crlf)
+      (progn$ (?ra $?razones)
+      (printout t " ----> Eran parecidas en " ?ra crlf)
+      )
+    )
   )
   (assert (asignatura-parecida ?asig))
 )
@@ -3264,7 +3427,7 @@
 
 
 ; regla encargada de imprimir la solucion
-(defrule imprimir ; TODO Hacer que se imprima de una manera bonita :D
+(defrule imprimir
   (object (is-a Alumno) (Nombre ?nombre))
   (lista-asig-ordenada (recomendaciones $?l))
   =>
